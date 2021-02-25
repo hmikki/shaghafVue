@@ -32,6 +32,8 @@
 
 </template>
 <script>
+import axios from "axios";
+
 export default {
     mounted() {
         console.log('Component mounted.')
@@ -49,10 +51,28 @@ export default {
     },
     methods:{
         changePassword(){
-            axios.post('http://3.124.189.172/api/auth/change_password',{
-                password:this.password,
-                password_confirmation:this.password_confirmation,
-                old_password:this.old_password,
+            const token = sessionStorage.getItem('access_token');
+            axios.post('http://3.124.189.172/api/auth/change_password',
+                {
+                  arguments:{
+                    password:this.password,
+                    password_confirmation:this.password_confirmation,
+                    old_password:this.old_password,
+                  }
+                },
+                {
+                  headers:{
+                    'Authorization': 'Bearer ' + token,
+                    'X-localization': 'ar'
+                  }
+                })
+            .then(res=>{
+              if (res.data['status']['status'] === "success"){
+                this.User = res.data['User'];
+                console.log(res.data['status']['status'])
+              }else {
+                console.log(res.data['status']['message']);
+              }
             })
         }
     }

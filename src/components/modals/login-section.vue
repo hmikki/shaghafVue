@@ -26,7 +26,7 @@
 
                                     <div class="row w-100 phone-n">
                                         <input class="form-control mr-sm-2 search-t col-lg" id="mobile" type="number" placeholder="ادخال رقم الجوال" aria-label="Search" v-model="mobile" required>
-                                        <span class="flag-img">(+966) <img src="assets/img/saudi-arabia.svg" alt=""></span>
+                                        <span class="flag-img">(+966) <img src="src/assets/img/saudi-arabia.svg" alt=""></span>
                                     </div> </div>
                                 <div class="form-group">
                                     <label for="password"> <i class="fas fa-lock"></i> كلمة المرور</label>
@@ -48,7 +48,14 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+import register_section from "@/components/modals/register_section";
+
 export default {
+  name: 'login',
+  components:{
+    register_section
+  },
     mounted() {
         console.log('Component mounted.')
         },
@@ -64,28 +71,31 @@ export default {
         this.login();
     },
     methods:{
-        login(){
+
+        login( ){
             axios.post('http://3.124.189.172/api/auth/login', {
-               arguments:{
-                   headers:{
-                       'X-localization': 'ar',
-                   },
-                   params:{
-                       'mobile': this.mobile,
-                       'password': this.password,
-                   }
-               }
+              'X-localization' : 'ar',
+              'mobile': this.mobile,
+              'password': this.password,
+
             }).then(res =>{
-                if(res.data['status']['status']== "success"){
+                if(res.data['status']['status'] === "success"){
                     this.User = res.data['User'];
+                    const token = res.data['User']['access_token'];
+                    console.log(token);
+                  localStorage.setItem('access_token', token);
+                    this.$router.push('/my_account');
                     console.log(res.data['status']['status']);
+                    console.log(res.data['User']['access_token']);
+
                 }else {
+                  localStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
                     console.log('error');
                 }
 
             })
-                .catch(e => {
-                    this.errors.push(e);
+                .catch(e=>{
+                  console.log(e);
                 });
 
         }

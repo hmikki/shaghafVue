@@ -1,14 +1,14 @@
 <template>
     <section class="our-serve" id="our-serve">
         <div class="test login100-pic js-tilt" data-tilt>
-            <img src="assets/img/test.svg" alt="">
+            <img src="src/assets/img/test.svg" alt="">
         </div>
         <div class="container">
             <h5 class="text-right"><span class="text-con"> خدماتنا </span><span class="text-c"></span></h5>
             <div class="row">
-                <div class="col-lg-3 login100-pic js-tilt" data-tilt v-for="(Category,index) in Categories">
+                <div class="col-lg-3 login100-pic js-tilt" data-tilt v-bind:v-for="Category in Categories">
                     <div class="service" onclick="location.href='#';">
-                        <img :src="Category.image" alt="" style="width: 80%">
+                        <img v-bind:src="Category.image" alt="" style="width: 80%">
                         <p>{{Category.name}}</p>
                     </div>
                 </div>
@@ -18,10 +18,12 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: 'Categories',
     mounted() {
-        console.log('Component mounted')
+        console.log('Services mounted')
     },
     data() {
         return {

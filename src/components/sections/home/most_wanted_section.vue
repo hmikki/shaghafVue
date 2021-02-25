@@ -10,7 +10,7 @@
 
                         <div class="col-lg most-l">
                             <a href="javascript:;" class="active">الكل</a>
-                            <a href="javascript:;" v-for="(category,index) in Categories">{{ category.name }}</a>
+                            <a href="javascript:;" :v-for="(category,index) in Categories">{{ category.name }}</a>
                         </div>
                     </div>
                 </div>
@@ -26,9 +26,11 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     mounted() {
-        console.log('most wanted.')
+        console.log('Most_Wanted mounted.')
     },
     data(){
         return{

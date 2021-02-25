@@ -28,6 +28,8 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
     mounted() {
         console.log('Component mounted.')
@@ -52,7 +54,8 @@ export default {
                     mobile: this.mobile
                 }
             })
-            .then(res=>{
+                .then( res=>{
+                this.User = res.data['status']['status'];
                 console.log('code sent, check your mobile messages');
             })
         }

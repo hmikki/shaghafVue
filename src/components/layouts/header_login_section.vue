@@ -14,10 +14,10 @@
                     <div class="col-lg-3 page-logo" onclick="location.href='index.php';">
                         <div class="row login100-pic js-tilt" data-tilt>
                             <div class="col-lg-5">
-                                <a href="index.php"><img src="assets/img/logo.svg" alt=""></a>
+                                <a href="/"><img src="../../assets/img/logo.svg" alt=""></a>
                             </div>
                             <div class="col-lg-7 padding">
-                                <a class="navbar-brand" href="index.php">منصة شغف</a>
+                                <a class="navbar-brand" href="/">منصة شغف</a>
                             </div>
                         </div>
                     </div>
@@ -39,13 +39,13 @@
                                             <i class="fas fa-chevron-down"></i><span>{{User.name}}</span>
                                         </a>
                                         <div class="dropdown-menu" id="MyAccountDropdown" aria-labelledby="MyAccount">
-                                            <a class="dropdown-item" href="#">حسابي</a>
+                                            <a class="dropdown-item" href="/#/my_account">حسابي</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">خدماتي</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="#">عملياتي المالية</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="/" @click="logout()">تسجيل خروج</a>
+                                            <a class="dropdown-item" href="" v-on:click.prevent="logout()">تسجيل خروج</a>
                                         </div>
                                     </div>
                                 </div>
@@ -59,6 +59,8 @@
     </header>
 </template>
 <script>
+import axios from "axios";
+
 export default {
     mounted() {
         console.log('Component mounted.')
@@ -70,27 +72,43 @@ export default {
     },
     created() {
         this.userDetails();
-        this.logout();
     },
     methods:{
+
         userDetails(){
+          const token = localStorage.getItem('access_token');
+          console.log('Bearer '+ token);
             axios.get('http://3.124.189.172/api/auth/me',{
-                headers:{
-                    'Authorization' : 'Bearer $[access_token]'
+              headers:{
+                'Authorization': 'Bearer '+token
+              }
             })
             .then(res=>{
+              if(res.data['status']['status'] === "success"){
                 this.User = res.data['User'];
-                console.log(res.data['User']);
+                console.log(token);
+                console.log(res.data['User'])
+              }else {
+               console.log(res.data['status']['status'])
+              }
             })
         },
         logout(){
-            axios.post('http://3.124.189.172/api/auth/logout',{
-                arguments:{
-                    headers:{
-                        'Authorization' : 'token $[access_token]'
-                    }
-                }
+            const token =localStorage.getItem('access_token');
+            axios.post('http://3.124.189.172/api/auth/logout', {}, {
+              headers:{
+                'Authorization': 'Bearer ' + token
+              }
             })
+            .then(res=>{
+              if(res.data['status']['status'] === "success"){
+                localStorage.removeItem('access_token');
+                this.$router.push('/shaghaf');
+                console.log(res.data['status']['status']);
+              }else {
+                console.log(res.data['status']['message']);
+              }
+          })
         }
     }
 }

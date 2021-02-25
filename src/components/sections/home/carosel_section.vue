@@ -3,8 +3,8 @@
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="container">
                 <div class="carousel-inner">
-                    <div class="carousel-item"  v-for="(Adv,index) in Advs" :class="{'active': index === 0}" >
-                        <img class="d-block w-100" :src="Adv.image" alt="First slide">
+                    <div class="carousel-item"  v-bind:v-for="(Adv, index) in Advs" :class="{'active': index === 0}" >
+                        <img class="d-block w-100" src="" alt="First slide">
                     </div>
                 </div>
             </div>
@@ -17,15 +17,18 @@
                 <span class="sr-only">Next</span>
             </a>
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleControls" v-for="(Adv,index) in Advs" :class="{'active': index === 0}" :data-slide-to="index"></li>
+                <li data-target="#carouselExampleControls" v-bind:v-for="(Adv, index) in Advs" :class="{'active': index === 0}" :data-slide-to="index"></li>
             </ol>
         </div>
     </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
+  name: 'carosel_section',
     mounted() {
-        console.log('carousel mounted.');
+        console.log('Carousel mounted.');
     },
     data() {
         return {
@@ -33,16 +36,13 @@ export default {
             }
         },
     created() {
-        this.fetchAdvertisment();
+      axios.get('http://3.124.189.172/api/home/advertisements')
+          .then(res => {
+            this.Advs = res.data['Advertisements'];
+            console.log(res.data['Advertisements'])
+          });
     },
     methods : {
-        fetchAdvertisment(){
-            axios.get('http://3.124.189.172/api/home/advertisements')
-            .then(res => {
-                this.Advs = res.data['Advertisements'];
-                console.log(res.data['Advertisements'])
-            });
-        },
     },
 };
 
