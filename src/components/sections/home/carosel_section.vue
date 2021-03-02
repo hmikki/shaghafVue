@@ -1,10 +1,10 @@
 <template>
-    <div class="first-s">
+    <div class="first-s" id="home">
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="container">
                 <div class="carousel-inner">
-                    <div class="carousel-item"  v-bind:v-for="(Adv, index) in Advs" :class="{'active': index === 0}" >
-                        <img class="d-block w-100" src="" alt="First slide">
+                    <div class="carousel-item" v-for="(Advertisment, index) in Advertisments" :key="index" :class="{'active' : index === 0}">
+                        <img class="d-block w-100" :src="Advertisment.image" alt="First slide">
                     </div>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                 <span class="sr-only">Next</span>
             </a>
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleControls" v-bind:v-for="(Adv, index) in Advs" :class="{'active': index === 0}" :data-slide-to="index"></li>
+                <li data-target="#carouselExampleControls" v-for="(Advertisment , index) in Advertisments" :key="index" :class="{'active' : index === 0}" :data-slide-to="index"></li>
             </ol>
         </div>
     </div>
@@ -32,17 +32,28 @@ export default {
     },
     data() {
         return {
-                Advs :[],
+                Advertisments :[],
             }
         },
     created() {
-      axios.get('http://3.124.189.172/api/home/advertisements')
-          .then(res => {
-            this.Advs = res.data['Advertisements'];
-            console.log(res.data['Advertisements'])
-          });
+    this.fetchAdvertisments();
     },
     methods : {
+    fetchAdvertisments(){
+      axios.get('http://18.194.157.202/api/home/advertisements',{
+        headers:{
+          'X-localization':'ar',
+        }
+      })
+      .then(res=>{
+        if (res.data['status']['status'] === "success"){
+          this.Advertisments = res.data['Advertisements'];
+          console.log(res.data['Advertisements']);
+        }else {
+          console.log(res.data['status']['message']);
+        }
+      });
+    }
     },
 };
 

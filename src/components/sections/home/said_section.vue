@@ -14,7 +14,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-1.svg" alt="">
+                                                        <img src="../../../assets/img/said-1.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -30,7 +30,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-2.svg" alt="">
+                                                        <img src="../../../assets/img/said-2.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -46,7 +46,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-3.svg" alt="">
+                                                        <img src="../../../assets/img/said-3.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -67,7 +67,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-1.svg" alt="">
+                                                        <img src="../../../assets/img/said-1.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -83,7 +83,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-2.svg" alt="">
+                                                        <img src="../../../assets/img/said-2.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -99,59 +99,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-3.svg" alt="">
-                                                    </div>
-                                                    <h4>Salah Khattab</h4>
-                                                    <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
-                                                    <div class="star">
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                            <div class="col-lg-4 text-center">
-                                                <div class="b-sh">
-                                                    <div class="said-img">
-                                                        <img src="assets/img/said-1.svg" alt="">
-                                                    </div>
-                                                    <h4>Salah Khattab</h4>
-                                                    <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
-                                                    <div class="star">
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 text-center">
-                                                <div class="b-sh">
-                                                    <div class="said-img">
-                                                        <img src="assets/img/said-2.svg" alt="">
-                                                    </div>
-                                                    <h4>Salah Khattab</h4>
-                                                    <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
-                                                    <div class="star">
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star checked"></span>
-                                                        <span class="fa fa-star"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4 text-center">
-                                                <div class="b-sh">
-                                                    <div class="said-img">
-                                                        <img src="assets/img/said-3.svg" alt="">
+                                                        <img src="../../../assets/img/said-3.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -171,7 +119,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-1.svg" alt="">
+                                                        <img src="../../../assets/img/said-1.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -187,7 +135,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-2.svg" alt="">
+                                                        <img src="../../../assets/img/said-2.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -203,7 +151,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-3.svg" alt="">
+                                                        <img src="../../../assets/img/said-3.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -223,7 +171,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-1.svg" alt="">
+                                                        <img src="../../../assets/img/said-1.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -239,7 +187,7 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-2.svg" alt="">
+                                                        <img src="../../../assets/img/said-2.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -255,7 +203,59 @@
                                             <div class="col-lg-4 text-center">
                                                 <div class="b-sh">
                                                     <div class="said-img">
-                                                        <img src="assets/img/said-3.svg" alt="">
+                                                        <img src="../../../assets/img/said-3.svg" alt="">
+                                                    </div>
+                                                    <h4>Salah Khattab</h4>
+                                                    <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
+                                                    <div class="star">
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                            <div class="col-lg-4 text-center">
+                                                <div class="b-sh">
+                                                    <div class="said-img">
+                                                        <img src="../../../assets/img/said-1.svg" alt="">
+                                                    </div>
+                                                    <h4>Salah Khattab</h4>
+                                                    <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
+                                                    <div class="star">
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 text-center">
+                                                <div class="b-sh">
+                                                    <div class="said-img">
+                                                        <img src="../../../assets/img/said-2.svg" alt="">
+                                                    </div>
+                                                    <h4>Salah Khattab</h4>
+                                                    <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
+                                                    <div class="star">
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star checked"></span>
+                                                        <span class="fa fa-star"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 text-center">
+                                                <div class="b-sh">
+                                                    <div class="said-img">
+                                                        <img src="../../../assets/img/said-3.svg" alt="">
                                                     </div>
                                                     <h4>Salah Khattab</h4>
                                                     <p>من أجمل المواقع لشراء البطاقات من أجمل المواقع لطلب المشاريع بكل</p>
@@ -287,7 +287,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 login100-pic js-tilt" data-tilt><img class="w-100" src="assets/img/said-about.svg" alt=""></div>
+                <div class="col-lg-3 login100-pic js-tilt" data-tilt><img class="w-100" src="../../../assets/img/said-about.svg" alt=""></div>
             </div>
         </div>
     </section>
@@ -310,7 +310,7 @@ export default {
     },
     methods:{
         fetchReviews(){
-            axios.post('http://3.124.189.172/api/orders/review')
+            axios.post('http://18.194.157.202/api/orders/review')
         },
     }
 }

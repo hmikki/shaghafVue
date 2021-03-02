@@ -78,7 +78,7 @@ export default {
     },
     methods:{
         register(){
-            axios.post('http://3.124.189.172/api/auth/register',{
+            axios.post('http://18.194.157.202/api/auth/register',{
               'X-localization' : 'ar',
               'name': this.name,
               'mobile': this.mobile,
@@ -91,11 +91,11 @@ export default {
                       if(res.data['status']['status'] === 'success'){
                         this.User = res.data['User'];
                         const access_token = res.data['User']['access_token'];
-                        localStorage.setItem('access_token', access_token);
+                        sessionStorage.setItem('access_token', access_token);
                         console.log(res.data['User']['access_token']);
                         console.log(res.data['status']['status']);
                         }else {
-                        localStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
+                        sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
                           console.log(res.data['status']['message']);
                         }
             }) .catch(e => {

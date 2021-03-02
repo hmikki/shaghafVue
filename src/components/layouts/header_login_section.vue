@@ -1,32 +1,4 @@
 <template>
-    <header>
-        <div class="header-1">
-            <div class="container">
-                <a href=""><i class="fas fa-wifi"></i></a>
-                <a href=""><i class="fab fa-youtube"></i></a>
-                <a href=""><i class="fab fa-twitter"></i></a>
-                <a href=""><i class="fab fa-facebook-f"></i></a>
-            </div>
-        </div>
-        <nav class="navbar navbar-light bg-light">
-            <div class="container">
-                <div class="row w-100">
-                    <div class="col-lg-3 page-logo" onclick="location.href='index.php';">
-                        <div class="row login100-pic js-tilt" data-tilt>
-                            <div class="col-lg-5">
-                                <a href="/"><img src="../../assets/img/logo.svg" alt=""></a>
-                            </div>
-                            <div class="col-lg-7 padding">
-                                <a class="navbar-brand" href="/">منصة شغف</a>
-                            </div>
-                        </div>
-                    </div>
-                    <form class="form-inline col-lg-5">
-                        <div class="row w-100">
-                            <input class="form-control mr-sm-2 search-t col-lg" type="search" placeholder="بحث عن خدمة" aria-label="Search">
-                            <button class="btn btn-outline my-2 my-sm-0 search-b col-lg-2" type="submit"><i class="fas fa-search"></i></button>
-                        </div>
-                    </form>
                     <div class="col-lg-4 pl-0 logo-h">
                         <div class="row">
                             <div class="col-2 my-cart">
@@ -39,11 +11,13 @@
                                             <i class="fas fa-chevron-down"></i><span>{{User.name}}</span>
                                         </a>
                                         <div class="dropdown-menu" id="MyAccountDropdown" aria-labelledby="MyAccount">
-                                            <a class="dropdown-item" href="/#/my_account">حسابي</a>
+                                            <router-link to="/serve_user"><a class="dropdown-item" href="">حسابي</a></router-link>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">خدماتي</a>
+                                            <router-link to="/add_service"><a class="dropdown-item">خدماتي</a></router-link>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">عملياتي المالية</a>
+                                            <a class="dropdown-item">عملياتي المالية</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" v-on:click.prevent="changeRoute()" href="">اعدادات الحساب</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="" v-on:click.prevent="logout()">تسجيل خروج</a>
                                         </div>
@@ -52,19 +26,18 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-            </div>
-        </nav>
-    </header>
 </template>
 <script>
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
     mounted() {
         console.log('Component mounted.')
     },
+  components:{
+  },
     data(){
         return {
             User:[]
@@ -76,9 +49,9 @@ export default {
     methods:{
 
         userDetails(){
-          const token = localStorage.getItem('access_token');
+          const token = sessionStorage.getItem('access_token_1');
           console.log('Bearer '+ token);
-            axios.get('http://3.124.189.172/api/auth/me',{
+            axios.get('http://18.194.157.202/api/auth/me',{
               headers:{
                 'Authorization': 'Bearer '+token
               }
@@ -94,22 +67,46 @@ export default {
             })
         },
         logout(){
-            const token =localStorage.getItem('access_token');
-            axios.post('http://3.124.189.172/api/auth/logout', {}, {
+            const token =sessionStorage.getItem('access_token_1');
+            axios.post('http://18.194.157.202/api/auth/logout', {}, {
               headers:{
                 'Authorization': 'Bearer ' + token
               }
             })
             .then(res=>{
               if(res.data['status']['status'] === "success"){
-                localStorage.removeItem('access_token');
-                this.$router.push('/shaghaf');
+                sessionStorage.removeItem('access_token_1');
+                this.$router.push('/');
+                $('#MyAccountDropdown').hide();
                 console.log(res.data['status']['status']);
               }else {
                 console.log(res.data['status']['message']);
               }
           })
-        }
+        },
+
+      changeRoute(){
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/auth/me',{
+          headers:{
+            'Authorization': 'Bearer '+token
+          }
+        })
+        .then(res=>{
+          if (res.data['status']['status'] === "success"){
+            if (res.data['User']['type'] === '1'){
+              this.$router.push('/my_account');
+            }else if (res.data['User']['type'] === '2'){
+              this.$router.push('/my_account_2');
+            }
+            else {
+              this.$router.push('/');
+            }
+          }else {
+            console.log(res.data['status']['status']);
+          }
+        })
+      }
     }
 }
 </script>

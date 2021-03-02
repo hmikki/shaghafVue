@@ -23,7 +23,7 @@
                         <input type="password" class="form-control" id="inputPassword-3" placeholder="تأكيد كلمة المرور الجديدة" v-model="password_confirmation">
                     </div>
                     <div class="tab-button">
-                        <button type="submit" class="btn" data-toggle="modal" data-target="#exampleModalCenter-7" aria-label="Close" data-dismiss="modal" v-on:click="changePassword">تغيير</button>
+                        <button type="submit" class="btn" data-toggle="modal"  aria-label="Close" data-dismiss="modal" v-on:click="changePassword2()">تغيير</button>
                     </div>
                     <div class="tab-a"></div>
                 </div>
@@ -34,10 +34,15 @@
 
 </template>
 <script>
+import axios from "axios";
+import thanks_message from "@/components/modals/thanks_message";
 export default {
     mounted() {
         console.log('Component mounted.')
     },
+  components:{
+    thanks_message,
+  },
     data(){
         return{
             User:[],
@@ -47,15 +52,28 @@ export default {
         }
     },
     created() {
-        this.changePassword();
     },
     methods:{
-        changePassword(){
-            axios.post('http://3.124.189.172/api/auth/change_password',{
+        changePassword2(){
+          const token = sessionStorage.getItem('access_token_1');
+            axios.post('http://18.194.157.202/api/auth/change_password',
+                {
                 password:this.password,
                 password_confirmation:this.password_confirmation,
                 old_password:this.old_password,
-            });
+                },
+                {
+                  headers:{
+                    'Authorization' : 'Bearer '+token,
+                  }
+                })
+            .then(res=>{
+              if(res.data['status']['status'] === "success"){
+                this.User = res.data['User'];
+                console.log(res.data['status']['status']);
+              }
+              console.log(res.data['status']['message']);
+            })
         }
     }
 }

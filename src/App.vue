@@ -1,5 +1,7 @@
 <template>
+  <header_section></header_section>
   <router-view/>
+  <footer_section></footer_section>
 </template>
 
 <style>
@@ -25,39 +27,27 @@
 }
 </style>
 <style scoped>
-@import "assets/css/all.min.css";
-@import "assets/css/ltr.css";
-@import "assets/css/normlaize.css";
-@import "assets/css/owl.theme.default.css";
-@import "assets/css/responsive.css";
-@import "assets/css/style.css";
-@import "assets/css/bootstrap-grid.min.css";
-@import "assets/css/bootstrap.min.css";
-@import "assets/css/owl.theme.default.css";
-@import "assets/css/v4-shims.min.css";
-</style>
-<script>
-export default {
-  mounted() {
-    console.log('App mounted.');
-  },
-  data(){
-    return{
-      User:[],
-    }
-  },
-  created() {
-    this.refresh();
-  },
-  methods:{
-    refresh(){
-      const token = localStorage.getItem('access_token');
-      if(!token){
-        console.log('you are guest');
-      }
 
-    }
-  }
+@import "assets/css/bootstrap.min.css";
+@import "assets/css/all.min.css";
+@import "assets/css/normlaize.css";
+@import "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.3/build/css/intlTelInput.css";
+@import "https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css";
+@import "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.3/build/css/intlTelInput.css";
+@import "assets/css/owl.theme.default.css";
+@import "assets/css/style.css";
+@import "assets/css/responsive.css";
+</style>
+
+<script>
+import header_section from "@/components/layouts/header_section";
+import footer_section from "@/components/layouts/footer_section";
+
+//const token = ''//sessionStorage.getItem('access_token');
+export default {
+  components: {
+    header_section,
+    footer_section
+  },
 }
 </script>
-

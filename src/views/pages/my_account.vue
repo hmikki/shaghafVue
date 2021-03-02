@@ -1,5 +1,4 @@
 <template>
-    <header_login_section></header_login_section>
     <change_password></change_password>
     <change_setting></change_setting>
     <!-- start wrapper -->
@@ -30,7 +29,7 @@
 
                                     <div class="row w-100 phone-n">
                                         <input class="form-control mr-sm-2 search-t col-lg" type="number" :placeholder="User.mobile" disabled aria-label="Search">
-                                        <span class="flag-img">{{User.country_id}} <img :src="User.country_id" alt=""></span>
+                                        <span class="flag-img">(+966) <img src="../../assets/img/saudi-arabia.svg" alt=""></span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -61,7 +60,6 @@
     </div>
 </template>
 <script>
-import header_login_section from "@/components/layouts/header_login_section";
 import change_password from "@/components/modals/change_password";
 import change_setting from "@/components/modals/change_setting";
 import axios from "axios";
@@ -72,7 +70,6 @@ export default {
         console.log('My_account mounted.')
     },
   components:{
-    header_login_section,
     change_password,
     change_setting,
   },
@@ -86,22 +83,25 @@ export default {
   },
   methods:{
     userDetails(){
-      const token = sessionStorage.getItem('access_token');
-      console.log('Bearer '+ token);
-      axios.get('http://3.124.189.172/api/auth/me',{
-        headers:{
-          'Authorization': 'Bearer '+token
-        }
-      })
-          .then(res=>{
-            if(res.data['status']['status'] === "success"){
-              this.User = res.data['User'];
-              console.log(token);
-              console.log(res.data['User'])
-            }else {
-              console.log(res.data['status']['status'])
-            }
-          })
+      const token = sessionStorage.getItem('access_token_1');
+      if(!token){
+        console.log('You need to login first');
+      }else{
+        axios.get('http://18.194.157.202/api/auth/me',{
+          headers:{
+            'Authorization': 'Bearer '+token
+          }
+        })
+            .then(res=>{
+              if(res.data['status']['status'] === "success"){
+                this.User = res.data['User'];
+                console.log(token);
+                console.log(res.data['status']['status']);
+              }else {
+                console.log(res.data['status']['status']);
+              }
+            })
+      }
     },
   }
 }

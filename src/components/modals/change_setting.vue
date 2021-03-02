@@ -25,7 +25,7 @@
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="ادخال البريد الالكتروني" v-model="email">
                     </div>
                     <div class="tab-button">
-                        <button type="submit" class="btn">حفظ التعديل</button>
+                        <button type="submit" class="btn" v-on:click.prevent="changeSetting()">حفظ التعديل</button>
                     </div>
                     <div class="tab-a"></div>
                 </div>
@@ -36,6 +36,8 @@
 </template>
 <script>
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
     mounted() {
@@ -51,30 +53,31 @@ export default {
       }
   },
   created() {
-      this.changeSetting();
   },
   methods:{
       changeSetting(){
-        const token = localStorage.getItem('access_token');
-        axios.post('http://3.124.189.172/api/auth/update',
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/auth/update',
             {
               arguments:{
-                'name': this.name,
-                'mobile': this.mobile,
-                'email': this.email,
+                name: this.name,
+                mobile: this.mobile,
+                email: this.email,
               }
             },
             {
                 headers:{
-                  'Authorization': 'Bearer ' + token,
-                  'X-Localization': 'ar',
+                  'Authorization': 'Bearer ' + token
                 }
         })
         .then(res=>{
           if (res.data['status']['status']){
-            console.log(res.data['status']['status']);
+            this.User = res.data['User'];
+            $('#exampleModalCenter-4').modal('hide');
+            console.log(res.data['User']);
+          }else {
+            console.log(res.data['status']['message']);
           }
-          console.log(res.data['status']['message']);
           })
         .catch(e=>{
           console.log(e);

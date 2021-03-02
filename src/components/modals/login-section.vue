@@ -8,6 +8,7 @@
                 </button>
                 <div class="modal-body">
                     <!-- start navs section -->
+
                     <div class="modal-tab">
                         <ul class="nav nav-pills mb-3 list-con col-lg row" id="pills-tab" role="tablist">
                             <li class="nav-item col-6">
@@ -20,7 +21,7 @@
                     </div>
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <form v-on:submit.prevent="login()" action="" accept-charset="UTF-8">
+                            <form action="" accept-charset="UTF-8">
                                 <div class="form-group">
                                     <label for="mobile"> <i class="fas fa-phone-alt"></i> رقم الجوال</label>
 
@@ -34,7 +35,7 @@
                                 </div>
                                 <a href="" data-toggle="modal" data-target="#exampleModalCenter-1"  aria-label="Close" data-dismiss="modal">هل نسيت كلمة المرور؟</a>
                                 <div class="tab-button">
-                                    <button type="submit" class="btn">تسجيل الدخول</button>
+                                    <button type="submit" class="btn" v-on:click.prevent="login">تسجيل الدخول</button>
                                 </div>
                             </form>
 
@@ -50,6 +51,9 @@
 <script>
 import axios from "axios";
 import register_section from "@/components/modals/register_section";
+import Jquery from 'jquery';
+let $ = Jquery;
+
 
 export default {
   name: 'login',
@@ -73,7 +77,7 @@ export default {
     methods:{
 
         login( ){
-            axios.post('http://3.124.189.172/api/auth/login', {
+            axios.post('http://18.194.157.202/api/auth/login', {
               'X-localization' : 'ar',
               'mobile': this.mobile,
               'password': this.password,
@@ -83,14 +87,23 @@ export default {
                     this.User = res.data['User'];
                     const token = res.data['User']['access_token'];
                     console.log(token);
-                  localStorage.setItem('access_token', token);
+                    //sessionStorage.setItem('access_token', token);
+                    sessionStorage.setItem('access_token_1', token);
+                    $('#exampleModalCenter').modal('hide');
+                  /*if (res.data['User']['type'] === '1'){
                     this.$router.push('/my_account');
+                  }else if (res.data['User']['type'] === '2'){
+                    this.$router.push('/my_account_2');
+                  }else {
+                    this.$router.push('/');
+                  }*/
+
                     console.log(res.data['status']['status']);
                     console.log(res.data['User']['access_token']);
 
                 }else {
-                  localStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
-                    console.log('error');
+                  //sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
+                  console.log('error');
                 }
 
             })

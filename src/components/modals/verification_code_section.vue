@@ -9,8 +9,9 @@
                     <p>تأكيد رقم الهاتف</p>
                 </div>
                 <div class="modal-body secound-m">
-                    <div class="model-img login100-pic js-tilt" data-tilt><img src="assets/img/verification-code.svg" alt=""></div>
+                    <div class="model-img login100-pic js-tilt" data-tilt><img src="../../assets/img/verification-code.svg" alt=""></div>
                     <span class="vc-m">يرجى إدخال الرمز المرسل الى رقم الجوال {{ User.mobile }}</span>
+                    <input type="text" class="hidden" :v-model="type = User.type">
                     <div class="v-code-main">
                         <div class="vcode" id="vcode">
                             <input type="phone" class="vcode-input" maxlength="1" id="vcode1" v-model="code">
@@ -29,6 +30,9 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+
+const token = sessionStorage.getItem('access_token');
 export default {
     mounted() {
         console.log('Verification mounted.')
@@ -42,37 +46,53 @@ export default {
         }
     },
     created() {
-        //this.verification();
-        //this.resendVerification();
+        this.verification();
     },
     methods:{
-        /*verification(){
-            axios.post('http://3.124.189.172/api/auth/verify',{
-                headers:{
-                    'Authorization' : 'token $[access_token]'
+        verification(){
+            axios.post('http://18.194.157.202/api/auth/verify',
+                {
+                  code: this.code,
+                  type: this.type,
                 },
-                params:{
-                    code: this.code,
-                    type: this.type,
-                }
-            })
-                .then(res=>{
-                    this.User = res.data['User']
-            })
-        },*/
-        /*resendVerification(){
-            axios.get('http://3.124.189.172/api/auth/resend_verify',{
-                headers:{
-                    'Authorization' : 'token $[access_token]'
-                },
-                params:{
-                    type: this.User.type
-                }
-            })
-                .then(res=>{
-                    console.log('code sent, check your mobile messages');
+                {
+                  headers:{
+                    'Authorization' : 'Bearer ' +token,
+                    'X-localization': 'ar'
+                  }
                 })
-        }*/
+                .then(res=>{
+                  if (res.data['status']['status'] === "success"){
+                    this.User = res.data['User'];
+                    console.log(res.data['User']);
+                  }else {
+                    console.log(res.data['status']['message']);
+                  }
+
+            })
+          .catch(e=>{
+            console.log(e);
+          })
+        },
+        resendVerification(){
+            axios.get('http://18.194.157.202/api/auth/resend_verify',{
+                headers:{
+                    'Authorization' : 'Bearer ' +token,
+                    'X-localization': 'ar'
+                },
+                params:{
+                    type: this.type
+                }
+            })
+                .then(res=>{
+                    if (res.data['status']['status'] === "success"){
+                      this.User = res.data['User'];
+                      console.log(res.data['status']['status']);
+                    }else {
+                      console.log(res.data['status']['status']);
+                    }
+                })
+        }
     }
 }
 </script>

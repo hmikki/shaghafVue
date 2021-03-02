@@ -26,10 +26,15 @@
 
 </template>
 <script>
-export default {
-    mounted() {
+import order_section from "@/components/sections/orders/order_section";
 
+export default {
+    name:'orders',
+    mounted() {
         console.log('Component mounted.')
-    }
+    },
+    components:{
+        order_section,
+    },
 }
 </script>

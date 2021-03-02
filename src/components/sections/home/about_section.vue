@@ -9,7 +9,7 @@
             </div>
             <div class="col-lg-1"></div>
             <div class="col-lg-3">
-                <img class="login100-pic js-tilt" data-tilt src="assets/img/about-us.svg" alt="">
+                <img class="login100-pic js-tilt" data-tilt src="../../../assets/img/about-us.svg" alt="">
             </div>
             <div class="col-lg-1"></div>
         </div>

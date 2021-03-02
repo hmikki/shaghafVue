@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-7">
                     <h5 class="text-right"><span class="text-con">تواصل معنا</span><span class="text-c"></span></h5>
-                    <img class="fw-img login100-pic js-tilt" data-tilt src="assets/img/contact-us.svg" alt="">
+                    <img class="fw-img login100-pic js-tilt" data-tilt src="../../../assets/img/contact-us.svg" alt="">
                 </div>
                 <div class="col-lg-4 contact-us-f-t">
                     <div class="contact-us-f">
@@ -25,13 +25,13 @@
                                     <div class="form-group">
                                         <textarea class="form-control" placeholder="نص الرسالة" id="exampleFormControlTextarea1" rows="4"></textarea>
                                     </div>
-                                    <button type="submit" class="btn"><img src="assets/img/mail-send.svg" alt=""> ارسال</button>
+                                    <button type="submit" class="btn"><img src="../../../assets/img/mail-send.svg" alt=""> ارسال</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-1 login100-pic js-tilt" data-tilt><img src="assets/img/test-1.svg" alt=""></div>
+                <div class="col-lg-1 login100-pic js-tilt" data-tilt><img src="../../../assets/img/test-1.svg" alt=""></div>
             </div>
         </div>
     </section>

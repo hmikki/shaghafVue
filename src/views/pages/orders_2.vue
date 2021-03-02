@@ -27,9 +27,14 @@
 
 </template>
 <script>
+import orders_2_section from "@/components/sections/orders_2/orders_2_section";
+
 export default {
     mounted() {
         console.log('Component mounted.')
+    },
+    components:{
+      orders_2_section,
     }
 }
 </script>

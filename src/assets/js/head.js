@@ -1,3 +1,4 @@
+/*
 function ImageViewTrigger(input,name) {
     if (input.files && input.files[0]) {
         console.log('1');
@@ -7,4 +8,4 @@ function ImageViewTrigger(input,name) {
         };
         reader.readAsDataURL(input.files[0]);
     }
-}
+}*/

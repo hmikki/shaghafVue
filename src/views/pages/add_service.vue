@@ -1,4 +1,5 @@
 <template>
+<add_order></add_order>
     <!-- start wrapper -->
     <div class="wrapper">
         <div class="container">
@@ -21,9 +22,18 @@
 
 </template>
 <script>
+import services from "@/components/sections/add_service/services";
+import add_order from "@/components/modals/add_order";
+
 export default {
+    name:'add_service',
     mounted() {
-        console.log('Component mounted.')
+        console.log('Add Service mounted.')
     }
+  ,
+  components:{
+      services,
+      add_order,
+  }
 }
 </script>

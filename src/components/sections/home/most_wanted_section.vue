@@ -10,14 +10,41 @@
 
                         <div class="col-lg most-l">
                             <a href="javascript:;" class="active">الكل</a>
-                            <a href="javascript:;" :v-for="(category,index) in Categories">{{ category.name }}</a>
+                            <a href="javascript:;" v-for="(category,index) in Categories" :key="index" v-on:click.prevent="category_id = category.id; fetchFreelancer()">{{ category.name }}</a>
                         </div>
                     </div>
                 </div>
                 <!-- Set up your HTML -->
                 <div class="container">
-                    <freelancer_section></freelancer_section>
-
+                  <div class="owl-carousel owl-theme">
+                    <div v-for="(freelancer, index) in Freelancers" :key="index" class="col-4" style="display: inline-block">
+                      <div class="card" onclick="location.href='#';">
+                        <div class="img-o-h">
+                          <div class="order-card-img">
+                            <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="border-radius: 50%">
+                          </div>
+                        </div>
+                        <div class="card-body">
+                          <h4>{{ freelancer.name }}</h4>
+                          <p class="card-text">{{freelancer['Categories']['name']}}</p>
+                        </div>
+                        <div class="card-footer">
+                          <div class="row">
+                            <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i>{{ freelancer.City['name'] }}</span></div>
+                            <div class="col-3 p-0"></div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-4 star">
+                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '1'}"></span>
+                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '2'}"></span>
+                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '3'}"></span>
+                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '4'}"></span>
+                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '5'}"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
             </div>
@@ -27,26 +54,35 @@
 
 <script>
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
     mounted() {
-        console.log('Most_Wanted mounted.')
-    },
+        console.log('Most_Wanted mounted.');
+        $('.most-l a').click(function(){
+          $('.most-l a').removeClass("active");
+          $(this).addClass("active");
+        });
+          },
     data(){
         return{
-            Categories: {
-                category_id:'',
-            },
+            Categories:[],
+            Freelancers:[],
             City:[],
+            category:[],
+            category_id:'',
+
 
         }
     },
     created() {
         this.fetchCategories();
+        this.fetchFreelancer();
     },
     methods:{
         fetchCategories(){
-            axios.get('http://3.124.189.172/api/home/categories',{
+            axios.get('http://18.194.157.202/api/home/categories',{
                 headers:{
                     'X-localization' : 'ar',
                 }
@@ -56,6 +92,25 @@ export default {
                     console.log(res.data['Categories']);
                 });
         },
+      fetchFreelancer(){
+        axios.get('http://18.194.157.202/api/home/get_freelancers', {
+          headers:{
+            'X-localization' : 'ar',
+          },
+          params:{
+            'category_id' : this.category_id,
+          },
+
+        })
+            .then(res => {
+              if (res.data['status']['status'] === "success"){
+                this.Freelancers = res.data['Freelancers'];
+                console.log(res.data['Freelancers']);
+              }else {
+               console.log(res.data['status']['status']);
+              }
+            });
+      },
     }
 
 }

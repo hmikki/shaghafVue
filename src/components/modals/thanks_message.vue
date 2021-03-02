@@ -7,7 +7,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body secound-m">
-                    <div class="model-img login100-pic js-tilt" data-tilt><img src="assets/img/thanks.svg" alt=""></div>
+                    <div class="model-img login100-pic js-tilt" data-tilt><img src="../../assets/img/thanks.svg" alt=""></div>
                     <h4 class="vc-m">شكرا لثقتك في  منصة شغف</h4>
                     <p class="vc-m">يمكنك متابعة الطلب من خلال قائمة  الطلبات</p>
                     <div class="tab-button">
@@ -22,7 +22,7 @@
 <script>
 export default {
     mounted() {
-        console.log('Component mounted.')
+        console.log('Thank you mounted.')
     }
 }
 </script>

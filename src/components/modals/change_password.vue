@@ -33,6 +33,8 @@
 </template>
 <script>
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
     mounted() {
@@ -47,29 +49,26 @@ export default {
         }
     },
     created() {
-        this.changePassword();
     },
     methods:{
         changePassword(){
-            const token = sessionStorage.getItem('access_token');
-            axios.post('http://3.124.189.172/api/auth/change_password',
+            const token = sessionStorage.getItem('access_token_1');
+            axios.post('http://18.194.157.202/api/auth/change_password',
                 {
-                  arguments:{
                     password:this.password,
                     password_confirmation:this.password_confirmation,
                     old_password:this.old_password,
-                  }
                 },
                 {
                   headers:{
-                    'Authorization': 'Bearer ' + token,
-                    'X-localization': 'ar'
+                    'Authorization': 'Bearer ' + token
                   }
                 })
             .then(res=>{
               if (res.data['status']['status'] === "success"){
                 this.User = res.data['User'];
-                console.log(res.data['status']['status'])
+                $('#exampleModalCenter-3').modal('hide');
+                console.log(res.data['status']['status']);
               }else {
                 console.log(res.data['status']['message']);
               }

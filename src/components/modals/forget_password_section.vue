@@ -9,14 +9,14 @@
                     <p>نسيت كلمة المرور</p>
                 </div>
                 <div class="modal-body secound-m">
-                    <div class="model-img login100-pic js-tilt" data-tilt><img src="assets/img/forget-password.svg" alt=""></div>
+                    <div class="model-img login100-pic js-tilt" data-tilt><img src="../../assets/img/forget-password.svg" alt=""></div>
                     <span class="vc-m">سوف نساعدك استعادة كلمة المرور الخاصة بك</span>
                     <div class="form-group">
                         <label for="mobile"> <i class="fas fa-phone-alt"></i> رقم الجوال</label>
 
                         <div class="row w-100 phone-n">
                             <input class="form-control mr-sm-2 search-t col-lg" id="mobile" name="mobile" type="number" placeholder="ادخال رقم الجوال" aria-label="Search" v-model="mobile">
-                            <span class="flag-img">(+966) <img src="assets/img/saudi-arabia.svg" alt=""></span>
+                            <span class="flag-img">(+966) <img src="../../assets/img/saudi-arabia.svg" alt=""></span>
                         </div> </div>
                     <div class="tab-button">
                         <button type="submit" class="btn">تأكيد</button>
@@ -29,7 +29,7 @@
 </template>
 <script>
 import axios from "axios";
-
+const token = sessionStorage.getItem('access_token');
 export default {
     mounted() {
         console.log('Component mounted.')
@@ -46,9 +46,9 @@ export default {
     },
     methods:{
         forgetPassword(){
-            axios.post('http://3.124.189.172/api/auth/forget_password',{
+            axios.post('http://18.194.157.202/api/auth/forget_password',{
                 headers:{
-                    'Authorization' : 'token $[access_token]'
+                    'Authorization' : 'Bearer ' +token
                 },
                 params:{
                     mobile: this.mobile

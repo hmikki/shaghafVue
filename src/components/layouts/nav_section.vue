@@ -1,0 +1,55 @@
+<template>
+  <div class="col-lg-8 m-auto b-link">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav nav-ul">
+        <li class="nav-item active scroll">
+          <a class="nav-link" href="#">الرئيسية <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item li-onepage">
+          <a class="nav-link scroll" href="" data-to="#about-us">من نحن</a>
+        </li>
+        <li class="nav-item li-onepage">
+          <a class="nav-link scroll" href="" data-to="#our-serve">خدماتنا</a>
+        </li>
+        <li class="nav-item li-onepage">
+          <a class="nav-link scroll" href="" data-to="#most-wanted">الاكثر طلبا</a>
+        </li>
+        <li class="nav-item li-onepage">
+          <a class="nav-link scroll" href="" data-to="#said-about-us">قالوا عنا</a>
+        </li>
+        <li class="nav-item li-onepage">
+          <a class="nav-link scroll" href="" data-to="#our-goals">اهدافنا</a>
+        </li>
+        <li class="nav-item li-onepage">
+          <a class="nav-link scroll" href="" data-to="#contact-us">تواصل معنا</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+<script>
+import jquery from 'jquery';
+let $ = jquery;
+
+export default {
+  mounted() {
+    console.log('nav mounted.');
+  },
+  created() {
+    $(document).ready(function(){
+      $('.li-onepage a').click(function(e) {
+        e.preventDefault();
+        // console.log("Offset: ", $(this).data('to'));
+        $('body, html').animate({
+          scrollTop: $( $(this).attr('data-to')).offset().top
+        }, 800)
+      });
+    });
+  },
+
+
+}
+</script>
