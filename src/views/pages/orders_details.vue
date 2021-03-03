@@ -76,35 +76,35 @@
                                     <p>السعر الاجمالي</p>
                                     <span> {{ Order.total }} </span>
                                 </div>
-                                <div class="tab-button" id="accept">
+                                <div class="tab-button" id="accept" v-show="(Order.status === 1) && (Order.User.type === 2)">
                                     <button type="submit" class="btn">قبول الطلب</button>
                                 </div>
-                              <div class="tab-button" id="reject">
+                              <div class="tab-button" id="reject" v-show="(Order.status === 1) && (Order.User.type === 2)">
                                 <button type="submit" class="btn">رفض الطلب</button>
                               </div>
-                              <div class="tab-button" id="cancel">
+                              <div class="tab-button" id="cancel" v-show="(Order.status === 1) && (Order.User.type === 1)">
                                 <button type="submit" class="btn">الغاء الطلب</button>
                               </div>
-                              <div class="tab-button" id="delivered">
-                                <button type="submit" class="btn">تم التسليم</button>
-                              </div>
-                              <div class="tab-button" id="recieved">
-                                <button type="submit" class="btn">تم الاستلام</button>
-                              </div>
-                              <div class="tab-button" id="paid">
+                              <div class="tab-button" id="paid" v-show="(Order.status === 1) && (Order.User.type === 1)">
                                 <button type="submit" class="btn">تم الدفع</button>
                               </div>
-                              <div class="tab-button" id="inProgress">
+                              <div class="tab-button" id="inProgress" v-show="(Order.status === 5) && (Order.User.type === 2)">
                                 <button type="submit" class="btn">قيد التنفيذ</button>
                               </div>
-                              <div class="tab-button" id="notDelivered">
+                              <div class="tab-button" id="delivered" v-show="(Order.status === 6) && (Order.User.type === 2)">
+                                <button type="submit" class="btn">تم التسليم</button>
+                              </div>
+                              <div class="tab-button" id="recieved" v-show="(Order.status === 7) && (Order.User.type === 1)">
+                                <button type="submit" class="btn">تم الاستلام</button>
+                              </div>
+                              <div class="tab-button" id="notDelivered" v-show="(Order.status === 6) && (Order.User.type === 2)">
                                 <button type="submit" class="btn">لم يتم التسليم</button>
                               </div>
-                              <div class="tab-button" id="notRecieved">
+                              <div class="tab-button" id="notRecieved" v-show="(Order.status === 7) && (Order.User.type === 1)">
                                 <button type="submit" class="btn">لم يتم الاستلام</button>
                               </div>
-                              <div class="tab-button" id="chat">
-                                <button type="submit" class="btn">بدء المحادثة</button>
+                              <div class="tab-button" id="chat" v-show="(Order.status === 2)">
+                                <router-link to="/chats"> <button type="submit" class="btn">بدء المحادثة</button> </router-link>
                               </div>
                             </div>
                         </div>

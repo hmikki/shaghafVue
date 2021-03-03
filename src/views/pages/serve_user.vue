@@ -16,7 +16,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="img-o-h">
-                                <a href=""><span class="chat"><img src="../../assets/img/chat.svg" alt=""></span></a>
+                                <router-link to="/chats"> <a href=""><span class="chat"><img src="../../assets/img/chat.svg" alt=""></span></a> </router-link>
                                 <div class="order-card-img">
                                     <img class="card-img-top" :src="User.avatar" alt="Card image cap">
                                 </div>

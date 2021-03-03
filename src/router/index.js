@@ -14,6 +14,8 @@ import orders from "@/views/pages/orders";
 import orders_2 from "@/views/pages/orders_2";
 import orders_details from "@/views/pages/orders_details";
 import orders_details_2 from "@/views/pages/orders_details_2";
+import chats from "@/views/pages/chats";
+import financial_operation from "@/views/pages/financial_operation";
 
 const routes = [
   {
@@ -80,6 +82,16 @@ const routes = [
     path: '/orders_details_2',
     name: 'orders_details_2',
     component:  orders_details_2
+  },
+  {
+    path: '/chats',
+    name: 'chats',
+    component:  chats
+  },
+  {
+    path: '/financial',
+    name: 'financial',
+    component:  financial_operation
   },
   {
     path: '/Home',

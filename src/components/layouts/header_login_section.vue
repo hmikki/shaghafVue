@@ -15,7 +15,7 @@
                                             <div class="dropdown-divider"></div>
                                             <router-link to="/add_service"><a class="dropdown-item">خدماتي</a></router-link>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item">عملياتي المالية</a>
+                                            <router-link to="/financial"> <a class="dropdown-item">عملياتي المالية</a> </router-link>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" v-on:click.prevent="changeRoute()" href="">اعدادات الحساب</a>
                                             <div class="dropdown-divider"></div>
