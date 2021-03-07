@@ -11,9 +11,9 @@
                     </ol>
                 </nav>
                 <div class="col-lg most-l">
-                    <a href="javascript:;" class="active">الكل</a>
-                    <a href="javascript:;" v-for="(Category, index) in Categories" :key="index">
-                      {{ Category.name }}
+                    <a href="javascript:;" v-on:click.prevent="fetchAllFreelancers()" class="active">الكل</a>
+                    <a href="javascript:;" v-for="(category, index) in Categories" :key="index" v-on:click.prevent="category_id = category.id; fetchFreelancers()">
+                      {{ category.name }}
                     </a>
                 </div>
 
@@ -24,7 +24,7 @@
                     <div class="card" onclick="location.href='#';">
                       <div class="img-o-h">
                         <div class="order-card-img">
-                          <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="min-width: 100%; min-height: 100%">
+                          <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="width: 70px; height: 70px">
                         </div>
                       </div>
                       <div class="card-body">
@@ -70,13 +70,13 @@ export default {
         Categories: {
           SubCategories:[],
         },
-        category_id:'1',
+        category_id: '',
         Freelancers:[],
       }
   },
   created() {
       this.fetchServices();
-      this.fetchFreelancers()
+      this.fetchAllFreelancers();
   },
   methods:{
     fetchServices(){
@@ -115,6 +115,24 @@ export default {
               console.log(res.data['Freelancers']);
             }else {
               console.log(res.data['Freelancers']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+    },
+    fetchAllFreelancers(){
+      axios.get('http://18.194.157.202/api/home/get_freelancers', {
+        headers:{
+          'X-localization' : 'ar',
+        },
+      },)
+          .then(res => {
+            if (res.data['status']['status'] === "success"){
+              this.Freelancers = res.data['Freelancers'];
+              console.log(res.data['Freelancers']);
+            }else {
+              console.log(res.data['status']['status']);
             }
           })
           .catch(e=>{

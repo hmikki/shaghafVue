@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput1"> إسم الخدمة</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput1" placeholder="{{Product.name}}" v-model="name">
+                        <input type="text" class="form-control" id="formGroupExampleInput1" :placeholder="Product.name" v-model="name">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect3"> نوع الخدمة</label>
@@ -36,7 +36,7 @@
 
                     <div class="form-group">
                         <label for="formGroupExampleInput3"> السعر</label>
-                        <input type="number" class="form-control" id="formGroupExampleInput3" placeholder="{{Product.price}}" v-model="price">
+                        <input type="number" class="form-control" id="formGroupExampleInput3" :placeholder="Product.price" v-model="price">
                     </div>
                     <div class="form-group">
                         <div class="form-group">

@@ -10,33 +10,33 @@
         </div>
         <div class="modal-body secound-m">
           <div class="form-group">
-            <label for="deliveredDate"><img src="../../assets/img/calendar%20(1).svg" alt=""> تاريخ التسليم</label>
-            <input type="date" class="form-control" id="deliveredDate" placeholder="05873131316">
+            <label for="deliveredDate"><img src="../../assets/img/calendar.svg" alt=""> تاريخ التسليم</label>
+            <input type="date" class="form-control" id="deliveredDate" placeholder="05873131316" v-model="delivered_date">
           </div>
           <div class="form-group">
             <label for="deliveredTime"><img src="../../assets/img/clock-1.svg" alt=""> توقيت التسليم</label>
-            <input type="time" class="form-control" id="deliveredTime" placeholder="05873131316">
+            <input type="time" class="form-control" id="deliveredTime" placeholder="05873131316" v-model="delivered_time">
           </div>
           <div class="form-group">
-            <label for="notes"><img src="../../assets/img/chat%20(1).svg" alt=""> الملاحظات</label>
-            <textarea class="form-control" id="notes" rows="5">
+            <label for="notes"><img :src="User.avatar" alt=""> الملاحظات</label>
+            <textarea class="form-control" id="notes" rows="5" v-model="note">
                                         </textarea>
           </div>
           <div class="row">
             <div class="col-lg-12">
               <div class="row confirm-order">
                 <div class="col-lg-4 pr-0">
-                  <img class="w-100" src="../../assets/img/c-order.svg" alt="">
+                  <img class="w-100" :src="Product['first_image']" alt="">
                 </div>
                 <div class="col-lg-7 confirm-order-content">
-                  <h5>لوحة دفنشي</h5>
-                  <p>تصميم فيلا على برنامج اليستريتور خلال 3 أيام بجودة عالية </p>
+                  <h5>{{ Product['name'] }}</h5>
+                  <p>{{ Product['description'] }} </p>
                   <div class="row">
                     <div class="col-lg-6">
-                      <span>بيوت</span>
+                      <span>{{ Product['category_name'] }}</span>
                     </div>
                     <div class="col-lg-6">
-                      <span>350 ر.س</span>
+                      <span>{{ Product['price'] }} ر.س</span>
                     </div>
                   </div>
                 </div>
@@ -44,15 +44,15 @@
                   <div class="count-card">
                     <div class="add-to-cart">
                                            <span>
-                                               <i class="fas fa-plus"></i>
+                                               <i id="increment" v-on:click.prevent="quantity++" :v-model="quantity" class="fas fa-plus"></i>
                                            </span>
                     </div>
                     <div class="cart-counter">
-                      1
+                      {{ quantity }}
                     </div>
                     <div class="remove-from-cart">
                                            <span>
-                                               <i class="fas fa-minus"></i>
+                                               <i id="decrement" v-on:click="quantity--" :v-model="quantity" class="fas fa-minus"></i>
                                            </span>
                     </div>
                   </div>
@@ -67,7 +67,7 @@
             </div>
           </div>
           <div class="tab-button">
-            <button type="submit" class="btn">اطلب الان</button>
+            <button type="submit" class="btn" v-on:click.prevent="creatrOrder()">اطلب الان</button>
           </div>
           <div class="tab-a"></div>
         </div>
@@ -76,11 +76,112 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import jquery from 'jquery';
+import serve_user from "@/views/pages/serve_user";
+let $ = jquery;
 export default {
   name : 'confirm_order',
   mounted() {
     console.log('confirm order mounted.');
   },
+  data(){
+    return{
+      Order:[],
+      Product:[],
+      delivered_date: '',
+      delivered_time : '',
+      product_id: serve_user.data().product_id,
+      quantity :1,
+      note :'',
+      User:[],
+      user_id:'',
+    }
+  },
+  created() {
+    this.fetchProduct();
+    console.log(this.product_id);
+  },
+  methods:{
+    creatrOrder(){
+      const token = sessionStorage.getItem('access_token_1');
+      axios.post('http://18.194.157.202/api/orders/store',
+          {
+            delivered_date: this.delivered_date,
+            delivered_time : this.delivered_time,
+            product_id : this.product_id,
+            quantity :this.quantity,
+            note : this.note,
+          },
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            }
+          })
+      .then(res=>{
+        if (res.data['status']['status'] === "success"){
+          this.Order = res.data['Order'];
+          console.log(res.data['Order']);
+          console.log(res.data['status']['status']);
+          $('#exampleModalCenter-12').modal('hide');
+        }else {
+          console.log(res.data['status']['message']);
+        }
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+    },
+    fetchProduct(){
+      const token = sessionStorage.getItem('access_token_1');
+      axios.get('http://18.194.157.202/api/products/show',
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            },
+            params:{
+              product_id : serve_user.data().product_id,
+            }
+            })
+      .then(res=>{
+        if (res.data['status']['status'] === "success"){
+          this.Product = res.data['Product'];
+          console.log(res.data['Product']);
+          console.log(res.data['status']['status']);
+        }else {
+          console.log(res.data['status']['status']);
+        }
+      })
+      .catch(e=>{
+        console.log(e);
+      })
 
+    },
+    fetchUser() {
+      const token = sessionStorage.getItem('access_token_1');
+      axios.get('http://18.194.157.202/api/auth/me',
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            }
+          })
+      .then(res=>{
+        if (res.data['status']['status'] === "success"){
+          this.User = res.data['User'];
+          this.user_id = res.data['User']['id'];
+          console.log(res.data['User']['id']);
+        }else {
+          console.log(res.data['status']['status']);
+        }
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+    },
+
+  }
 }
 </script>

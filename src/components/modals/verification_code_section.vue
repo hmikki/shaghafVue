@@ -32,7 +32,6 @@
 <script>
 import axios from "axios";
 
-const token = sessionStorage.getItem('access_token');
 export default {
     mounted() {
         console.log('Verification mounted.')
@@ -50,6 +49,7 @@ export default {
     },
     methods:{
         verification(){
+          const token = sessionStorage.getItem('access_token_1');
             axios.post('http://18.194.157.202/api/auth/verify',
                 {
                   code: this.code,
@@ -57,14 +57,14 @@ export default {
                 },
                 {
                   headers:{
-                    'Authorization' : 'Bearer ' +token,
+                    'Authorization' : 'Bearer ' + token,
                     'X-localization': 'ar'
                   }
                 })
                 .then(res=>{
                   if (res.data['status']['status'] === "success"){
-                    this.User = res.data['User'];
-                    console.log(res.data['User']);
+                    this.User = res.data['status']['status'];
+                    console.log(res.data['status']['status']);
                   }else {
                     console.log(res.data['status']['message']);
                   }
@@ -75,6 +75,7 @@ export default {
           })
         },
         resendVerification(){
+          const token = sessionStorage.getItem('access_token_1');
             axios.get('http://18.194.157.202/api/auth/resend_verify',{
                 headers:{
                     'Authorization' : 'Bearer ' +token,

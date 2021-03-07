@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="row w-100">
                     <div class="col-lg-3 page-logo" onclick="location.href='index.php';">
-                        <div class="row login100-pic js-tilt" data-tilt>
+                        <div class="row login100-pic js-tilt" data-tilt v-tilt>
                             <div class="col-lg-5">
                                <a> <img src="../../assets/img/logo.svg" alt=""> </a>
                             </div>
@@ -67,5 +67,10 @@ export default {
       token: sessionStorage.getItem('access_token_1'),
     }
   },
+  created() {
+  },
+  methods:{
+
+  }
 }
 </script>

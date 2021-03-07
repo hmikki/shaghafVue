@@ -56,6 +56,8 @@
 </template>
 <script>
 import axios from "axios";
+import jquery from 'jquery'
+let $ = jquery;
 
 export default {
     mounted() {
@@ -78,21 +80,34 @@ export default {
     },
     methods:{
         register(){
-            axios.post('http://18.194.157.202/api/auth/register',{
-              'X-localization' : 'ar',
-              'name': this.name,
-              'mobile': this.mobile,
-              'email': this.email,
-              'password': this.password,
-              'type': this.type,
-              'country_id' : this.country_id,
-              'city_id' : this.city_id,
-            }).then(res=>{
+            axios.post('http://18.194.157.202/api/auth/register',
+                {
+                  'name': this.name,
+                  'mobile': this.mobile,
+                  'email': this.email,
+                  'password': this.password,
+                  'type': this.type,
+                  'country_id' : this.country_id,
+                  'city_id' : this.city_id,
+                  'device_token' : sessionStorage.getItem('device_token'),
+                  'device_type' : 'web',
+                },
+                {
+                  headers:{
+                    'X-localization' : 'ar',
+                  }
+                })
+                .then(res=>{
                       if(res.data['status']['status'] === 'success'){
                         this.User = res.data['User'];
                         const access_token = res.data['User']['access_token'];
+                        const email = res.data['User']['email'];
+                        const password = res.data['User']['password'];
                         sessionStorage.setItem('access_token', access_token);
-                        console.log(res.data['User']['access_token']);
+                        sessionStorage.setItem('email', email);
+                        sessionStorage.setItem('password', password);
+                        $('#exampleModalCenter').modal('hide');
+                        console.log(res.data['User']['access_token'] + '/n' + res.data['User']['email'] + '/n' + res.data['User']['password']);
                         console.log(res.data['status']['status']);
                         }else {
                         sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
@@ -101,7 +116,8 @@ export default {
             }) .catch(e => {
                 this.errors.push(e);
             });
-        }
+        },
+
     }
 }
 </script>

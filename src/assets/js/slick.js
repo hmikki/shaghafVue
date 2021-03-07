@@ -14,8 +14,10 @@
   Issues: http://github.com/kenwheeler/slick/issues
 
  */
-/* global window, document, define, jQuery, setInterval, clearInterval */
-;(function(factory) {
+// global window, document, define, jQuery, setInterval, clearInterval
+import jQuery from 'jquery';
+import define from 'define-property';
+(function(factory) {
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define(['jquery'], factory);
@@ -592,7 +594,7 @@
 
     };
 
-    Slick.prototype.checkResponsive = function(initial, forceUpdate) {
+    /*Slick.prototype.checkResponsive = function(initial, forceUpdate) {
 
         var _ = this,
             breakpoint, targetBreakpoint, respondToWidth, triggerBreakpoint = false;
@@ -678,7 +680,7 @@
             }
         }
 
-    };
+    };*/
 
     Slick.prototype.changeSlide = function(event, dontAnimate) {
 
@@ -1856,7 +1858,7 @@
 
     };
 
-    Slick.prototype.registerBreakpoints = function() {
+    /*Slick.prototype.registerBreakpoints = function() {
 
         var _ = this, breakpoint, currentBreakpoint, l,
             responsiveSettings = _.options.responsive || null;
@@ -1894,7 +1896,7 @@
 
         }
 
-    };
+    };*/
 
     Slick.prototype.reinit = function() {
 
@@ -2644,7 +2646,7 @@
 
     };
 
-    Slick.prototype.swipeEnd = function(event) {
+    Slick.prototype.swipeEnd = function() {
 
         var _ = this,
             slideCount,
@@ -2767,7 +2769,6 @@
     Slick.prototype.swipeMove = function(event) {
 
         var _ = this,
-            edgeWasHit = false,
             curLeft, swipeDirection, swipeLength, positionOffset, touches, verticalSwipeLength;
 
         touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
@@ -2916,11 +2917,10 @@
 
     };
 
-    Slick.prototype.updateArrows = function() {
+    /*Slick.prototype.updateArrows = function() {
 
-        var _ = this,
-            centerOffset;
-
+        var _ = this, centerOffset;
+        
         centerOffset = Math.floor(_.options.slidesToShow / 2);
 
         if ( _.options.arrows === true &&
@@ -2949,7 +2949,7 @@
 
         }
 
-    };
+    };*/
 
     Slick.prototype.updateDots = function() {
 

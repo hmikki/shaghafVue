@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="carousel-inner">
                     <div class="carousel-item" v-for="(Advertisment, index) in Advertisments" :key="index" :class="{'active' : index === 0}">
-                        <img class="d-block w-100" :src="Advertisment.image" alt="First slide">
+                        <img class="d-block w-100" :src="Advertisment.image" alt="First slide" style="max-height: 500px">
                     </div>
                 </div>
             </div>

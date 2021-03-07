@@ -42,7 +42,7 @@
                         Your browser does not support the audio element.
                       </audio>
                       <p class="ch-messsage" v-show="message.type === 4">
-                        <a href="" download :src="'http://18.194.157.202/'+message.message" style="overflow-wrap: anywhere">
+                        <a :href="'http://18.194.157.202/'+message.message" :src="'http://18.194.157.202/'+message.message" style="overflow-wrap: anywhere">
                           {{ message.message }}</a>
                       </p>
                       <span>{{ message.created_at }}</span>
@@ -63,13 +63,16 @@
                   <form>
                     <div class="write-m-chat">
                       <label style="display:none" for="exampleFormControlTextarea1"></label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="كتابة رسالة" v-model="message" :v-modal="type=== 1"></textarea>
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="كتابة رسالة" v-model="message" :v-modal="type = 1"></textarea>
                     </div>
                   </form>
                 </div>
                 <div class="col-lg-1 d-flex-chat upload-voice">
-                      <VueRecordAudio  @result="onResult"/>
-
+                  <a href="" v-on:mouseup="sendMessage()" :v-model="type = 2">
+                    <i class="fas fa-microphone">
+                      <input type="file" accept="audio/*" capture>
+                    </i>
+                  </a>
                 </div>
                 <div class="col-lg-1 d-flex-chat chat-upload-img">
                   <form v-on:submit.prevent="sendMessage()">
@@ -92,8 +95,6 @@
 </template>
 <script>
 import axios from "axios";
-
-
 export default {
   name : 'chats',
   mounted() {
@@ -217,10 +218,6 @@ export default {
         console.log(e);
       })
     },
-    onResult (data) {
-      console.log('The blob data:', data);
-      console.log('Downloadable audio', window.URL.createObjectURL(data));
-    }
       }
 }
 </script>

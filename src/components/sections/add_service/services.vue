@@ -4,18 +4,13 @@
         <div class="col-lg-3" v-for="(product,index) in Products" :key="index">
           <span class="hidden" :v-model="product_id = product.id"></span>
             <div class="card pro-ser-card">
-                <img class="card-img-top" src="../../../assets/img/product-1.svg" alt="Card image cap">
+                <img class="card-img-top" :src="product.first_image" alt="Card image cap">
                 <div class="card-body">
                     <h6 class="card-title">{{ product['name'] }}</h6>
                     <p class="card-text">{{ product['description'] }}</p>
                     <hr>
-                    <ul>
-                        <li>بيوت</li>
-                        <li>منازل</li>
-                        <li>تشطيب</li>
-                    </ul>
                     <div class="row">
-                        <div class="col-lg-12"><span class="count count-pr">{{ product.price }}</span></div>
+                        <div class="col-lg-12"><span class="count count-pr">السعر : {{ product.price }}</span></div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">

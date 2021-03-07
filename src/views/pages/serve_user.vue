@@ -1,5 +1,4 @@
 <template>
-  <add_order></add_order>
   <login_section></login_section>
     <div class="wrapper">
         <div class="container">
@@ -50,7 +49,7 @@
                                       <div class="carousel-item active">
                                         <div class="row">
                                           <div class="col-lg-3" v-for="(portfolio, index) in Portfolios" :key="index">
-                                            <a href=""><img :src="portfolio.image" alt="portfolio"></a>
+                                            <img :src="portfolio.media" alt="portfolio" style="max-width: 150px">
                                           </div>
                                         </div>
                                       </div>
@@ -78,7 +77,14 @@
                                 </div>
                                 <div class="col-lg-9">
                                     <div class="map-pre-w">
-                                        <img src="../../assets/img/map.svg" alt="">
+                                      <GoogleMap
+                                          api-key="AIzaSyCrtMEBxgNcO0-bqdMFxo5hev35ugBZMhI"
+                                          style="width: 100%; height: 500px"
+                                          :center="center"
+                                          :zoom="15">
+                                        <Marker :options="{ position: center }" />
+                                      </GoogleMap>
+                                      <!--                                        <img src="../../assets/img/map.svg" alt="">-->
                                     </div>
                                 </div>
                             </div>
@@ -97,24 +103,17 @@
               <div class="row pb-5">
                 <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
                   <div class="card pro-ser-card">
-                    <img class="card-img-top" src="../../assets/img/product-1.svg" alt="Card image cap">
+                    <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
                     <div class="card-body">
                       <h6 class="card-title">{{product['name']}}</h6>
                       <p class="card-text">{{ product['description'] }}</p>
                       <hr>
-                      <ul>
-                        <li>بيوت</li>
-                        <li>منازل</li>
-                        <li>تشطيب</li>
-                      </ul>
                       <div class="row">
                         <div class="col-lg-3"></div>
-                        <div class="col-lg-6"><span class="count count-pr">{{ product.price }}</span></div>
+                        <div class="col-lg-6"><span class="count count-pr">السعر : {{ product.price }}</span></div>
                         <div class="col-lg-3"></div>
                       </div>
-                      <router-link to="/orders">
-                        <a class="btn pro-ser-button">أطلب الان</a>
-                      </router-link>
+                        <a class="btn pro-ser-button" data-toggle="modal" data-target="#exampleModalCenter-12" aria-label="Close" data-dismiss="modal" :v-model="product_id = product.id">أطلب الان</a>
                     </div>
                   </div>
                 </div>
@@ -122,33 +121,126 @@
             </div>
         </div>
     </div>
+  <!--confirm order -->
+  <div class="modal fade confirm-order-page" id="exampleModalCenter-12" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-header">
+          <p>تأكيد الطلب</p>
+        </div>
+        <div class="modal-body secound-m">
+          <div class="form-group">
+            <label for="deliveredDate"><img src="../../assets/img/calendar.svg" alt=""> تاريخ التسليم</label>
+            <input type="date" class="form-control" id="deliveredDate" placeholder="05873131316" v-model="delivered_date">
+          </div>
+          <div class="form-group">
+            <label for="deliveredTime"><img src="../../assets/img/clock-1.svg" alt=""> توقيت التسليم</label>
+            <input type="time" class="form-control" id="deliveredTime" placeholder="05873131316" v-model="delivered_time">
+          </div>
+          <div class="form-group">
+            <label for="notes"><img :src="User['avatar']" alt=""> الملاحظات</label>
+            <textarea class="form-control" id="notes" rows="5" v-model="note">
+                                        </textarea>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row confirm-order">
+                <div class="col-lg-4 pr-0">
+                  <img class="w-100" :src="Product['first_image']" alt="">
+                </div>
+                <div class="col-lg-7 confirm-order-content">
+                  <h5>{{ Product['name'] }}</h5>
+                  <p>{{ Product['description'] }} </p>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <span>{{ Product['category_name'] }}</span>
+                    </div>
+                    <div class="col-lg-6">
+                      <span>{{ Product['price'] }} ر.س</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-1 pl-0">
+                  <div class="count-card">
+                    <div class="add-to-cart">
+                                           <span>
+                                               <i id="increment" v-on:click.prevent="quantity++" :v-model="quantity" class="fas fa-plus"></i>
+                                           </span>
+                    </div>
+                    <div class="cart-counter">
+                      {{ quantity }}
+                    </div>
+                    <div class="remove-from-cart">
+                                           <span>
+                                               <i id="decrement" v-on:click="quantity--" :v-model="quantity" class="fas fa-minus"></i>
+                                           </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="row total-price">
+                <h6 class="h5 col-lg-6">السعر الاجمالي</h6>
+                <p :v-model="total = quantity * Product['price']" class="col-lg-6">{{ total }} ر.س</p>
+              </div>
+            </div>
+          </div>
+          <div class="tab-button">
+            <button type="submit" class="btn" v-on:click.prevent="creatrOrder()">اطلب الان</button>
+          </div>
+          <div class="tab-a"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </template>
 <script>
 import login_section from "@/components/modals/login-section";
 import axios from "axios";
-import add_order from "@/components/modals/add_order";
+import { GoogleMap, Marker } from 'vue3-google-map'
+import jquery from 'jquery';
+let $ = jquery;
+
 
 export default {
     name: 'serve_user',
     components:{
       login_section,
-      add_order
+      GoogleMap,
+      Marker
     },
     mounted() {
         console.log('Component mounted.');
         this.fetchUser();
+        this.fetchProduct();
     },
   data(){
       return{
         User:[],
         Portfolios:[],
         Products:[],
+        Product:[],
+        Order : [],
+        delivered_date: '',
+        delivered_time : '',
+        quantity :1,
+        note :'',
+        product_id:'',
+        lat: '',
+        lng: '' ,
       }
   },
   created() {
       this.fetchUser();
       this.fetchUserPortfolios();
       this.fetchProducts();
+
+
   },
   methods:{
       fetchUser(){
@@ -163,6 +255,10 @@ export default {
         .then(res=>{
           if (res.data['status']['status'] === "success"){
             this.User = res.data['User'];
+            this.lat = res.data['User']['lat'];
+            this.lng = res.data['User']['lng'];
+            const user_id = res.data['User']['id'];
+            sessionStorage.setItem('user_id', user_id);
             console.log(res.data['User']);
           }else {
             console.log(res.data['status']['status']);
@@ -192,6 +288,7 @@ export default {
       },
       fetchProducts(){
       const token = sessionStorage.getItem('access_token_1');
+      const user_id = sessionStorage.getItem('user_id');
       axios.get('http://18.194.157.202/api/products',
           {
             headers:{
@@ -199,19 +296,80 @@ export default {
               'X-localization' : 'ar',
             },
             params:{
-              user_id : '1'
+              user_id : user_id,
             }
           })
       .then(res =>{
         if (res.data['status']['status'] === "success"){
           this.Products = res.data['Products'];
           console.log(res.data['Products']);
+
         }else {
           console.log(res.data['status']['status']);
         }
       })
     },
+      creatrOrder(){
+      const token = sessionStorage.getItem('access_token_1');
+      axios.post('http://18.194.157.202/api/orders/store',
+          {
+            delivered_date: this.delivered_date,
+            delivered_time : this.delivered_time,
+            product_id : this.product_id,
+            quantity :this.quantity,
+            note : this.note,
+          },
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            }
+          })
+          .then(res=>{
+            if (res.data['status']['status'] === "success"){
+              this.Order = res.data['Order'];
+              console.log(res.data['Order']);
+              console.log(res.data['status']['status']);
+              $('#exampleModalCenter-12').modal('hide');
+            }else {
+              console.log(res.data['status']['message']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+    },
+      fetchProduct(){
+      const token = sessionStorage.getItem('access_token_1');
+      axios.get('http://18.194.157.202/api/products/show',
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            },
+            params:{
+              product_id : this.product_id,
+            }
+          })
+          .then(res=>{
+            if (res.data['status']['status'] === "success"){
+              this.Product = res.data['Product'];
+              console.log(res.data['Product']);
+              console.log(res.data['status']['status']);
+            }else {
+              console.log(res.data['status']['status']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
 
-  }
+    },
+
+  },
+  setup() {
+    const center = { lat: 40.689247, lng: -74.044502 }
+    return { center }
+  },
 }
 </script>

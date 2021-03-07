@@ -22,7 +22,7 @@
                             </ul>
                         </div>
                         <div class="col-lg-2"></div>
-                        <div class="col-lg-4 login100-pic js-tilt" data-tilt>
+                        <div class="col-lg-4 login100-pic js-tilt" data-tilt v-tilt>
                             <img class="fw-img" src="../../../assets/img/our-goals-1.svg" alt="">
                         </div>
                     </div>

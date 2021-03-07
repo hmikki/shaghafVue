@@ -67,6 +67,7 @@ export default {
       return{
           User:[
           ],
+          email: sessionStorage.getItem('email') ,
           mobile :'',
           password: '',
       }
@@ -77,12 +78,17 @@ export default {
     methods:{
 
         login( ){
-            axios.post('http://18.194.157.202/api/auth/login', {
-              'X-localization' : 'ar',
+            axios.post('http://18.194.157.202/api/auth/login',
+                {
               'mobile': this.mobile,
               'password': this.password,
-
-            }).then(res =>{
+              'device_token' : ''+sessionStorage.getItem('device_token'),
+              'device_type' : 'web',
+            },
+                {
+                  'X-localization' : 'ar',
+                })
+                .then(res =>{
                 if(res.data['status']['status'] === "success"){
                     this.User = res.data['User'];
                     const token = res.data['User']['access_token'];
@@ -97,11 +103,11 @@ export default {
                   }else {
                     this.$router.push('/');
                   }*/
-
                     console.log(res.data['status']['status']);
                     console.log(res.data['User']['access_token']);
 
                 }else {
+                  console.log(res);
                   //sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
                   console.log('error');
                 }
@@ -111,7 +117,7 @@ export default {
                   console.log(e);
                 });
 
-        }
+        },
     }
 
 }

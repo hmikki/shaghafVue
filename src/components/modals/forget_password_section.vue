@@ -29,7 +29,6 @@
 </template>
 <script>
 import axios from "axios";
-const token = sessionStorage.getItem('access_token');
 export default {
     mounted() {
         console.log('Component mounted.')
@@ -46,16 +45,24 @@ export default {
     },
     methods:{
         forgetPassword(){
-            axios.post('http://18.194.157.202/api/auth/forget_password',{
-                headers:{
-                    'Authorization' : 'Bearer ' +token
-                },
-                params:{
+          const token = sessionStorage.getItem('access_token_1');
+            axios.post('http://18.194.157.202/api/auth/forget_password',
+                {
                     mobile: this.mobile
-                }
-            })
+                },
+                {
+                  headers:{
+                    'Authorization' : 'Bearer ' +token,
+                    'X-localization' : 'ar',
+                  },
+                })
                 .then( res=>{
-                this.User = res.data['status']['status'];
+                  if (res.data['status']['status'] === "success"){
+                    this.User = res.data['status']['status'];
+                    console.log(res.data['status']['status']);
+                  }else {
+                    console.log(res.data['status']['status'])
+                  }
                 console.log('code sent, check your mobile messages');
             })
         }

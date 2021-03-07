@@ -9,43 +9,40 @@
                         </div>
 
                         <div class="col-lg most-l">
-                            <a href="javascript:;" class="active">الكل</a>
+                            <a href="javascript:;" class="active" v-on:click.prevent="fetchAllFreelancer()">الكل</a>
                             <a href="javascript:;" v-for="(category,index) in Categories" :key="index" v-on:click.prevent="category_id = category.id; fetchFreelancer()">{{ category.name }}</a>
                         </div>
                     </div>
                 </div>
-                <!-- Set up your HTML -->
-                <div class="container">
-                  <div class="owl-carousel owl-theme">
-                    <div v-for="(freelancer, index) in Freelancers" :key="index" class="col-4" style="display: inline-block">
-                      <div class="card" onclick="location.href='#';">
-                        <div class="img-o-h">
-                          <div class="order-card-img">
-                            <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="border-radius: 50%">
-                          </div>
-                        </div>
-                        <div class="card-body">
-                          <h4>{{ freelancer.name }}</h4>
-                          <p class="card-text">{{freelancer['Categories']['name']}}</p>
-                        </div>
-                        <div class="card-footer">
-                          <div class="row">
-                            <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i>{{ freelancer.City['name'] }}</span></div>
-                            <div class="col-3 p-0"></div>
-                            <div class="col-lg-2"></div>
-                            <div class="col-4 star">
-                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '1'}"></span>
-                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '2'}"></span>
-                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '3'}"></span>
-                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '4'}"></span>
-                              <span class="fa fa-star" :class="{'checked': freelancer.rate >= '5'}"></span>
-                            </div>
-                          </div>
+              <div class="container">
+                <div>
+                      <div v-for="(freelancer, index) in Freelancers" :key="index" class="card col-lg-4" style="display: inline-flex">
+                    <div class="img-o-h">
+                      <div class="order-card-img">
+                        <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="width: 100px; height: 100px">
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <h4>{{ freelancer.name }}</h4>
+                      <p class="card-text">{{freelancer['Categories']['name']}}</p>
+                    </div>
+                    <div class="card-footer">
+                      <div class="row">
+                        <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i> {{ freelancer.City['name'] }}</span></div>
+                        <div class="col-3 p-0"></div>
+                        <div class="col-lg-2"></div>
+                        <div class="col-4 star">
+                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '1'}"></span>
+                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '2'}"></span>
+                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '3'}"></span>
+                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '4'}"></span>
+                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '5'}"></span>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
 
             </div>
         </div>
@@ -78,7 +75,16 @@ export default {
     },
     created() {
         this.fetchCategories();
-        this.fetchFreelancer();
+        this.fetchAllFreelancer();
+      $(document).ready(function(){
+        $('.onepage').click(function(e) {
+          e.preventDefault();
+          // console.log("Offset: ", $(this).data('to'));
+          $('body, html').animate({
+            scrollTop: $( $(this).attr('data-to')).offset().top
+          }, 800)
+        });
+      });
     },
     methods:{
         fetchCategories(){
@@ -92,6 +98,27 @@ export default {
                     console.log(res.data['Categories']);
                 });
         },
+      fetchAllFreelancer(){
+        axios.get('http://18.194.157.202/api/home/get_freelancers', {
+          headers:{
+            'X-localization' : 'ar',
+          },
+          params:{
+            per_page : 3
+          }
+        },)
+            .then(res => {
+              if (res.data['status']['status'] === "success"){
+                this.Freelancers = res.data['Freelancers'];
+                console.log(res.data['Freelancers']);
+              }else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e=>{
+              console.log(e);
+            })
+      },
       fetchFreelancer(){
         axios.get('http://18.194.157.202/api/home/get_freelancers', {
           headers:{
@@ -99,6 +126,7 @@ export default {
           },
           params:{
             'category_id' : this.category_id,
+             per_page: 3
           },
 
         })
@@ -109,7 +137,10 @@ export default {
               }else {
                console.log(res.data['status']['status']);
               }
-            });
+            })
+        .catch(e=>{
+          console.log(e);
+        })
       },
     }
 

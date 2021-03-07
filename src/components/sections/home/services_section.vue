@@ -6,7 +6,7 @@
         <div class="container">
             <h5 class="text-right"><span class="text-con"> خدماتنا </span><span class="text-c"></span></h5>
             <div class="row">
-                <div class="col-lg-3 login100-pic js-tilt" data-tilt v-for="(Category, index) in Categories" :key="index">
+                <div class="col-lg-3 login100-pic js-tilt" v-tilt data-tilt v-for="(Category, index) in Categories" :key="index">
                   <router-link to="/our_serve">
 
                     <div class="service">

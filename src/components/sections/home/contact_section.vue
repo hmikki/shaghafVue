@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-7">
                     <h5 class="text-right"><span class="text-con">تواصل معنا</span><span class="text-c"></span></h5>
-                    <img class="fw-img login100-pic js-tilt" data-tilt src="../../../assets/img/contact-us.svg" alt="">
+                    <img class="fw-img login100-pic js-tilt" v-tilt data-tilt src="../../../assets/img/contact-us.svg" alt="">
                 </div>
                 <div class="col-lg-4 contact-us-f-t">
                     <div class="contact-us-f">
