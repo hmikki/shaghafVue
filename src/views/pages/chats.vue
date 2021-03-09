@@ -68,19 +68,19 @@
                   </form>
                 </div>
                 <div class="col-lg-1 d-flex-chat upload-voice">
-                  <a href="" v-on:mouseup="sendMessage()" :v-model="type = 2">
+                  <a href="">
                     <i class="fas fa-microphone">
                       <audio-player></audio-player>
                     </i>
                   </a>
                 </div>
                 <div class="col-lg-1 d-flex-chat chat-upload-img">
-                  <form v-on:submit.prevent="sendMessage()">
+                  <form>
                     <label for="file">
                       <i class="fas fa-images"></i>
                     </label>
-                    <input type="file" id="file" ref="file" v-on:change="sendFile()" style="display:none;width: 80px; height: 25px; font-size: 12px;" accept="*/*"/>
-                    <div id="image" style="display: block"></div>
+                    <input id="file" style="display: none" type="file" v-on:change="previewFile()"><br>
+                    <img src="" style="display: none" height="200" alt="Image preview...">
 <!--                    <div class="image-upload">
                       <label for="file-input">
                         <i class="fas fa-images"></i>
@@ -114,7 +114,7 @@ export default {
       chatRoom:[],
       room_id: 1,
       message:'',
-      type : 1,
+      type : '',
       file :'',
     }
   },
@@ -227,8 +227,8 @@ export default {
     },
     sendFile(){
       let file = this.$refs.file.files[0];
+
       console.log(file);
-      this.message = file;
 
       if (this.$refs.file.files[0].type === "image/png"){
         this.type= 3;
@@ -261,9 +261,43 @@ export default {
         console.log(e);
       })
     },
-    handleFileUpload(){
-      this.file = this.$refs.file.files[0];
-    },
+    previewFile() {
+      const preview = document.querySelector('img');
+      const file = document.querySelector('input[type=file]').files[0];
+      const reader = new FileReader();
+
+      reader.addEventListener("load", function () {
+        // convert image file to base64 string
+        preview.src = reader.result;
+      }, false);
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+      const token = sessionStorage.getItem('access_token_1');
+      axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
+          {
+            'chat_room_id': this.room_id,
+            'type': this.type,
+            'message' : file,
+          },
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            }
+          })
+          .then(res=>{
+            if (res.data['status']['status'] === "success"){
+              console.log(res.data['status']['status']);
+            }else {
+              console.log(res.data['status']['message']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+}
 
       }
 }
