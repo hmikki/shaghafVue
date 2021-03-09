@@ -264,6 +264,7 @@ export default {
     previewFile() {
       const preview = document.querySelector('img');
       const file = document.querySelector('input[type=file]').files[0];
+      console.log(file);
       const reader = new FileReader();
 
       reader.addEventListener("load", function () {
@@ -272,6 +273,7 @@ export default {
       }, false);
 
       if (file) {
+        console.log('hhh');
         reader.readAsDataURL(file);
       }
       const token = sessionStorage.getItem('access_token_1');
