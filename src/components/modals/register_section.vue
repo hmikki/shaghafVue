@@ -89,8 +89,6 @@ export default {
                   'type': this.type,
                   'country_id' : this.country_id,
                   'city_id' : this.city_id,
-                  'device_token' : sessionStorage.getItem('device_token'),
-                  'device_type' : 'web',
                 },
                 {
                   headers:{

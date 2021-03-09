@@ -61,17 +61,6 @@ export default {
                 this.User = res.data['User'];
                 console.log(token);
                 console.log(res.data['User']);
-                axios.post('http://18.194.157.202/api/auth/refresh',
-                    {
-                      'device_token' : ''+sessionStorage.getItem('device_token'),
-                      'device_type' : 'web',
-                    },
-                    {
-                      headers:{
-                        'Authorization': 'Bearer '+token,
-                        'X-localization' : 'ar',
-                      }
-                    });
               }else {
                console.log(res.data['status']['status'])
               }

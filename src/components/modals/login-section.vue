@@ -82,8 +82,6 @@ export default {
                 {
               'mobile': this.mobile,
               'password': this.password,
-              'device_token' : ''+sessionStorage.getItem('device_token'),
-              'device_type' : 'web',
             },
                 {
                   'X-localization' : 'ar',

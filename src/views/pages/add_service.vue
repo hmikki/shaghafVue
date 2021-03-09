@@ -1,7 +1,7 @@
 <template>
 <add_order></add_order>
     <!-- start wrapper -->
-    <div class="wrapper">
+    <div class="wrapper" v-show="token != null">
         <div class="container">
             <div class="sevice-user orders add-orders">
                 <nav aria-label="breadcrumb">
@@ -11,7 +11,7 @@
                     </ol>
                 </nav>
                 <div class="row justify-content-end">
-                    <div class="add-serv col-lg-2">
+                    <div class="add-serv col-lg-2"  v-tilt>
                         <button type="submit" class="btn" data-toggle="modal" data-target="#exampleModalCenter-9" aria-label="Close" data-dismiss="modal"><i class="fas fa-plus-circle"></i> إضافة خدمة</button>
                     </div>
                 </div>
@@ -34,6 +34,11 @@ export default {
   components:{
       services,
       add_order,
+  },
+  data(){
+      return {
+        token : sessionStorage.getItem('access_token_1'),
+      }
   }
 }
 </script>

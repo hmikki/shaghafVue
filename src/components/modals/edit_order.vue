@@ -10,16 +10,19 @@
                 </div>
                 <div class="modal-body secound-m">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">الخدمة الرئيسية</label>
-                        <select class="form-control minimal" id="exampleFormControlSelect1">
-                            <option v-for="(category, index) in Categories" :key="index" :class="{'selected' : index === 0}">
+                        <label for="cats">الخدمة الرئيسية</label>
+                        <select class="form-control minimal" id="cats" v-on:change.prevent="showSubCategories()">
+                            <option>select</option>
+                            <option v-for="(category, index) in Categories" :key="index" :class="{'selected': index === 0}" :value="category.id">
                               {{ category.name }}</option>
                         </select>
                     </div>
-                    <div class="form-group" v-for="(category,index) in Categories" :key="index">
-                        <label for="exampleFormControlSelect2" >الخدمة الفرعية</label>
-                        <select class="form-control minimal" id="exampleFormControlSelect2">
-                            <option v-for="(sub, index) in category.SubCategories" :key="index" :class="{'selected' : index === 0}">{{ sub.name }}</option>
+                    <div class="form-group">
+                        <label for="subcats" >الخدمة الفرعية</label>
+                        <select class="form-control minimal" id="subcats">
+                          <option >select</option>
+                          <option v-for="(subcategory, index) in SubCategories" :key="index" :value="subcategory.id">
+                            {{ subcategory['name'] }}</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -89,7 +92,6 @@ export default {
   data(){
       return{
         Categories:[],
-
         SubCategories: [],
         Product:[],
         product_id:services.data().product_id,
@@ -165,6 +167,27 @@ export default {
         };
         reader.readAsDataURL(input.files[0]);
       }
+    },
+    showSubCategories(){
+      var select = document.getElementById('cats').value;
+      console.log(select);
+      axios.get('http://18.194.157.202/api/home/categories',
+          {
+            headers:{
+              'X-localization' : 'ar',
+            }
+          })
+          .then(res=>{
+            if (res.data['status']['status'] === "success"){
+              this.SubCategories = res.data['Categories'][select -1]['SubCategories'];
+              console.log(res.data['Categories'][select-1]['SubCategories']);
+            }else {
+              console.log(res.data['status']['status']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
     }
   }
 }

@@ -70,18 +70,24 @@
                 <div class="col-lg-1 d-flex-chat upload-voice">
                   <a href="" v-on:mouseup="sendMessage()" :v-model="type = 2">
                     <i class="fas fa-microphone">
-                      <input type="file" accept="audio/*" capture>
+                      <audio-player></audio-player>
                     </i>
                   </a>
                 </div>
                 <div class="col-lg-1 d-flex-chat chat-upload-img">
                   <form v-on:submit.prevent="sendMessage()">
-                    <div class="image-upload">
+                    <label for="file">
+                      <i class="fas fa-images"></i>
+                    </label>
+                    <input type="file" id="file" ref="file" v-on:change="sendFile()" style="display:none;width: 80px; height: 25px; font-size: 12px;" accept="*/*"/>
+                    <div id="image" style="display: block"></div>
+<!--                    <div class="image-upload">
                       <label for="file-input">
                         <i class="fas fa-images"></i>
                       </label>
-                      <input id="file-input" type="file" :v-model="type === 4" />
-                    </div>
+                      <input v-on:change="onSelectImage()" id="file-input" type="file" :v-model="type === 4" />
+                      <p id="image" style="display: block"></p>
+                    </div>-->
                   </form>
                 </div>
                 <div class="col-lg-1"></div>
@@ -109,6 +115,7 @@ export default {
       room_id: 1,
       message:'',
       type : 1,
+      file :'',
     }
   },
   created() {
@@ -197,9 +204,9 @@ export default {
       const token = sessionStorage.getItem('access_token_1');
       axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
           {
-            chat_room_id: this.room_id,
-            type: this.type,
-            message: this.message,
+            'chat_room_id': this.room_id,
+            'type': this.type,
+            'message' : this.message,
           },
           {
             headers:{
@@ -211,13 +218,53 @@ export default {
         if (res.data['status']['status'] === "success"){
           console.log(res.data['status']['status']);
         }else {
-          console.log(res.data['status']['status']);
+          console.log(res.data['status']['message']);
         }
       })
       .catch(e=>{
         console.log(e);
       })
     },
+    sendFile(){
+      let file = this.$refs.file.files[0];
+      console.log(file);
+      this.message = file;
+
+      if (this.$refs.file.files[0].type === "image/png"){
+        this.type= 3;
+        console.log(this.type);
+      }else {
+        this.type= 4;
+        console.log(this.type);
+      }
+      const token = sessionStorage.getItem('access_token_1');
+      axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
+          {
+            chat_room_id : this.room_id,
+            message : this.message,
+            type : this.type
+          },
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            }
+          })
+      .then(res=>{
+        if (res.data['status']['status'] === "success"){
+          console.log(res.data['status']['status']);
+        }else {
+          console.log(res.data['status']['message']);
+        }
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+    },
+    handleFileUpload(){
+      this.file = this.$refs.file.files[0];
+    },
+
       }
 }
 </script>

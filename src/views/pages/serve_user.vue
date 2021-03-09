@@ -15,7 +15,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="img-o-h">
-                                <router-link to="/chats"> <a href=""><span class="chat"><img src="../../assets/img/chat.svg" alt=""></span></a> </router-link>
+                                <router-link to="/chats"><span class="chat"><img src="../../assets/img/chat.svg" alt=""></span></router-link>
                                 <div class="order-card-img">
                                     <img class="card-img-top" :src="User.avatar" alt="Card image cap">
                                 </div>
@@ -81,7 +81,8 @@
                                           api-key="AIzaSyCrtMEBxgNcO0-bqdMFxo5hev35ugBZMhI"
                                           style="width: 100%; height: 500px"
                                           :center="center"
-                                          :zoom="15">
+                                          :zoom="15"
+                                          :init="initializeGoogleMap" :markers="markers" :getUserLocation="true">
                                         <Marker :options="{ position: center }" />
                                       </GoogleMap>
                                       <!--                                        <img src="../../assets/img/map.svg" alt="">-->
@@ -365,10 +366,23 @@ export default {
           })
 
     },
+      locatorButtonPressed() {
+      navigator.geolocation.getCurrentPosition(
+          position => {
+            this.lng = position.coords.longitude;
+                this.lat = position.coords.latitude;
+            console.log(position.coords.latitude);
+            console.log(position.coords.longitude);
+          },
+          error => {
+            console.log(error.message);
+          },
+      )
+    }
 
   },
   setup() {
-    const center = { lat: 40.689247, lng: -74.044502 }
+    const center = { lat: 32, lng: 35.25 }
     return { center }
   },
 }

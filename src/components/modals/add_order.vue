@@ -10,16 +10,18 @@
                 </div>
                 <div class="modal-body secound-m">
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">الخدمة الرئيسية</label>
-                        <select class="form-control minimal" id="exampleFormControlSelect1" v-on:change.prevent="">
+                        <label for="categories">الخدمة الرئيسية</label>
+                        <select class="form-control minimal" id="categories" v-on:change.prevent="addSubCategories()">
                           <option>select</option>
-                          <option :value="category.id"  v-for="(category, index) in Categories" :key="index" :class="{'selected': index === 0}" :v-model="category_id = category.id">{{ category.name }}</option>
+                          <option v-for="(category, index) in Categories" :key="index" :class="{'selected': index === 0}" :value="category_id = category.id">{{ category.name }}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlSelect1">الخدمة الفرعية</label>
-                        <select class="form-control minimal" id="exampleFormControlSelect2">
-                          <option>select</option>
+                        <label for="subcategories">الخدمة الفرعية</label>
+                        <select class="form-control minimal" id="subcategories">
+                          <option >select</option>
+                          <option v-for="(subcategory, index) in SubCategories" :key="index" :value="sub_category_id = subcategory.id">
+                            {{ subcategory['name'] }}</option>
                             </select>
                     </div>
 
@@ -47,27 +49,27 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6">
-                            <h6 class="text-right">صورة الخدمة</h6>                                                                                                   <!-- Upload  -->
-                            <form id="file-upload-form" class="uploader">
-                                <input id="file-upload" type="file" name="fileUpload" v-on:change.prevent="ImageViewTrigger()" accept="image/*" :v-model="media" />
-                                <p id="demo"></p>
-                              <label for="file-upload" id="file-drag">
-                                    <img id="file-image" src="#" alt="Preview" class="hidden">
-                                    <div id="start">
-                                        <img src="../../assets/img/upload.svg" alt="" id="add_order">
-                                        <div id="notimage" class="hidden">Please select an image</div>
-                                    </div>
-                                    <div id="response" class="hidden">
-                                        <div id="messages"></div>
-                                        <progress class="progress" id="file-progress" value="0">
-                                            <span>0</span>%
-                                        </progress>
-                                    </div>
-                                </label>
-                            </form>
-<!--                          <file-upload :url='url' :thumb-url='thumbUrl' :headers="headers" v-on:change.prevent="onFileChange"></file-upload>-->
-                        </div>
+                      <div class="col-lg-6">
+                        <h6 class="text-right">صورة الخدمة</h6>
+                          <input type="file" v-on:change="onSelectImage" id="product_image">                                                                          <!-- Upload  -->
+                          <form id="file-upload-form" class="">
+<!--                          <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+
+                          <label for="file-upload" id="file-drag">
+                            <img id="file-image" src="#" alt="Preview" class="hidden">
+                            <div id="start">
+                              <img src="../../assets/img/upload.svg" alt="" id="add-order">
+                              <div id="notimage" class="hidden">Please select an image</div>
+                            </div>
+                            <div id="response" class="hidden">
+                              <div id="messages"></div>
+                              <progress class="progress" id="file-progress" value="0">
+                                <span>0</span>%
+                              </progress>
+                            </div>
+                          </label>-->
+                        </form>
+                      </div>
                     </div>
                     <div class="tab-button">
                         <button type="submit" class="btn" v-on:click.prevent="addService()">اضافة</button>
@@ -81,6 +83,8 @@
 </template>
 <script>
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
 
@@ -90,11 +94,12 @@ export default {
     data(){
         return{
           Categories:[],
+          SubCategories: [],
           product:[],
           Products:[],
           name:'',
           description:'',
-          category_id:'',
+          category_id: '',
           sub_category_id:'',
           price:'',
           type:'',
@@ -107,86 +112,99 @@ export default {
     created() {
       this.fetchAllCategories();
     },
-  methods:{
-      fetchAllCategories(){
-        axios.get('http://18.194.157.202/api/home/categories',
-            {
-              headers:{
-                'X-localization' : 'ar',
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Categories = res.data['Categories'];
-            console.log(res.data['status']['status']);
-          }else {
-            console.log(res.data['status']['status']);
-          }
-        })
-        .catch(e=>{
-          console.log(e);
-        })
-      },
-      addService(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/products/store',
-            {
-                name:this.name,
-                description:this.description,
-                category_id:this.category_id,
-                sub_category_id:this.sub_category_id,
-                price:this.price,
-                type:this.type,
-                media:this.media,
+  methods: {
+    fetchAllCategories() {
+      axios.get('http://18.194.157.202/api/home/categories',
+          {
+            headers: {
+              'X-localization': 'ar',
+            }
+          })
+          .then(res => {
+            if (res.data['status']['status'] === "success") {
+              this.Categories = res.data['Categories'];
+
+              console.log(res.data['status']['status']);
+            } else {
+              console.log(res.data['status']['status']);
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          })
+    },
+    addService() {
+      const token = sessionStorage.getItem('access_token_1');
+      axios.post('http://18.194.157.202/api/products/store',
+          {
+            name: this.name,
+            description: this.description,
+            category_id: this.category_id,
+            sub_category_id: this.sub_category_id,
+            price: this.price,
+            type: this.type,
+            media : this.media,
+          },
+          {
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'X-localization': 'ar',
             },
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar',
-              },
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Product = res.data['Product'];
-            console.log(res.data['status']['status']);
-          }else {
-            console.log(res.data['status']['message']);
-          }
-        })
-      },
-    ImageViewTrigger(){
-      var x = document.getElementById("file-upload");
-      var txt = "";
-      var media = [];
-          if ('files' in x) {
-        if (x.files.length == 0) {
-          txt = "Select one or more files.";
-        } else {
-          for (var i = 0; i < x.files.length; i++) {
-            txt += "<br><strong>" + (i+1) + ". file</strong><br>";
-            var file = x.files[i];
-            if ('name' in file) {
-              txt += "name: " + file.name + "<br>";
-             //set media for request
-              media = file.name;
-              this.media.push(media);
+          })
+          .then(res => {
+            if (res.data['status']['status'] === "success") {
+              this.Product = res.data['Product'];
+              console.log(res.data['status']['status']);
+            } else {
+              console.log(res.data['status']['message']);
             }
-            if ('size' in file) {
-              txt += "size: " + file.size + " bytes <br>";
+          })
+    },
+    addSubCategories() {
+      var select = document.getElementById('categories').value;
+      console.log(select);
+      axios.get('http://18.194.157.202/api/home/categories',
+          {
+            headers: {
+              'X-localization': 'ar',
             }
-          }
-        }
+          })
+          .then(res => {
+            if (res.data['status']['status'] === "success") {
+              this.SubCategories = res.data['Categories'][select - 1]['SubCategories'];
+              console.log(res.data['Categories'][select - 1]['SubCategories']);
+            } else {
+              console.log(res.data['status']['status']);
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          })
+    },
+    ImageViewTrigger() {
+      var input = document.getElementById('file-upload');
+      console.log(input);
+      var name = 'add-order';
+      if (input.files && input.files[0]) {
+          console.log('done');
+          let reader = new FileReader();
+          reader.onload = function (e) {
+          $('#'+name).attr('src', e.target.result);
+      };
+          reader.readAsDataURL(input.files[0]);
       }
-      else {
-        if (x.value == "") {
-          txt += "Select one or more files.";
-        } else {
-          txt += "The files property is not supported by your browser!";
-          txt  += "<br>The path of the selected file: " + x.value; // If the browser does not support the files property, it will return the path of the selected file instead.
-        }
-      }
-      document.getElementById("demo").innerHTML = txt;
-}
+    },
+    onSelectImage(event) {
+      console.log(event);
+      this.media = event.target.files[0];
+      console.log(this.media);
+      let reader = new FileReader();
+      reader.onload = function (e) {
+        $('#add-order').attr('src', e.target.result);
+      };
+      reader.readAsDataURL(this.media);
+    }
+
   }
 }
 </script>
