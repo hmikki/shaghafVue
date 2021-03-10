@@ -31,7 +31,7 @@
 
           </div>
         </div>
-        <div class="col-lg-3 login100-pic js-tilt" data-tilt><img class="w-100" src="../../../assets/img/said-about.svg" alt=""></div>
+        <div class="col-lg-3 login100-pic" v-tilt><img class="w-100" src="../../../assets/img/said-about.svg" alt=""></div>
       </div>
     </div>
   </section>

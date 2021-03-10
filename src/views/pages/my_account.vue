@@ -19,7 +19,8 @@
                                 <h5>بيانات الحساب</h5>
                             </div>
                             <div class="siting-body">
-                                <div class="edit-c"><a href="" data-toggle="modal" data-target="#exampleModalCenter-4" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
+                                <div class="edit-c"><a href="" data-tooltip="edit settings" data-toggle="modal" data-target="#exampleModalCenter-4" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
+                                <div class="verify-c"><a data-tooltip="verify account" href="" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
                                 <div class="form-group">
                                     <label for="formGroupExampleInput"><i class="fas fa-user"></i> الاسم كاملا</label>
                                     <input type="text" class="form-control" id="formGroupExampleInput" :placeholder="User.name" disabled>

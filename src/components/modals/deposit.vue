@@ -1,4 +1,5 @@
 <template>
+  <checkBalance></checkBalance>
   <div class="modal fade collection-request" id="deposit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -16,7 +17,7 @@
             </div>
           </div>
           <div class="tab-button">
-            <button type="submit" class="btn" v-on:click.prevent="createTransaction()">ايداع</button>
+            <button type="submit" class="btn" id="dep" v-on:click.prevent="checkBalance()">ايداع</button>
           </div>
           <form action="/" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
         </div>
@@ -26,6 +27,7 @@
 </template>
 <script>
 import axios from "axios";
+import checkBalance from "@/components/modals/checkBalance";
 import jquery from 'jquery';
 let $ = jquery;
 
@@ -33,6 +35,9 @@ export default {
   name:'deposit',
   mounted() {
     console.log('deposit mounted');
+  },
+  components:{
+    checkBalance,
   },
   data(){
     return{
@@ -85,6 +90,34 @@ export default {
           .catch(e=>{
             console.log(e);
           })
+    },
+    checkBalance(){
+      const token = sessionStorage.getItem('access_token_1');
+      axios.get('http://18.194.157.202/api/transactions/my_balance',
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar'
+            }
+          })
+          .then(res=>{
+            if (res.data['status']['status'] === "success"){
+              this.Balance = res.data['Balance'];
+              console.log(res.data['Balance']);
+              console.log(res.data['status']['status']);
+            }else{
+              console.log(res.data['status']['status']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+      if (this.Balance['AvailableBalance'] < this.value){
+          $("#deposit").modal('hide');
+          $("#check_balance").modal();
+      }else {
+        this.createTransaction();
+      }
     },
   }
 }

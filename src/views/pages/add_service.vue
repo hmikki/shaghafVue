@@ -1,7 +1,7 @@
 <template>
 <add_order></add_order>
     <!-- start wrapper -->
-    <div class="wrapper" v-show="token != null">
+    <div class="wrapper">
         <div class="container">
             <div class="sevice-user orders add-orders">
                 <nav aria-label="breadcrumb">
@@ -37,7 +37,6 @@ export default {
   },
   data(){
       return {
-        token : sessionStorage.getItem('access_token_1'),
       }
   }
 }

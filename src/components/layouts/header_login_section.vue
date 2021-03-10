@@ -11,10 +11,12 @@
                                             <i class="fas fa-chevron-down"></i><span>{{User.name}}</span>
                                         </a>
                                         <div class="dropdown-menu" id="MyAccountDropdown" aria-labelledby="MyAccount">
-                                            <router-link to="/serve_user"><a class="dropdown-item" href="">حسابي</a></router-link>
-                                            <div class="dropdown-divider"></div>
-                                            <router-link to="/add_service"><a class="dropdown-item">خدماتي</a></router-link>
-                                            <div class="dropdown-divider"></div>
+                                            <router-link to="/serve_user" v-show="User.type === '2' "><a class="dropdown-item" href="">حسابي</a></router-link>
+                                            <div class="dropdown-divider" v-show="User.type === '2'"></div>
+                                            <router-link to="/add_service" v-show="User.type === '2'"><a class="dropdown-item">خدماتي</a></router-link>
+                                            <div class="dropdown-divider" v-show="User.type === '2'"></div>
+                                            <router-link to="/orders"> <a class="dropdown-item">طلباتي</a> </router-link>
+                                            <div class="dropdown-divider"></div><div class="dropdown-divider" v-show="User.type === 2"></div>
                                             <router-link to="/financial"> <a class="dropdown-item">عملياتي المالية</a> </router-link>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" v-on:click.prevent="changeRoute()" href="">اعدادات الحساب</a>
@@ -40,7 +42,7 @@ export default {
   },
     data(){
         return {
-            User:[]
+            User:[],
         }
     },
     created() {

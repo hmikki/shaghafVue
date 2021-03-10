@@ -1,5 +1,4 @@
 <template>
-  <login_section></login_section>
     <div class="wrapper">
         <div class="container">
             <div class="sevice-user">
@@ -104,7 +103,7 @@
               <div class="row pb-5">
                 <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
                   <div class="card pro-ser-card">
-                    <router-link to="/orders"><img class="card-img-top" :src="product['first_image']" alt="Card image cap"></router-link>
+                    <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
                     <div class="card-body">
                       <h6 class="card-title">{{product['name']}}</h6>
                       <p class="card-text">{{ product['description'] }}</p>
@@ -201,7 +200,6 @@
 
 </template>
 <script>
-import login_section from "@/components/modals/login-section";
 import axios from "axios";
 import { GoogleMap, Marker } from 'vue3-google-map'
 import jquery from 'jquery';
@@ -211,7 +209,6 @@ let $ = jquery;
 export default {
     name: 'serve_user',
     components:{
-      login_section,
       GoogleMap,
       Marker
     },
@@ -378,7 +375,7 @@ export default {
             console.log(error.message);
           },
       )
-    }
+    },
 
   },
   setup() {

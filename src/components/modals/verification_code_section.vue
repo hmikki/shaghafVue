@@ -11,17 +11,13 @@
                 <div class="modal-body secound-m">
                     <div class="model-img login100-pic js-tilt" data-tilt><img src="../../assets/img/verification-code.svg" alt=""></div>
                     <span class="vc-m">يرجى إدخال الرمز المرسل الى رقم الجوال {{ User.mobile }}</span>
-                    <input type="text" class="hidden" :v-model="type = User.type">
                     <div class="v-code-main">
                         <div class="vcode" id="vcode">
-                            <input type="phone" class="vcode-input" maxlength="1" id="vcode1" v-model="code">
-                            <input type="phone" class="vcode-input" maxlength="1" v-model="code">
-                            <input type="phone" class="vcode-input" maxlength="1" v-model="code">
-                            <input type="phone" class="vcode-input" maxlength="1" v-model="code">
+                            <input type="phone" class="vcode-input" id="vcode1" v-model="code">
                         </div>
                     </div>
                     <div class="tab-button">
-                        <button type="submit" class="btn">تأكيد</button>
+                        <button type="submit" class="btn" v-on:click.prevent="verification()">تأكيد</button>
                     </div>
                     <div class="tab-a"> <span> لم يتم ارسال الكود <a href="" v-on:click="resendVerification()"> اعادة الارسال </a></span></div>
                 </div>
@@ -31,6 +27,8 @@
 </template>
 <script>
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
     mounted() {
@@ -40,8 +38,8 @@ export default {
         return{
             User:[],
             mobile: '',
-            type: '',
-            code: [],
+            type: 2,
+            code: '',
         }
     },
     created() {
@@ -64,6 +62,7 @@ export default {
                 .then(res=>{
                   if (res.data['status']['status'] === "success"){
                     this.User = res.data['status']['status'];
+                    $('#exampleModalCenter-2').modal('hide');
                     console.log(res.data['status']['status']);
                   }else {
                     console.log(res.data['status']['message']);

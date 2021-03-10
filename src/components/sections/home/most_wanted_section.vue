@@ -16,7 +16,8 @@
                 </div>
               <div class="container">
                 <div>
-                      <div v-for="(freelancer, index) in Freelancers" :key="index" class="card col-lg-4" style="display: inline-flex">
+                  <router-link to="/Freelancer_page">
+                       <div v-tilt v-for="(freelancer, index) in Freelancers" :key="index" class="card col-lg-4" style="display: inline-flex" v-on:click="getFreelancerId(freelancer.id)">
                     <div class="img-o-h">
                       <div class="order-card-img">
                         <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="width: 100px; height: 100px">
@@ -41,6 +42,7 @@
                       </div>
                     </div>
                   </div>
+                  </router-link>
                 </div>
               </div>
 
@@ -98,13 +100,13 @@ export default {
                     console.log(res.data['Categories']);
                 });
         },
-      fetchAllFreelancer(){
+        fetchAllFreelancer(){
         axios.get('http://18.194.157.202/api/home/get_freelancers', {
           headers:{
             'X-localization' : 'ar',
           },
           params:{
-            per_page : 3
+
           }
         },)
             .then(res => {
@@ -119,7 +121,7 @@ export default {
               console.log(e);
             })
       },
-      fetchFreelancer(){
+        fetchFreelancer(){
         axios.get('http://18.194.157.202/api/home/get_freelancers', {
           headers:{
             'X-localization' : 'ar',
@@ -142,6 +144,9 @@ export default {
           console.log(e);
         })
       },
+        getFreelancerId(freelancer_id){
+          sessionStorage.setItem('freelancer_id', freelancer_id);
+        }
     }
 
 }

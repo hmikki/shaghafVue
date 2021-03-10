@@ -16,6 +16,7 @@ import orders_details from "@/views/pages/orders_details";
 import orders_details_2 from "@/views/pages/orders_details_2";
 import chats from "@/views/pages/chats";
 import financial_operation from "@/views/pages/financial_operation";
+import Freelancer_page from "@/views/pages/Freelancer_page";
 
 const routes = [
   {
@@ -92,6 +93,11 @@ const routes = [
     path: '/financial',
     name: 'financial',
     component:  financial_operation
+  },
+  {
+    path: '/Freelancer_page',
+    name: 'Freelancer_page',
+    component:  Freelancer_page
   },
   {
     path: '/Home',

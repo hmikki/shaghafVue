@@ -20,7 +20,8 @@
                             </div>
                             <div class="siting-body">
                                 <div class="edit-c"><a href="" data-toggle="modal" data-target="#exampleModalCenter-5" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
-                                <div class="acount-user-img">
+                                <div class="verify-c"><a data-tooltip="verify account" href="" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
+                              <div class="acount-user-img">
                                     <img :src="User.avatar" id="profile-image" alt="">
                                     <input type="file" class="d-none" id="profile-img" onchange="ImageViewTrigger(this,'profile-image')" accept="image/*">
                                     <label for="profile-img"><span><i class="fas fa-plus-circle"></i></span></label>

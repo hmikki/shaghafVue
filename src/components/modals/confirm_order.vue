@@ -62,7 +62,7 @@
             <div class="col-lg-12">
               <div class="row total-price">
                 <h6 class="h5 col-lg-6">السعر الاجمالي</h6>
-                <p class="col-lg-6">1500 ر.س</p>
+                <p class="col-lg-6">{{ Product['price'] * this.quantity }} ر.س</p>
               </div>
             </div>
           </div>
@@ -78,7 +78,6 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
-import serve_user from "@/views/pages/serve_user";
 let $ = jquery;
 export default {
   name : 'confirm_order',
@@ -91,7 +90,6 @@ export default {
       Product:[],
       delivered_date: '',
       delivered_time : '',
-      product_id: serve_user.data().product_id,
       quantity :1,
       note :'',
       User:[],
@@ -109,7 +107,7 @@ export default {
           {
             delivered_date: this.delivered_date,
             delivered_time : this.delivered_time,
-            product_id : this.product_id,
+            product_id : sessionStorage.getItem('product_id'),
             quantity :this.quantity,
             note : this.note,
           },
@@ -142,7 +140,7 @@ export default {
               'X-localization' : 'ar',
             },
             params:{
-              product_id : serve_user.data().product_id,
+              product_id : sessionStorage.getItem('product_id'),
             }
             })
       .then(res=>{

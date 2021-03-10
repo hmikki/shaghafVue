@@ -35,7 +35,7 @@
                                 </div>
                                 <a href="" data-toggle="modal" data-target="#exampleModalCenter-1"  aria-label="Close" data-dismiss="modal">هل نسيت كلمة المرور؟</a>
                                 <div class="tab-button">
-                                    <button type="submit" class="btn" v-on:click.prevent="login">تسجيل الدخول</button>
+                                    <button type="submit" class="btn" v-on:click.prevent="login()">تسجيل الدخول</button>
                                 </div>
                             </form>
 
@@ -90,9 +90,12 @@ export default {
                 if(res.data['status']['status'] === "success"){
                     this.User = res.data['User'];
                     const token = res.data['User']['access_token'];
+                    const user_id = res.data['User']['id'];
+                    const user_type = res.data['User']['type'];
                     console.log(token);
-                    //sessionStorage.setItem('access_token', token);
                     sessionStorage.setItem('access_token_1', token);
+                    sessionStorage.setItem('user_id', user_id);
+                    sessionStorage.setItem('user_type', user_type);
                     $('#exampleModalCenter').modal('hide');
                   /*if (res.data['User']['type'] === '1'){
                     this.$router.push('/my_account');

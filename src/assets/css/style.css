@@ -616,6 +616,8 @@ ul{
     font-size: 1rem
 }
 .b-sh{
+    width: 150px;
+    min-height: 250px;
     border: 1px solid #EDEDED;
     border-radius: 30px;
     padding: 20px 15px;
@@ -922,7 +924,7 @@ input[type=number] {
     padding: 0 20px
 }
 .vcode-input {
-  width: 40px;
+  width: 100px;
   height: 40px;
   text-align: center;
   font-size: 18px;
@@ -1244,6 +1246,20 @@ input[type=number] {
     background-color: #FEE101;
 }
 .edit-c i{
+    color: #fff !important
+}
+.verify-c{
+    display: inline-flex;
+    padding: 7px;
+    border: 1px solid #FEE101;
+    border-radius: 50%;
+    position: absolute;
+    left: 15%;
+    top: 15%;
+    font-size: 12px;
+    background-color: #FEE101;
+}
+.verify-c i{
     color: #fff !important
 }
 .flag-img{
@@ -1612,6 +1628,9 @@ input[type=number] {
 .acount-sitting-2 .edit-c{
      top: 8%;   
 }
+.acount-sitting-2 .verify-c{
+    top: 8%;
+}
 .thanks .modal-body{
     padding: 40px 
 }
@@ -1850,6 +1869,17 @@ select:-moz-focusring {
     background-color: #eee;
     border: none
 }
+.orders .modal-tab,.orders .modal-tab li{
+    padding: 0!important
+}
+.orders .modal-tab .nav-pills .nav-link.active,.orders .modal-tab .nav-pills .show>.nav-link,.orders .modal-tab ul a,.orders .modal-tab{
+    color: #000;
+    font-size: 0.9rem
+}
+.orders .modal-tab{
+    background-color: #eee;
+    border: none
+}
 .collection-request h5{
     padding: 20px 0px 0px;
     margin-bottom: 0;   
@@ -2071,6 +2101,7 @@ Start Chats Page
 }
 
 .card-img-top{
+    height: 150px;
     border-top-left-radius: calc(1.25rem - 1px);
     border-top-right-radius: calc(1.25rem - 1px);
 }

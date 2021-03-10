@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade thanks rate-page" id="exampleModalCenter-8" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade thanks rate-page" id="rate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -28,7 +28,7 @@
                         </div>
                     </form>
                     <div class="tab-button">
-                        <button type="submit" class="btn" v-on:click.prevent="reviewOrder()">تقييم</button>
+                        <button type="submit" class="btn" v-on:click.prevent="reviewOrder(); updateOrder(8)">تقييم</button>
                     </div>
                 </div>
             </div>
@@ -42,6 +42,7 @@ import axios from "axios";
 const token= sessionStorage.getItem('access_token');
 
 export default {
+  name: 'rate',
     mounted() {
         console.log('Component mounted.')
     },
@@ -81,7 +82,32 @@ export default {
             .catch(e=>{
               console.log(e);
             });
-      }
+      },
+    updateOrder(order_status){
+      const token = sessionStorage.getItem('access_token_1');
+      axios.post('http://18.194.157.202/api/orders/update',
+          {
+            order_id : sessionStorage.getItem('order_id'),
+            status : order_status,
+          },
+          {
+            headers:{
+              'Authorization' : 'Bearer ' +token,
+              'X-localization' : 'ar',
+            },
+          })
+          .then(res=>{
+            if (res.data['status']['status'] === "success"){
+              console.log(res.data['status']['status']);
+            }else {
+              console.log(res.data['status']['status']);
+            }
+          })
+          .catch(e=>{
+            console.log(e);
+          })
+    }
+
   }
 }
 </script>

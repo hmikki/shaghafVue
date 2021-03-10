@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-3" v-for="(order, index) in Orders" :key="index">
             <div class="card pro-ser-card" onclick="">
-                <img class="card-img-top" src="../../../assets/img/product-1.svg" alt="Card image cap">
+                <img class="card-img-top" :src="order['Product']['first_image']" alt="Card image cap">
                 <div class="card-body">
                     <h6 class="card-title">{{ order.Product.name }}</h6>
                     <p class="card-text">{{ order.Product.description }}</p>

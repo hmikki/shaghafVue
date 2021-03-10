@@ -2,10 +2,10 @@
   <edit_order></edit_order>
     <div class="row">
         <div class="col-lg-3" v-for="(product,index) in Products" :key="index">
-          <span class="hidden" :v-model="product_id = product.id"></span>
-            <div class="card pro-ser-card">
+            <div class="card pro-ser-card" v-tilt>
                 <img class="card-img-top" :src="product.first_image" alt="Card image cap">
                 <div class="card-body">
+                  {{product.id}}
                     <h6 class="card-title">{{ product['name'] }}</h6>
                     <p class="card-text">{{ product['description'] }}</p>
                     <hr>
@@ -14,7 +14,7 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
-                            <button type="submit" class="btn" data-toggle="modal" data-target="#exampleModalCenter-10" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen" ></i> تعديل </button>
+                            <button type="submit" v-on:click="getProductId(product.id)" class="btn" data-toggle="modal" data-target="#edit_product" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i> تعديل </button>
                         </div>
                         <div class="col-lg-6">
                             <button type="submit" class="btn no-bg" data-toggle="modal" data-target="#exampleModalCenter-11" aria-label="Close" data-dismiss="modal"><i class="far fa-trash-alt"></i> حذف </button>
@@ -95,7 +95,7 @@ export default {
       const token = sessionStorage.getItem('access_token_1');
       axios.post('http://18.194.157.202/api/products/destroy',
           {
-            product_id:this.product_id,
+            product_id: sessionStorage.getItem('product_id'),
           },
           {
             headers:{
@@ -114,6 +114,9 @@ export default {
       .catch(e=>{
         console.log(e);
       })
+    },
+    getProductId(product_id){
+      sessionStorage.setItem('product_id',product_id);
     }
   }
 }

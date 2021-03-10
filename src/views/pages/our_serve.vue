@@ -70,7 +70,7 @@ export default {
         Categories: {
           SubCategories:[],
         },
-        category_id: '',
+        category_id: sessionStorage.getItem('category_id'),
         Freelancers:[],
       }
   },

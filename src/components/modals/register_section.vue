@@ -105,6 +105,7 @@ export default {
                         sessionStorage.setItem('email', email);
                         sessionStorage.setItem('password', password);
                         $('#exampleModalCenter').modal('hide');
+                        $('#exampleModalCenter-2').modal('show');
                         console.log(res.data['User']['access_token'] + '/n' + res.data['User']['email'] + '/n' + res.data['User']['password']);
                         console.log(res.data['status']['status']);
                         }else {

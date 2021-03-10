@@ -104,7 +104,6 @@ export default {
     return{
       Balance:[],
       Transactions:[],
-      value:100,
     }
   },
   created() {

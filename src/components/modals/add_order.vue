@@ -50,24 +50,9 @@
                     </div>
                     <div class="row">
                       <div class="col-lg-6">
-                        <h6 class="text-right">صورة الخدمة</h6>
-                          <input type="file" v-on:change="onSelectImage" id="product_image">                                                                          <!-- Upload  -->
+                        <h6 class="text-right">صورة الخدمة</h6>                                                                          <!-- Upload  -->
                           <form id="file-upload-form" class="">
-<!--                          <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
-
-                          <label for="file-upload" id="file-drag">
-                            <img id="file-image" src="#" alt="Preview" class="hidden">
-                            <div id="start">
-                              <img src="../../assets/img/upload.svg" alt="" id="add-order">
-                              <div id="notimage" class="hidden">Please select an image</div>
-                            </div>
-                            <div id="response" class="hidden">
-                              <div id="messages"></div>
-                              <progress class="progress" id="file-progress" value="0">
-                                <span>0</span>%
-                              </progress>
-                            </div>
-                          </label>-->
+                          <input id="files" ref="files" multiple type="file" name="fileUpload" accept="image/*"/>
                         </form>
                       </div>
                     </div>
@@ -103,10 +88,7 @@ export default {
           sub_category_id:'',
           price:'',
           type:'',
-          media:[],
-          url: 'http://18.194.157.202/storage/users/avatar/5366aeda6ab7226dbbac7ddc52317e62.svg',
-          headers: {'access-token': sessionStorage.getItem('access_token_1')},
-          filesUploaded: []
+          files: '',
         }
     },
     created() {
@@ -134,17 +116,21 @@ export default {
           })
     },
     addService() {
+      this.files = this.$refs.files.files;
+      let formData = new FormData();
+      for( var i = 0; i < this.files.length; i++ ){
+        let file = this.files[i];
+        formData.append('media[' + i + ']', file);
+      }
+      formData.append('name', this.name);
+      formData.append('description', this.description);
+      formData.append('category_id', this.category_id);
+      formData.append('sub_category_id', this.sub_category_id);
+      formData.append('price', this.price);
+      formData.append('type', this.type);
       const token = sessionStorage.getItem('access_token_1');
       axios.post('http://18.194.157.202/api/products/store',
-          {
-            name: this.name,
-            description: this.description,
-            category_id: this.category_id,
-            sub_category_id: this.sub_category_id,
-            price: this.price,
-            type: this.type,
-            media : this.media,
-          },
+          formData,
           {
             headers: {
               'Authorization': 'Bearer ' + token,
@@ -154,6 +140,7 @@ export default {
           .then(res => {
             if (res.data['status']['status'] === "success") {
               this.Product = res.data['Product'];
+              $('#exampleModalCenter-9').modal('hide');
               console.log(res.data['status']['status']);
             } else {
               console.log(res.data['status']['message']);
@@ -181,29 +168,6 @@ export default {
             console.log(e);
           })
     },
-    ImageViewTrigger() {
-      var input = document.getElementById('file-upload');
-      console.log(input);
-      var name = 'add-order';
-      if (input.files && input.files[0]) {
-          console.log('done');
-          let reader = new FileReader();
-          reader.onload = function (e) {
-          $('#'+name).attr('src', e.target.result);
-      };
-          reader.readAsDataURL(input.files[0]);
-      }
-    },
-    onSelectImage(event) {
-      console.log(event);
-      this.media = event.target.files[0];
-      console.log(this.media);
-      let reader = new FileReader();
-      reader.onload = function (e) {
-        $('#add-order').attr('src', e.target.result);
-      };
-      reader.readAsDataURL(this.media);
-    }
 
   }
 }

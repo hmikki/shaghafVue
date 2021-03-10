@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade add-o" id="exampleModalCenter-10" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade add-o" id="edit_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -13,7 +13,7 @@
                         <label for="cats">الخدمة الرئيسية</label>
                         <select class="form-control minimal" id="cats" v-on:change.prevent="showSubCategories()">
                             <option>select</option>
-                            <option v-for="(category, index) in Categories" :key="index" :class="{'selected': index === 0}" :value="category.id">
+                            <option v-for="(category, index) in Categories" :key="index" :class="{'selected': index === 0}" :value="category_id = category.id">
                               {{ category.name }}</option>
                         </select>
                     </div>
@@ -21,7 +21,7 @@
                         <label for="subcats" >الخدمة الفرعية</label>
                         <select class="form-control minimal" id="subcats">
                           <option >select</option>
-                          <option v-for="(subcategory, index) in SubCategories" :key="index" :value="subcategory.id">
+                          <option v-for="(subcategory, index) in SubCategories" :key="index" :value="sub_category_id = subcategory.id">
                             {{ subcategory['name'] }}</option>
                         </select>
                     </div>
@@ -51,27 +51,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <h6 class="text-right">صورة الخدمة</h6>                                                                                                   <!-- Upload  -->
-                            <form id="file-upload-form" class="uploader">
-                                <input id="file-upload" type="file" name="fileUpload" onchange="ImageViewTrigger(this,'edit_order')" accept="image/*" :v-model="media" />
-
-                                <label for="file-upload" id="file-drag">
-                                    <img id="file-image" src="#" alt="Preview" class="hidden">
-                                    <div id="start">
-                                        <img src="../../assets/img/upload.svg" alt="" id="edit-order">
-                                        <div id="notimage" class="hidden">Please select an image</div>
-                                    </div>
-                                    <div id="response" class="hidden">
-                                        <div id="messages"></div>
-                                        <progress class="progress" id="file-progress" value="0">
-                                            <span>0</span>%
-                                        </progress>
-                                    </div>
-                                </label>
+                            <form id="file-upload-form" class="">
+                              <input id="files" ref="files" multiple type="file" name="fileUpload" accept="image/*"/>
                             </form>
                         </div>
                     </div>
                     <div class="tab-button">
-                        <button type="submit" class="btn">تعديل</button>
+                        <button type="submit" v-on:click.prevent="editService()" class="btn">تعديل</button>
                     </div>
                     <div class="tab-a"></div>
                 </div>
@@ -82,7 +68,6 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
-import services from "@/components/sections/add_service/services";
 let $ = jquery;
 
 export default {
@@ -94,14 +79,14 @@ export default {
         Categories:[],
         SubCategories: [],
         Product:[],
-        product_id:services.data().product_id,
+        product_id: sessionStorage.getItem('product_id'),
         name: '',
         description:'',
         category_id:'',
         sub_category_id:'',
         price:'',
         type:'',
-        media:[],
+        files: '',
       }
   },
   created() {
@@ -127,24 +112,17 @@ export default {
             console.log(e);
           })
     },
-      editOrder(){
+      fetchDetails(){
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/products/update',
-            {
-              product_id:this.product_id,
-              name: this.name,
-              description: this.description,
-              category_id: this.category_id,
-              sub_category_id: this.sub_category_id,
-              price: this.price,
-              type: this.type,
-              media:this.media,
-            },
+        axios.get('http://18.194.157.202/api/products/show',
             {
               headers:{
                 'Authorization' : 'Bearer ' +token,
                 'X-localization' : 'ar',
               },
+              params:{
+                product_id : sessionStorage.getItem('product_id')
+              }
             })
         .then(res=>{
           if (res.data['status']['status'] === "success"){
@@ -158,17 +136,46 @@ export default {
           console.log(e);
         })
       },
-    ImageViewTrigger(input,name) {
-      if (input.files && input.files[0]) {
-        console.log('1');
-        let reader = new FileReader();
-        reader.onload = function (e) {
-          $('#'+name).attr('src', e.target.result);
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    },
-    showSubCategories(){
+      editService(){
+        console.log(this.product_id);
+        this.files = this.$refs.files.files;
+        let formData = new FormData();
+        for( var i = 0; i < this.files.length; i++ ){
+          let file = this.files[i];
+          formData.append('media[' + i + ']', file);
+        }
+        formData.append('product_id', sessionStorage.getItem('product_id'));
+        formData.append('name', this.name);
+        formData.append('description', this.description);
+        formData.append('category_id', this.category_id);
+        formData.append('sub_category_id', this.sub_category_id);
+        formData.append('price', this.price);
+        formData.append('type', this.type);
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/products/update',
+            formData,
+            {
+              headers:{
+                'Authorization' : 'Bearer ' +token,
+                'X-localization' : 'ar',
+                'Content-Type': 'multipart/form-data'
+              },
+            })
+        .then(res=>{
+          if (res.data['status']['status'] === "success"){
+            this.Product = res.data['Product'];
+            console.log(res.data['status']['status']);
+            console.log(res.data['Product']);
+            $('#edit_product').modal('hide');
+          }else {
+            console.log(res.data['status']['message']);
+          }
+        })
+        .catch(e=>{
+          console.log(e);
+        })
+      },
+      showSubCategories(){
       var select = document.getElementById('cats').value;
       console.log(select);
       axios.get('http://18.194.157.202/api/home/categories',
