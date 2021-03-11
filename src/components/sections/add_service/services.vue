@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-3" v-for="(product,index) in Products" :key="index">
             <div class="card pro-ser-card" v-tilt>
-                <img class="card-img-top" :src="product.first_image" alt="Card image cap">
+                <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
                 <div class="card-body">
                   {{product.id}}
                     <h6 class="card-title">{{ product['name'] }}</h6>
@@ -66,30 +66,30 @@ export default {
     }
   },
   created() {
-      this.fetchServices();
+      this.fetchAllServices();
   },
   methods:{
-    fetchServices(){
+    fetchAllServices(){
       const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/products',
+      axios.get('http://18.194.157.202/api/products/',
           {
             headers:{
-              'Authorization' : 'Bearer ' +token,
+              'Authorization': 'Bearer ' +token,
               'X-localization' : 'ar',
             },
+            params:{
+              user_id : sessionStorage.getItem('freelancer_id'),
+            }
           })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Products = res.data['Products'];
-          console.log(res.data['Products']);
-          console.log(res.data['status']['status']);
-        }else {
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
-        console.log(e);
-      })
+          .then(res =>{
+            if (res.data['status']['status'] === "success"){
+              this.Products = res.data['Products'];
+              console.log(res.data['Products']);
+
+            }else {
+              console.log(res.data['status']['status']);
+            }
+          })
     },
     deleteService(){
       const token = sessionStorage.getItem('access_token_1');

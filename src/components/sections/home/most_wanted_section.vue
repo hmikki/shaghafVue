@@ -106,7 +106,6 @@ export default {
             'X-localization' : 'ar',
           },
           params:{
-
           }
         },)
             .then(res => {

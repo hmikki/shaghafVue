@@ -1,6 +1,7 @@
 <template>
     <change_password_2></change_password_2>
     <change_setting_2></change_setting_2>
+    <error></error>
     <!-- start wrapper -->
     <div class="wrapper">
         <div class="container">
@@ -23,8 +24,8 @@
                                 <div class="verify-c"><a data-tooltip="verify account" href="" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
                               <div class="acount-user-img">
                                     <img :src="User.avatar" id="profile-image" alt="">
-                                    <input type="file" class="d-none" id="profile-img" onchange="ImageViewTrigger(this,'profile-image')" accept="image/*">
-                                    <label for="profile-img"><span><i class="fas fa-plus-circle"></i></span></label>
+                                    <input type="file" class="d-none" id="file" ref="file" v-on:change="handleImage()" accept="image/*">
+                                    <label for="file"><span><i class="fas fa-plus-circle"></i></span></label>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group">
@@ -109,7 +110,10 @@
 <script>
 import change_setting_2 from "@/components/modals/change_setting_2";
 import change_password_2 from "@/components/modals/change_password_2";
+import error from "@/components/modals/error";
 import axios from "axios";
+import jquery from 'jquery';
+let $ = jquery;
 
 export default {
   name: 'my_account',
@@ -119,10 +123,12 @@ export default {
   components:{
       change_setting_2,
       change_password_2,
+      error,
   },
   data(){
       return{
         User:[],
+        file:'',
       }
   },
   created() {
@@ -133,7 +139,8 @@ export default {
       const token = sessionStorage.getItem('access_token_1');
         axios.get('http://18.194.157.202/api/auth/me',{
           headers:{
-            'Authorization': 'Bearer '+token
+            'Authorization': 'Bearer '+token,
+            'X-localization' : 'ar',
           }
         })
             .then(res=>{
@@ -146,6 +153,37 @@ export default {
               }
             })
     },
+    handleImage(){
+      let file = this.$refs.file.files[0];
+      if (file.type === "image/png"){
+        let formData = new FormData();
+        formData.append('avatar',file);
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/auth/update',
+            formData,
+            {
+              headers:{
+                'Authorization': 'Bearer '+token,
+                'X-localization' : 'ar',
+              }
+            })
+        .then(res=>{
+          if (res.data['status']['status'] === "success") {
+            this.User = res.data['User'];
+            $('#profile-image').src = res.data['User']['avatar'];
+            console.log(res.data['status']['status']);
+            console.log(res.data['User']);
+          }else {
+            console.log(res.data['status']['status']);
+          }
+        })
+        .catch(e=>{
+          console.log(e);
+        })
+      }else {
+        $('#error').modal();
+      }
+    }
   }
 }
 </script>

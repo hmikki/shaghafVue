@@ -2101,9 +2101,11 @@ Start Chats Page
 }
 
 .card-img-top{
-    height: 150px;
     border-top-left-radius: calc(1.25rem - 1px);
     border-top-right-radius: calc(1.25rem - 1px);
+}
+.sevice-user .card-img-top{
+    height: 150px;
 }
 
 .map{
