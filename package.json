@@ -17,7 +17,7 @@
     "firebase": "^8.2.10",
     "googlemaps-vue3": "^2.0.4",
     "jquery": "^3.5.1",
-    "popper.js": "^1.16.1",
+    "pusher-js": "^7.0.3",
     "v-file-upload": "^3.1.7",
     "vue": "^3.0.0",
     "vue-audio-recorder": "^3.0.1",

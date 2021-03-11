@@ -28,27 +28,31 @@ import '../src/assets/js/head.js';
 import './assets/js/mains.js';
 import './assets/js/slick';
 import '../public/firebase-messaging-sw.js';
-import {messaging} from '../public/firebase-messaging-sw.js';
+import firebase from "firebase";
 
-
-messaging.getToken({ vapidKey: 'BCUvW2TRd4xbzM7D7ncJO8r5mJNoOtnSat9Dtso9IQRXhNALvFqSFBxgYTAzuToxuVRUpgVLym0yXKrOgwh3Nt4'})
-    .then((currentToken) => {
+function saveMessagingDeviceToken(){
+    firebase.messaging().getToken().then(function(currentToken) {
         if (currentToken) {
-            // Send the token to your server and update the UI if necessary
-            sessionStorage.setItem('device_token', currentToken)
-            console.log(currentToken);
+            console.log('Got FCM device token:', currentToken);
+            // Saving the Device Token to the datastore.
+            firebase.firestore().collection('fcmTokens').doc(currentToken)
+                .set({uid: firebase.auth().currentUser.uid});
         } else {
-            // Show permission request UI
-            console.log('No registration token available. Request permission to generate one.');
-            // ...
+            // Need to request permissions to show notifications.
+            requestNotificationsPermissions();
         }
-    }).catch((err) => {
-    console.log('An error occurred while retrieving token. ', err);
-    // ...
-});
-messaging.onMessage((payload) => {
-    console.log('Message received. ', payload);
-    // ...
-});
+    }).catch(function(error){
+        console.error('Unable to get messaging token.', error);
+    });
+}
+function requestNotificationsPermissions() {
+    console.log('Requesting notifications permission...');
+    firebase.messaging().requestPermission().then(function() {
+        // Notification permission granted.
+        saveMessagingDeviceToken();
+    }).catch(function(error) {
+        console.error('Unable to get permission to notify.', error);
+    });
+}
 
-createApp(App).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(VueSlickCarousel).use(FileUpload).mount('#app');
+createApp(App).use(router).use(store).use(VueTilt).use(saveMessagingDeviceToken).use(Bootstrap).use(jquery).use(VueSlickCarousel).use(FileUpload).mount('#app');

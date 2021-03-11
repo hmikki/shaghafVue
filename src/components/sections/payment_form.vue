@@ -5,6 +5,6 @@
 
 <script>
 let checkoutId = sessionStorage.getItem('payment_token');
-import 'https://test.oppwa.com/v1/paymentWidgets.js?checkoutId='+ checkoutId;
+import 'https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=';
 
 </script>

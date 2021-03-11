@@ -94,6 +94,8 @@
 </template>
 <script>
 import axios from "axios";
+import Pusher from 'pusher-js';
+import {mapState} from "vuex";
 export default {
   name : 'chats',
   mounted() {
@@ -108,12 +110,31 @@ export default {
       message:'',
       type : '',
       file :'',
+      pusher : null,
+      channel :null,
+      chat_room_id: sessionStorage.getItem('room_id'),
     }
+  },
+  computed:{
+    ...mapState({
+
+    })
   },
   created() {
     this.fetchRooms();
     this.openChat();
     this.fetchMessages();
+    Pusher.logToConsole = true;
+    let pusher = new Pusher('da99af9260d89f306342', {
+      cluster: 'ap1'
+    });
+    let that = this;
+    this.channel = pusher.subscribe("chat_room." + this.chat_room_id + ".new_message");
+    this.channel.bind('CreateMessageEvent', function(data) {
+      console.log(data.message);
+      that.Messages.push(data.message);
+      console.log(that.Messages);
+    });
   },
   methods:{
     fetchRooms(){
@@ -165,6 +186,9 @@ export default {
           .catch(e=>{
             console.log(e);
           })
+    },
+    getMessage(data){
+      this.Messages.push(data);
     },
     fetchMessages(){
       console.log(this.room_id);
@@ -291,7 +315,8 @@ export default {
     },
     getRoomId(room_id){
       sessionStorage.setItem('room_id', room_id);
-    }
+    },
+
   }
 }
 </script>
