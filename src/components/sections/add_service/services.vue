@@ -76,6 +76,7 @@ export default {
             headers:{
               'Authorization': 'Bearer ' +token,
               'X-localization' : 'ar',
+              'Accept' : 'application/json',
             },
             params:{
               user_id : sessionStorage.getItem('freelancer_id'),

@@ -19,7 +19,7 @@
           <div class="tab-button">
             <button type="submit" class="btn" id="dep" v-on:click.prevent="checkBalance()">ايداع</button>
           </div>
-          <form action="/" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
+
         </div>
       </div>
     </div>
@@ -69,20 +69,7 @@ export default {
               sessionStorage.setItem('payment_token', payment_token);
               $('#deposit').modal('hide');
               console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
-              axios.get('https://test.oppwa.com/v1/paymentWidgets.js?checkoutId='+ transaction_id)
-              .then(res=>{
-                console.log(res);
-              })
-              .catch(e=>{
-                console.log(e);
-              });
-              axios.get('https://test.oppwa.com/v1/checkouts/'+payment_token+'/payment')
-                  .then(res=>{
-                    console.log(res);
-                  })
-                  .catch(e=>{
-                    console.log(e);
-                  });
+              this.$router.push('/payment_form');
             }else {
               console.log(res.data['status']['status']);
             }
