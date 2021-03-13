@@ -53,7 +53,7 @@ import axios from "axios";
 import register_section from "@/components/modals/register_section";
 import Jquery from 'jquery';
 let $ = Jquery;
-
+import Pusher from 'pusher-js';
 
 export default {
   name: 'login',
@@ -74,6 +74,40 @@ export default {
     },
     created() {
         this.login();
+        /********* pusher auth***********/
+     /* let authorizer = (channel, options) => {
+        return {
+          authorize: (socketId, callback) => {
+            fetch(authUrl, {
+              method: "POST",
+              headers: new Headers({ "Content-Type": "application/json" }),
+              body: JSON.stringify({
+                socket_id: socketId,
+                channel_name: channel.name
+              })
+            })
+                .then(res => {
+                  if (!res.ok) {
+                    throw new Error(`Received ${res.statusCode} from ${authUrl}`);
+                  }
+                  return res.json();
+                })
+                .then(data => {
+                  callback(null, data);
+                })
+                .catch(err => {
+                  callback(new Error(`Error calling auth endpoint: ${err}`), {
+                    auth: ""
+                  });
+                });
+          }
+        };
+      };
+      const pusher = new Pusher('da99af9260d89f306342', {
+        cluster: 'ap1',
+        authorizer: authorizer,
+      })
+      console.log(pusher);*/
     },
     methods:{
 
@@ -119,6 +153,7 @@ export default {
                 });
 
         },
+
     }
 
 }

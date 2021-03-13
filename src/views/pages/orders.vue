@@ -13,10 +13,10 @@
                 <div class="modal-tab col-3">
                   <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
                     <li class="nav-item col-6">
-                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click="this.is_completed = 0">الطلبات الحالية</a>
+                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="fetchCurrentOrder(0)">الطلبات الحالية</a>
                     </li>
                     <li class="nav-item col-6">
-                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click="this.is_completed = 1">الطلبات السابقة</a>
+                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="fetchCurrentOrder(1)">الطلبات السابقة</a>
                     </li>
                   </ul>
                 </div>
@@ -26,10 +26,10 @@
                   <div class="row">
                     <div class="col-lg-3" v-for="(order,index) in Orders" :key="index" v-on:click.prevent="getOrderId(order.id)">
                       <div class="card pro-ser-card">
-                        <img class="card-img-top" :src="order['Product']['first_image']" alt="Card image cap">
+                        <img class="card-img-top" src="" alt="Card image cap">
                         <div class="card-body">
-                          <h6 class="card-title">{{order['Product']['name']}}</h6>
-                          <p class="card-text">{{ order['Product']['description'] }}</p>
+                          <h6 class="card-title">name</h6>
+                          <p class="card-text">description</p>
                           <hr>
                           <div class="row bg-h">
                             <div class="col-lg-6"><span class="count count-pr">{{ order['total'] }}</span></div>
@@ -56,20 +56,33 @@
 
                 <div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="pills-profile-tab">
                   <div class="row">
-                    <div class="col-lg-3"></div>
-                    <div class="col-lg-6 p-balance">
-                      <div class="balance balance-op row" v-for="(transaction, index) in Transactions" :key="index">
-                        <div class="col-lg-10">
-                          <i class="fas fa-arrow-down"></i>
-                          <span>  {{ transaction['value'] }} ريال سعودي</span>
-                          <p class="balance-op-p">{{ transaction['type_str'] }} : <span>{{ transaction['status_str'] }}</span></p>
-                        </div>
-                        <div class="col-lg-2 balance-op-link">
-                          <a href=""><i class="fas fa-chevron-left"></i></a>
+                    <div class="col-lg-3" v-for="(order,index) in Orders" :key="index" v-on:click.prevent="getOrderId(order.id)">
+                      <div class="card pro-ser-card">
+                        <img class="card-img-top" src="" alt="Card image cap">
+                        <div class="card-body">
+                          <h6 class="card-title">name</h6>
+                          <p class="card-text">description</p>
+                          <hr>
+                          <div class="row bg-h">
+                            <div class="col-lg-6"><span class="count count-pr">{{ order['total'] }}</span></div>
+                            <div class="col-lg-6">
+                              <span class="count">عدد الخدمة : {{ order['quantity'] }}</span>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="m-name col-7">
+                              <span class="count">المنفذ</span>
+                              <p>{{ order['Freelancer']['name'] }}</p>
+                            </div>
+                            <router-link class="col-5 refused" to="/orders_details">
+                              <div class="col-5 refused">
+                                {{ order['status_str'] }}
+                              </div>
+                            </router-link>
+                          </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-3"></div>
                   </div>
                 </div>
               </div>
@@ -92,7 +105,7 @@ export default {
         product: [],
         Freelancer: [],
         User:[],
-        is_completed: 0
+        is_completed: null
     },
     }
   },
@@ -100,7 +113,7 @@ export default {
       this.fetchCurrentOrder();
   },
   methods:{
-    fetchCurrentOrder(){
+    fetchCurrentOrder(val){
       const token = sessionStorage.getItem('access_token_1');
       axios.get('http://18.194.157.202/api/orders',
           {
@@ -109,7 +122,7 @@ export default {
               'X-localization' : 'ar',
             },
             params:{
-              is_completed : this.is_completed,
+              is_completed : val,
             }
           })
           .then(res=>{
@@ -127,7 +140,8 @@ export default {
     },
     getOrderId(order_id){
       sessionStorage.setItem('order_id', order_id);
-    }
+    },
+
 
   }
 

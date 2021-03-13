@@ -15,35 +15,40 @@
                     </div>
                 </div>
               <div class="container">
-                <div>
-                  <router-link to="/Freelancer_page">
-                       <div v-tilt v-for="(freelancer, index) in Freelancers" :key="index" class="card col-lg-4" style="display: inline-flex" v-on:click="getFreelancerId(freelancer.id)">
-                    <div class="img-o-h">
-                      <div class="order-card-img">
-                        <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="width: 100px; height: 100px">
+                <carousel :items-to-show="4" :wrapAround="true" :snapAlign="start" :initialSlide="0">
+                  <slide v-for="(freelancer, index) in Freelancers" :key="index">
+                    <router-link v-on:click="getFreelancerId(freelancer.id)" to="/Freelancer_page">
+                    <div class="card">
+                      <div class="img-o-h">
+                        <div class="order-card-img">
+                          <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap">
+                        </div>
                       </div>
-                    </div>
-                    <div class="card-body">
-                      <h4>{{ freelancer.name }}</h4>
-                      <p class="card-text">{{freelancer['Categories']['name']}}</p>
-                    </div>
-                    <div class="card-footer">
-                      <div class="row">
-                        <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i> {{ freelancer.City['name'] }}</span></div>
-                        <div class="col-3 p-0"></div>
-                        <div class="col-lg-2"></div>
-                        <div class="col-4 star">
-                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '1'}"></span>
-                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '2'}"></span>
-                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '3'}"></span>
-                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '4'}"></span>
-                          <span class="fa fa-star" :class="{'checked': freelancer.rate >= '5'}"></span>
+                      <div class="card-body">
+                        <h4>{{ freelancer.name }}</h4>
+                        <p class="card-text">{{freelancer['Categories']['name']}}</p>
+                      </div>
+                      <div class="card-footer">
+                        <div class="row">
+                          <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i> {{ freelancer.City['name'] }}</span></div>
+                          <div class="col-lg-2"></div>
+                          <div class="col-4 star">
+                            <span class="fa fa-star" :class="{'checked': freelancer.rate >= '1'}"></span>
+                            <span class="fa fa-star" :class="{'checked': freelancer.rate >= '2'}"></span>
+                            <span class="fa fa-star" :class="{'checked': freelancer.rate >= '3'}"></span>
+                            <span class="fa fa-star" :class="{'checked': freelancer.rate >= '4'}"></span>
+                            <span class="fa fa-star" :class="{'checked': freelancer.rate >= '5'}"></span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  </router-link>
-                </div>
+                    </router-link>
+                  </slide>
+                  <template #addons>
+                    <navigation />
+                    <pagination />
+                  </template>
+                </carousel>
               </div>
 
             </div>
@@ -55,6 +60,8 @@
 import axios from "axios";
 import jquery from 'jquery';
 let $ = jquery;
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 export default {
     mounted() {
@@ -64,6 +71,12 @@ export default {
           $(this).addClass("active");
         });
           },
+  components:{
+    Carousel,
+    Slide,
+    Pagination,
+    Navigation,
+  },
     data(){
         return{
             Categories:[],
@@ -150,3 +163,4 @@ export default {
 
 }
 </script>
+

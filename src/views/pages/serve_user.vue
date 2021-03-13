@@ -95,8 +95,8 @@
                 <div class="pro-ser col-3">
                   <!-- start navs section -->
                   <div class="col-lg most-l">
-                    <a href="javascript:;" class="active">منتجات</a>
-                    <a href="javascript:;">خدمات</a>
+                    <a href="javascript:;" class="active" v-on:click.prevent="fetchProducts(2)">منتجات</a>
+                    <a href="javascript:;" v-on:click.prevent="fetchProducts(1)">خدمات</a>
                   </div>
                 </div>
               </div>
@@ -284,7 +284,7 @@ export default {
           console.log(e);
         })
       },
-      fetchProducts(){
+      fetchProducts(val){
       const token = sessionStorage.getItem('access_token_1');
       const user_id = sessionStorage.getItem('user_id');
       axios.get('http://18.194.157.202/api/products',
@@ -295,6 +295,7 @@ export default {
             },
             params:{
               user_id : user_id,
+              type: val,
             }
           })
       .then(res =>{

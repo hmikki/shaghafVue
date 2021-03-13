@@ -5,7 +5,6 @@
             <div class="card pro-ser-card" v-tilt>
                 <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
                 <div class="card-body">
-                  {{product.id}}
                     <h6 class="card-title">{{ product['name'] }}</h6>
                     <p class="card-text">{{ product['description'] }}</p>
                     <hr>
@@ -66,20 +65,21 @@ export default {
     }
   },
   created() {
-      this.fetchAllServices();
+      this.fetchService();
   },
   methods:{
-    fetchAllServices(){
+    fetchService(){
       const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/products/',
+      const user_id = sessionStorage.getItem('user_id');
+      axios.get('http://18.194.157.202/api/products',
           {
             headers:{
               'Authorization': 'Bearer ' +token,
               'X-localization' : 'ar',
-              'Accept' : 'application/json',
             },
             params:{
-              user_id : sessionStorage.getItem('freelancer_id'),
+              user_id : user_id,
+              type: 1,
             }
           })
           .then(res =>{

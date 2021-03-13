@@ -16,6 +16,7 @@
  */
 // global window, document, define, jQuery, setInterval, clearInterval
 import jQuery from 'jquery';
+
 import define from 'define-property';
 (function(factory) {
     'use strict';

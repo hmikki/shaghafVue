@@ -16,12 +16,18 @@ import orders_details from "@/views/pages/orders_details";
 import orders_details_2 from "@/views/pages/orders_details_2";
 import chats from "@/views/pages/chats";
 import financial_operation from "@/views/pages/financial_operation";
+import payment_form from "@/components/sections/payment_form";
+import most_wanted_section from "@/components/sections/home/most_wanted_section";
+import said_section from "@/components/sections/home/said_section";
+import services_section from "@/components/sections/home/services_section";
+import contact_section from "@/components/sections/home/contact_section";
+import Freelancer_page from "@/views/pages/Freelancer_page";
 
 const routes = [
   {
     path: '/',
     name: 'shaghaf',
-    component:  home, carosel_section, about_section,
+    component:  home, carosel_section, about_section,most_wanted_section, said_section, services_section, contact_section
   },
   {
     path: '/my_account',
@@ -92,6 +98,16 @@ const routes = [
     path: '/financial',
     name: 'financial',
     component:  financial_operation
+  },
+  {
+    path: '/payment_form',
+    name: 'payment_form',
+    component:  payment_form
+  },
+  {
+    path: '/Freelancer_page',
+    name: 'Freelancer_page',
+    component:  Freelancer_page
   },
   {
     path: '/Home',

@@ -32,8 +32,8 @@
                     <div class="form-group">
                         <label for="formGroupExampleInput"> نوع الخدمة</label>
                       <select class="form-control minimal" id="exampleFormControlSelect3">
-                        <option :v-model="type = '1'">خدمات</option>
-                        <option :v-model="type = '2'">منتجات</option>
+                        <option>خدمات</option>
+                        <option>منتجات</option>
                       </select>
                     </div>
 

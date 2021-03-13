@@ -26,8 +26,8 @@
                     </div>
                     <form class="form-inline col-lg-5">
                         <div class="row w-100">
-                            <input class="form-control mr-sm-2 search-t col-lg" type="search" placeholder="بحث عن خدمة" aria-label="Search">
-                            <button class="btn btn-outline my-2 my-sm-0 search-b col-lg-2" type="submit"><i class="fas fa-search"></i></button>
+                            <input class="form-control mr-sm-2 search-t col-lg" type="search" placeholder="بحث عن خدمة" aria-label="Search" v-model="name">
+                            <button class="btn btn-outline my-2 my-sm-0 search-b col-lg-2" type="submit" v-on:click.prevent="search()"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
 
@@ -50,6 +50,7 @@ import header_login_section from "@/components/layouts/header_login_section";
 import login_section from "@/components/modals/login-section";
 import forget_password_section from "@/components/modals/forget_password_section";
 import verification_code_section from "@/components/modals/verification_code_section";
+import axios from "axios";
 export default {
   components: {
     nav_section,
@@ -65,12 +66,34 @@ export default {
   data(){
     return{
       token: sessionStorage.getItem('access_token_1'),
+      Freelancers:[],
+      name: '',
     }
   },
   created() {
   },
   methods:{
-
+    search(){
+      axios.get('http://18.194.157.202/api/home/get_freelancers', {
+        headers:{
+          'X-localization' : 'ar',
+        },
+        params:{
+        }
+      },)
+      .then(res=>{
+        if (res.data['status']['status'] === "success"){
+          this.Freelancers = res.data['Freelancers'].filter(this.name);
+          console.log(res.data['status']['status']);
+          console.log(res.data['Freelancers']);
+        }else {
+          console.log(res.data['status']['status']);
+        }
+      })
+      .catch(e=>{
+        console.log(e);
+      })
+    }
   }
 }
 </script>

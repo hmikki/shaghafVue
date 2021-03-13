@@ -20,8 +20,8 @@
               <div class="cards">
                 <div class="row">
                   <div class="col-lg-3" v-for="(freelancer, index) in Freelancers" :key="index">
-
-                    <div class="card" onclick="location.href='#';">
+                    <router-link v-on:click="getFreelancerId(freelancer.id)" to="/Freelancer_page">
+                    <div class="card">
                       <div class="img-o-h">
                         <div class="order-card-img">
                           <img class="card-img-top" :src="freelancer.avatar" alt="Card image cap" style="width: 70px; height: 70px">
@@ -45,6 +45,7 @@
                         </div>
                       </div>
                     </div>
+                    </router-link>
                   </div>
                 </div>
               </div>
@@ -139,6 +140,9 @@ export default {
             console.log(e);
           })
     },
+    getFreelancerId(freelancer_id){
+      sessionStorage.setItem('freelancer_id', freelancer_id);
+    }
   }
 }
 </script>

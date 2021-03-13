@@ -25,34 +25,6 @@ import '../src/assets/js/head.js';
 //import '../src/assets/js/owl.carousel.js'
 //import '../src/assets/js/tilt.jquery.min.js';
 //import '../src/assets/js/v4-shims.min.js';
-import './assets/js/mains.js';
-import './assets/js/slick';
-import '../public/firebase-messaging-sw.js';
-import firebase from "firebase";
 
-function saveMessagingDeviceToken(){
-    firebase.messaging().getToken().then(function(currentToken) {
-        if (currentToken) {
-            console.log('Got FCM device token:', currentToken);
-            // Saving the Device Token to the datastore.
-            firebase.firestore().collection('fcmTokens').doc(currentToken)
-                .set({uid: firebase.auth().currentUser.uid});
-        } else {
-            // Need to request permissions to show notifications.
-            requestNotificationsPermissions();
-        }
-    }).catch(function(error){
-        console.error('Unable to get messaging token.', error);
-    });
-}
-function requestNotificationsPermissions() {
-    console.log('Requesting notifications permission...');
-    firebase.messaging().requestPermission().then(function() {
-        // Notification permission granted.
-        saveMessagingDeviceToken();
-    }).catch(function(error) {
-        console.error('Unable to get permission to notify.', error);
-    });
-}
 
-createApp(App).use(router).use(store).use(VueTilt).use(saveMessagingDeviceToken).use(Bootstrap).use(jquery).use(VueSlickCarousel).use(FileUpload).mount('#app');
+createApp(App).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(VueSlickCarousel).use(FileUpload).mount('#app');
