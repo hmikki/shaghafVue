@@ -11,7 +11,7 @@
                                             <i class="fas fa-chevron-down"></i><span>{{User.name}}</span>
                                         </a>
                                         <div class="dropdown-menu" id="MyAccountDropdown" aria-labelledby="MyAccount">
-                                            <router-link to="/serve_user" v-show="User.type === '2' "><a class="dropdown-item" href="">حسابي</a></router-link>
+                                            <router-link to="/serve_user" v-show="User.type === '2' "><a class="dropdown-item">حسابي</a></router-link>
                                             <div class="dropdown-divider" v-show="User.type === '2'"></div>
                                             <router-link to="/add_service" v-show="User.type === '2'"><a class="dropdown-item">خدماتي</a></router-link>
                                             <div class="dropdown-divider" v-show="User.type === '2'"></div>
@@ -19,9 +19,9 @@
                                             <div class="dropdown-divider"></div><div class="dropdown-divider" v-show="User.type === 2"></div>
                                             <router-link to="/financial"> <a class="dropdown-item">عملياتي المالية</a> </router-link>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" v-on:click.prevent="changeRoute()" href="">اعدادات الحساب</a>
+                                            <a class="dropdown-item" v-on:click.prevent="changeRoute()">اعدادات الحساب</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="" v-on:click.prevent="logout()">تسجيل خروج</a>
+                                            <a class="dropdown-item" v-on:click.prevent="logout()">تسجيل خروج</a>
                                         </div>
                                     </div>
                                 </div>

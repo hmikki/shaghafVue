@@ -53,7 +53,7 @@ import axios from "axios";
 import register_section from "@/components/modals/register_section";
 import Jquery from 'jquery';
 let $ = Jquery;
-import Pusher from 'pusher-js';
+//import Pusher from 'pusher-js';
 
 export default {
   name: 'login',
