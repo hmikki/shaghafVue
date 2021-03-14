@@ -3,13 +3,16 @@
         <div class="container">
             <div class="sevice-user">
                 <nav aria-label="breadcrumb">
+                  <div>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="#">خدماتنا</a></li>
+                        <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
+                        <li class="breadcrumb-item"><router-link to="/our_serve">خدماتنا</router-link></li>
                         <li class="breadcrumb-item" aria-current="page"><a href="">التصميم الجرافيكي</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ User.name }}</li>
                     </ol>
+                  </div>
                 </nav>
+
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="card">

@@ -74,7 +74,7 @@
                               <span class="count">المنفذ</span>
                               <p>{{ order['Freelancer']['name'] }}</p>
                             </div>
-                            <router-link class="col-5 refused" to="/orders_details">
+                            <router-link class="col-5" to="/orders_details">
                               <div class="col-5 refused">
                                 {{ order['status_str'] }}
                               </div>

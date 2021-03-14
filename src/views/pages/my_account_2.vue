@@ -2,6 +2,7 @@
     <change_password_2></change_password_2>
     <change_setting_2></change_setting_2>
     <error></error>
+    <add_portfolio></add_portfolio>
     <!-- start wrapper -->
     <div class="wrapper">
         <div class="container">
@@ -22,6 +23,7 @@
                             <div class="siting-body">
                                 <div class="edit-c"><a href="" data-toggle="modal" data-target="#exampleModalCenter-5" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
                                 <div class="verify-c"><a data-tooltip="verify account" href="" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
+                                <div class="add-c"><a data-tooltip="add portfolio" href="" data-toggle="modal" data-target="#add_portfolio" aria-label="Close" data-dismiss="modal"><i class="fas fa-plus-circle"></i></a></div>
                               <div class="acount-user-img">
                                     <img :src="User.avatar" id="profile-image" alt="">
                                     <input type="file" class="d-none" id="file" ref="file" v-on:change="handleImage()" accept="image/*">
@@ -113,6 +115,7 @@ import change_password_2 from "@/components/modals/change_password_2";
 import error from "@/components/modals/error";
 import axios from "axios";
 import jquery from 'jquery';
+import add_portfolio from "@/components/modals/add_portfolio";
 let $ = jquery;
 
 export default {
@@ -124,6 +127,7 @@ export default {
       change_setting_2,
       change_password_2,
       error,
+      add_portfolio
   },
   data(){
       return{

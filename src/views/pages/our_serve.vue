@@ -11,8 +11,8 @@
                     </ol>
                 </nav>
                 <div class="col-lg most-l">
-                    <a href="javascript:;" v-on:click.prevent="fetchAllFreelancers()" class="active">الكل</a>
-                    <a href="javascript:;" v-for="(category, index) in Categories" :key="index" v-on:click.prevent="category_id = category.id; fetchFreelancers()">
+                    <a v-on:click.prevent="fetchAllFreelancers()" class="active" style="cursor: pointer">الكل</a>
+                    <a v-for="(category, index) in Categories" :key="index" v-on:click.prevent="category_id = category.id; fetchFreelancers()" style="cursor: pointer">
                       {{ category.name }}
                     </a>
                 </div>

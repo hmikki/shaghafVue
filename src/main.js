@@ -12,11 +12,6 @@ import "firebase/auth"
 import "firebase/firestore"
 import "firebase/messaging"
 
-import VueSlickCarousel from 'vue-slick-carousel'
-import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-// optional style for arrows & dots
-import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
-
 //import '../src/assets/js/bootstrap.bundle.min.js';
 //import '../src/assets/js/bootstrap.min.js';
 //import '../src/assets/js/fontawesome.min.js';
@@ -25,6 +20,7 @@ import '../src/assets/js/head.js';
 //import '../src/assets/js/owl.carousel.js'
 //import '../src/assets/js/tilt.jquery.min.js';
 //import '../src/assets/js/v4-shims.min.js';
+import * as carousel from 'vue3-carousel';
 
 
-createApp(App).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(VueSlickCarousel).use(FileUpload).mount('#app');
+createApp(App).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(carousel).use(FileUpload).mount('#app');

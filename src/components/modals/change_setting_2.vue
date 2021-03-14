@@ -36,11 +36,11 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect2">المدينة</label>
                         <select class="form-control minimal" id="exampleFormControlSelect2">
-                            <option v-bind:v-model="city_id= '1'">المملكة العربية السعودية - المدينة المنورة</option>
-                            <option v-bind:v-model="city_id= '2'">2</option>
-                            <option v-bind:v-model="city_id= '3'">3</option>
-                            <option v-bind:v-model="city_id= '4'">4</option>
-                            <option v-bind:v-model="city_id= '5'">5</option>
+                            <option>المملكة العربية السعودية - المدينة المنورة</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -55,24 +55,17 @@
                         <div class="form-group col-lg-6">
                             <label for="exampleFormControlSelect1"> الجنس</label>
                             <select class="form-control" id="exampleFormControlSelect1">
-                                <option value="" :v-model="gender='male'">ذكر</option>
-                                <option value="" :v-model="gender= 'female'">أنثى</option>
+                                <option :value="gender='1'">ذكر</option>
+                                <option :value="gender= '2'">أنثى</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <h6 class="text-right">صورة الهوية الوطنية</h6>                                                                                                   <!-- Upload  -->
-                            <form id="file-upload-form" class="uploader">
-                                <input id="file-upload" type="file" name="fileUpload" onchange="ImageViewTrigger(this,'image12')" accept="image/*" :v-model="identity_image" />
-
-                                <label for="file-upload" id="file-drag">
-                                    <!--    <img id="file-image" src="#" alt="Preview" class="hidden">-->
-                                    <div id="start">
-                                        <img src="../../assets/img/upload.svg" class="w-100" id="image12" alt="">
-                                    </div>
-                                </label>
-                            </form>
+                          <form id="file-upload-form" class="">
+                            <input id="file" type="file" ref="file" accept="image/*">
+                          </form>
                         </div>
                     </div>
                     <div class="tab-button">
@@ -106,37 +99,38 @@ export default {
         mobile: '',
         email: '',
         country_id : '1',
-        city_id : '',
+        city_id : '1',
         gender :'',
         identity_image: '',
         iban_number :'',
-
+        file :'',
       }
     },
     methods:{
       changeSetting2(){
+        let file = this.$refs.file.files[0];
+        let formData = new FormData();
+        formData.append('identity_image',file);
+        console.log(file);
+        formData.append('bio',this.bio);
+        formData.append('name',this.name);
+        formData.append('mobile',this.mobile);
+        formData.append('email',this.email);
+        formData.append('country_id',this.country_id);
+        formData.append('city_id',this.city_id);
+        formData.append('gender',this.gender);
+        formData.append('iban_number',this.iban_number);
         const token = sessionStorage.getItem('access_token_1');
         axios.post('http://18.194.157.202/api/auth/update',
-            {
-              arguments:{
-                bio : this.bio,
-                name: this.name,
-                mobile: this.mobile,
-                email: this.email,
-                country_id: this.country_id,
-                city_id : this.city_id,
-                gender: this.gender,
-                identity_image: this.identity_image,
-                iban_number: this.iban_number,
-              }
-            },
+            formData,
             {
               headers:{
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + token,
+                'X-localization' : 'ar',
               }
             })
             .then(res=>{
-              if (res.data['status']['status']){
+              if (res.data['status']['status'] === "success"){
                 this.User = res.data['User'];
                 console.log(res.data['status']['message']);
                 $('#exampleModalCenter-5').modal('hide');

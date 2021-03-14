@@ -44,29 +44,17 @@
                             <div class="pre-works said-about-us">
                                 <div class="col-lg-11 o-h">
                                     <h6>الأعمال السابقة</h6>
-                                  <div id="carouselExampleControls-4" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                      <div class="carousel-item active">
-                                        <div class="row">
-                                          <div class="col-lg-3" v-for="(portfolio, index) in Portfolios" :key="index">
-                                            <img :src="portfolio.media" alt="portfolio" style="max-width: 150px">
-                                          </div>
-                                        </div>
+                                  <carousel :items-to-show="1" :wrap-around="true">
+                                    <Slide>
+                                      <div class="col-lg-3" v-for="(portfolio, index) in Portfolios" :key="index">
+                                        <img :src="portfolio.media" alt="portfolio" style="max-width: 150px">
                                       </div>
-
-                                    </div>
-
-                                  </div>
-                                </div>
-                                <div class="col-lg-1 pre-next">
-                                    <a class="carousel-control-prev" href="#carouselExampleControls-4" role="button" data-slide="prev">
-                                        <span class="arow-s-l arow-s" aria-hidden="true"><i class="fas fa-chevron-left"></i></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleControls-4" role="button" data-slide="next">
-                                        <span class="arow-s-r arow-s" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
+                                    </Slide>
+                                    <template #addons>
+                                      <navigation />
+                                      <pagination />
+                                    </template>
+                                  </carousel>
                                 </div>
                             </div>
                         </div>
@@ -129,6 +117,8 @@
 import confirm_order from "@/components/modals/confirm_order"
 import axios from "axios";
 import { GoogleMap, Marker } from 'vue3-google-map'
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 //import jquery from 'jquery';
 //let $ = jquery;
 
@@ -139,6 +129,10 @@ export default {
       GoogleMap,
       Marker,
       confirm_order,
+      Carousel,
+      Slide,
+      Pagination,
+      Navigation,
     },
     mounted() {
         console.log('Component mounted.');

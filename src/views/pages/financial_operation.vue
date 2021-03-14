@@ -59,7 +59,6 @@
               <div class="col-lg-2">
                 <button type="submit" class="btn" data-toggle="modal" data-target="#deposit"  aria-label="Close" data-dismiss="modal">ايداع</button>
               </div>
-              <form action="/" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
               <div class="col-lg-4"></div>
             </div>
           </div>

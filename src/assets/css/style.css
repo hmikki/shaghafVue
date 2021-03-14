@@ -1262,6 +1262,19 @@ input[type=number] {
 .verify-c i{
     color: #fff !important
 }
+.add-c{
+    display: inline-flex;
+    padding: 7px;
+    border: 1px solid #FEE101;
+    border-radius: 50%;
+    position: absolute;
+    left: 10%;
+    font-size: 12px;
+    background-color: #FEE101;
+}
+.add-c i{
+    color: #fff !important
+}
 .flag-img{
     border: 1px solid #ced4da;
     border-right: none;
@@ -2104,9 +2117,6 @@ Start Chats Page
     border-top-left-radius: calc(1.25rem - 1px);
     border-top-right-radius: calc(1.25rem - 1px);
 }
-.sevice-user .card-img-top{
-    max-height: 150px;
-}
 
 .map{
     width: 100%;
@@ -2115,6 +2125,12 @@ Start Chats Page
 }
 .carousel__prev, .carousel__next{
     background-color: #fee101 !important;
+}
+a {
+    color: black;
+}
+a:hover{
+    color: black;
 }
 /**  
 

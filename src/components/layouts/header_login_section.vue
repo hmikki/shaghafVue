@@ -15,13 +15,13 @@
                                             <div class="dropdown-divider" v-show="User.type === '2'"></div>
                                             <router-link to="/add_service" v-show="User.type === '2'"><a class="dropdown-item">خدماتي</a></router-link>
                                             <div class="dropdown-divider" v-show="User.type === '2'"></div>
-                                            <router-link to="/orders"> <a class="dropdown-item">طلباتي</a> </router-link>
+                                            <a v-on:click.prevent="changeOrderRoute()" style="cursor: pointer" class="dropdown-item">طلباتي</a>
                                             <div class="dropdown-divider"></div><div class="dropdown-divider" v-show="User.type === 2"></div>
                                             <router-link to="/financial"> <a class="dropdown-item">عملياتي المالية</a> </router-link>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" v-on:click.prevent="changeRoute()">اعدادات الحساب</a>
+                                            <a class="dropdown-item" v-on:click.prevent="changeRoute()" style="cursor: pointer">اعدادات الحساب</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" v-on:click.prevent="logout()">تسجيل خروج</a>
+                                            <a class="dropdown-item" v-on:click.prevent="logout()" style="cursor: pointer">تسجيل خروج</a>
                                         </div>
                                     </div>
                                 </div>
@@ -86,8 +86,7 @@ export default {
               }
           })
         },
-
-      changeRoute(){
+        changeRoute(){
         const token = sessionStorage.getItem('access_token_1');
         axios.get('http://18.194.157.202/api/auth/me',{
           headers:{
@@ -108,6 +107,28 @@ export default {
             console.log(res.data['status']['status']);
           }
         })
+      },
+        changeOrderRoute(){
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/auth/me',{
+          headers:{
+            'Authorization': 'Bearer '+token
+          }
+        })
+            .then(res=>{
+              if (res.data['status']['status'] === "success"){
+                if (res.data['User']['type'] === '1'){
+                  this.$router.push('/orders');
+                }else if (res.data['User']['type'] === '2'){
+                  this.$router.push('/orders_2');
+                }
+                else {
+                  this.$router.push('/');
+                }
+              }else {
+                console.log(res.data['status']['status']);
+              }
+            })
       }
     }
 }

@@ -6,7 +6,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h5 class="text-center">طلب تحصيل</h5>
+        <h5 class="text-center">طلب ايداع</h5>
         <div class="modal-body secound-m">
           <div class="model-img login100-pic js-tilt" data-tilt><img src="../../assets/img/col-req.svg" alt=""></div>
           <span class="vc-m"> </span>
@@ -69,7 +69,10 @@ export default {
               sessionStorage.setItem('payment_token', payment_token);
               $('#deposit').modal('hide');
               console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
-              this.$router.push('/payment_form');
+              let url = 'https://test.oppwa.com/v1/checkouts/'+ sessionStorage.getItem('payment_token') +'/payment';
+              console.log(url);
+              //this.$router.push('/payment_form');
+              window.location.replace(url);
             }else {
               console.log(res.data['status']['status']);
             }

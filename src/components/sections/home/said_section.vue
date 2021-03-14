@@ -8,25 +8,25 @@
           <div class="row">
 
             <div class="col-lg-12 o-h">
-              <carousel :items-to-show="4" :wrapAround="true" :snapAlign="start" :initialSlide="0">
-                <slide v-for="(review, index) in Reviews" :key="index">
-                  <div class="said-cur-p text-center">
+              <carousel :items-to-show="1" :wrap-around="true" style="width: 70%">
+                <Slide>
+                  <div class="said-cur-p text-center col-lg-4" v-for="(review, index) in Reviews" :key="index">
                     <div class="b-sh">
                       <div class="said-img">
-                        <img :src="review['User']['avatar']" alt="" style="max-width: 70px">
+                        <img :src="review['User']['avatar']" alt="avatar" style="max-width: 70px">
                       </div>
                       <h4>{{ review['User']['name'] }}</h4>
                       <p>{{ review['review'] }}</p>
                       <div class="star">
-                        <span class="fa fa-star" :class="{'checked': review.rate >=1}"></span>
-                        <span class="fa fa-star" :class="{'checked': review.rate >=2}"></span>
-                        <span class="fa fa-star" :class="{'checked': review.rate >=3}"></span>
-                        <span class="fa fa-star" :class="{'checked': review.rate >=4}"></span>
-                        <span class="fa fa-star" :class="{'checked': review.rate >=5}"></span>
+                        <span class="fa fa-star" :class="{'checked' : review.rate >= 1}"></span>
+                        <span class="fa fa-star" :class="{'checked' : review.rate >= 2}"></span>
+                        <span class="fa fa-star" :class="{'checked' : review.rate >= 3}"></span>
+                        <span class="fa fa-star" :class="{'checked' : review.rate >= 4}"></span>
+                        <span class="fa fa-star" :class="{'checked' : review.rate >= 5}"></span>
                       </div>
                     </div>
                   </div>
-                </slide>
+                </Slide>
                 <template #addons>
                   <navigation />
                   <pagination />
@@ -74,7 +74,7 @@ export default {
                     'X-localization' : 'ar',
                   },
                   params:{
-                    per_page: 4
+
                   }
                 })
           .then(res=>{
