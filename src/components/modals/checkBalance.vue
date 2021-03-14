@@ -13,6 +13,9 @@
             <div>
               <h3> لا يوجد لديك رصيد كافي </h3>
             </div>
+            <div class="tab-button">
+              <button type="submit" class="btn" id="dep" v-on:click.prevent="">انتقل للبطاقة</button>
+            </div>
           </div>
         </div>
       </div>

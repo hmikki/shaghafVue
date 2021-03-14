@@ -66,7 +66,7 @@ export default {
   },
   methods:{
     pay(){
-      axios.post('https://test.oppwa.com/v1/payments',
+      axios.post('https://test.oppwa.com/v1/payments/'+checkoutId,
           {
               'entityId':'8a8294174b7ecb28014b9699220015ca',
               'paymentBrand':'VISA',
