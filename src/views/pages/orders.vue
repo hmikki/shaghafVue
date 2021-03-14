@@ -42,11 +42,11 @@
                               <span class="count">المنفذ</span>
                               <p>{{ order['Freelancer']['name'] }}</p>
                             </div>
-                            <router-link class="col-5 refused" to="/orders_details">
+                              <button type="submit" class="btn" v-on:click.prevent="getFreelancerId(order['Freelancer']['id'])">
                               <div class="col-5 refused">
                                 {{ order['status_str'] }}
                               </div>
-                            </router-link>
+                              </button>
                           </div>
                         </div>
                       </div>
@@ -74,11 +74,11 @@
                               <span class="count">المنفذ</span>
                               <p>{{ order['Freelancer']['name'] }}</p>
                             </div>
-                            <router-link class="col-5" to="/orders_details">
-                              <div class="col-5 refused">
-                                {{ order['status_str'] }}
-                              </div>
-                            </router-link>
+                              <button type="submit" class="btn" v-on:click.prevent="getFreelancerId(order['Freelancer']['id'])">
+                                <div class="col-5 refused">
+                                  {{ order['status_str'] }}
+                                </div>
+                              </button>
                           </div>
                         </div>
                       </div>
@@ -141,6 +141,10 @@ export default {
     getOrderId(order_id){
       sessionStorage.setItem('order_id', order_id);
     },
+    getFreelancerId(id){
+      sessionStorage.setItem('freelancer_id', id);
+      this.$router.push('/orders_details');
+    }
 
 
   }

@@ -7,7 +7,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
                         <li class="breadcrumb-item"><router-link to="/our_serve">خدماتنا</router-link></li>
-                        <li class="breadcrumb-item" aria-current="page"><a href="">التصميم الجرافيكي</a></li>
+                      <li class="breadcrumb-item" aria-current="page"><router-link to="/our_serve">التصميم الجرافيكي</router-link></li>
                         <li class="breadcrumb-item active" aria-current="page">{{ User.name }}</li>
                     </ol>
                   </div>
@@ -86,8 +86,8 @@
                 <div class="pro-ser col-3">
                   <!-- start navs section -->
                   <div class="col-lg most-l">
-                    <a href="javascript:;" class="active" v-on:click.prevent="fetchProducts(2)">منتجات</a>
-                    <a href="javascript:;" v-on:click.prevent="fetchProducts(1)">خدمات</a>
+                    <a class="active" v-on:click.prevent="fetchProducts(2)" style="cursor: pointer">منتجات</a>
+                    <a v-on:click.prevent="fetchProducts(1)" style="cursor: pointer">خدمات</a>
                   </div>
                 </div>
               </div>
@@ -293,6 +293,7 @@ export default {
             params:{
               user_id : user_id,
               type: val,
+              per_page : 10,
             }
           })
       .then(res =>{

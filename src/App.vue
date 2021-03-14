@@ -1,9 +1,4 @@
 <template>
-  <push-notification
-      ref="pushNotification"
-      :currentToken="userToken"
-      @update-token="onUpdateToken"
-      @new-message="onNewMessage" />
   <header_section></header_section>
   <router-view/>
   <footer_section></footer_section>
@@ -53,15 +48,12 @@
 import header_section from "@/components/layouts/header_section";
 import footer_section from "@/components/layouts/footer_section";
 import axios from "axios";
-import PushNotification from '@/components/PushNotification';
-import api from '@/api/api';
 
 
 export default {
   components: {
     header_section,
-    footer_section,
-    PushNotification
+    footer_section
   },
   data(){
     return{
@@ -120,23 +112,6 @@ export default {
         }
       })
     },
-    enableNotifications () {
-      this.$refs.pushNotification.askForPermission()
-    },
-    onUpdateToken (newToken) {
-      this.device_token = newToken
-      // send token to the server
-      api.update_token(this.userProfile, this.device_token)
-    },
-    onNewMessage (message) {
-      var snackbarContainer = document.querySelector('#snackbar-message')
-      var data = {
-        message: message.notification.title + ': ' + message.notification.body,
-        timeout: 10000,
-        actionText: 'OK'
-      }
-      snackbarContainer.MaterialSnackbar.showSnackbar(data)
-    }
   }
 }
 

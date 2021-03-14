@@ -19,7 +19,7 @@
                     <div class="tab-button">
                         <button type="submit" class="btn" v-on:click.prevent="verification()">تأكيد</button>
                     </div>
-                    <div class="tab-a"> <span> لم يتم ارسال الكود <a href="" v-on:click="resendVerification()"> اعادة الارسال </a></span></div>
+                    <div class="tab-a"> <span> لم يتم ارسال الكود <a style="cursor: pointer" v-on:click="resendVerification()"> اعادة الارسال </a></span></div>
                 </div>
             </div>
         </div>
@@ -43,10 +43,11 @@ export default {
         }
     },
     created() {
-        this.verification();
     },
     methods:{
         verification(){
+
+          console.log(this.code);
           const token = sessionStorage.getItem('access_token_1');
             axios.post('http://18.194.157.202/api/auth/verify',
                 {
@@ -63,10 +64,13 @@ export default {
                   if (res.data['status']['status'] === "success"){
                     this.User = res.data['status']['status'];
                     $('#exampleModalCenter-2').modal('hide');
+                    $('#success').modal();
                     console.log(res.data['status']['status']);
                   }else {
                     console.log(res.data['status']['message']);
+                    $('#success').modal();
                   }
+
 
             })
           .catch(e=>{
@@ -75,23 +79,29 @@ export default {
         },
         resendVerification(){
           const token = sessionStorage.getItem('access_token_1');
-            axios.get('http://18.194.157.202/api/auth/resend_verify',{
+            axios.get('http://18.194.157.202/api/auth/resend_verify',
+                {
                 headers:{
                     'Authorization' : 'Bearer ' +token,
-                    'X-localization': 'ar'
+                    'X-localization': 'ar',
                 },
                 params:{
                     type: this.type
                 }
             })
                 .then(res=>{
+                  sessionStorage.setItem('message',res.data['status']['message']);
                     if (res.data['status']['status'] === "success"){
-                      this.User = res.data['User'];
+                      $('#exampleModalCenter-2').modal('hide');
                       console.log(res.data['status']['status']);
                     }else {
                       console.log(res.data['status']['status']);
                     }
+                  $('#success').modal();
                 })
+          .catch(e=>{
+            console.log(e);
+          })
         }
     }
 }

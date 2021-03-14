@@ -113,6 +113,7 @@ export default {
       pusher : null,
       channel :null,
       chat_room_id: sessionStorage.getItem('room_id'),
+      user_id:'',
     }
   },
   computed:{
@@ -144,7 +145,7 @@ export default {
             headers:{
               'Authorization': 'Bearer ' +token,
               'X-localization': 'ar',
-            }
+            },
           })
           .then(res=>{
             if (res.data['status']['status'] === "success"){
@@ -160,10 +161,16 @@ export default {
           })
     },
     openChat(){
+      const user_type = sessionStorage.getItem('user_type');
+      if (user_type === '1'){
+        this.user_id = sessionStorage.getItem('freelancer_id');
+      }else{
+        this.user_id = sessionStorage.getItem('customer_id');
+      }
       const token = sessionStorage.getItem('access_token_1');
       axios.post('http://18.194.157.202/api/chats/rooms/create',
           {
-            user_id : sessionStorage.getItem('user_id'),
+            user_id : this.user_id,
           },
           {
             headers:{
@@ -174,9 +181,6 @@ export default {
           .then(res=>{
             if (res.data['status']['status'] === "success"){
               this.chatRoom = res.data['ChatRoom'];
-              const chat_user_id = res.data['ChatRoom']['User']['id'];
-              console.log(chat_user_id);
-              sessionStorage.setItem('chat_user_id' , chat_user_id);
               console.log(res.data['ChatRoom']);
               console.log(res.data['status']['status']);
             }else {

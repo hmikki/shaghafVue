@@ -40,10 +40,8 @@
                           </div>
 
                           <div class="color-1">
-                            <router-link class="col-5" to="/orders_details">
-                            <button type="submit" class="btn" >
+                            <button type="submit" class="btn" v-on:click.prevent="getCustomerId(order.user_id)">
                               {{ order.status_str }}  </button>
-                            </router-link>
                           </div>
                         </div>
                       </div>
@@ -70,10 +68,8 @@
                           </div>
 
                           <div class="color-1">
-
-                            <button type="submit" class="btn" >
+                            <button type="submit" class="btn" v-on:click.prevent="getCustomerId(order.user_id)">
                               {{ order.status_str }}  </button>
-
                           </div>
                         </div>
                       </div>
@@ -139,6 +135,10 @@ export default {
     getOrderId(order_id){
       sessionStorage.setItem('order_id', order_id);
     },
+    getCustomerId(id){
+      sessionStorage.setItem('customer_id', id);
+      this.$router.push('/orders_details');
+    }
 
 
   }

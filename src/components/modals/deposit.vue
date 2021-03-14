@@ -17,7 +17,7 @@
             </div>
           </div>
           <div class="tab-button">
-            <button type="submit" class="btn" id="dep" v-on:click.prevent="checkBalance()">ايداع</button>
+            <button type="submit" class="btn" id="dep" v-on:click.prevent="createTransaction()">ايداع</button>
           </div>
 
         </div>
@@ -69,10 +69,10 @@ export default {
               sessionStorage.setItem('payment_token', payment_token);
               $('#deposit').modal('hide');
               console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
-              let url = 'https://test.oppwa.com/v1/checkouts/'+ sessionStorage.getItem('payment_token') +'/payment';
-              console.log(url);
-              //this.$router.push('/payment_form');
-              window.location.replace(url);
+              //let url = 'https://test.oppwa.com/v1/checkouts/'+ sessionStorage.getItem('payment_token') +'/payment';
+              //console.log(url);
+              this.$router.push('/payment_form');
+              //window.location.replace(url);
             }else {
               console.log(res.data['status']['status']);
             }

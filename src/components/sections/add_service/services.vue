@@ -25,7 +25,7 @@
                             <button type="submit" v-on:click="getProductId(product.id)" class="btn" data-toggle="modal" data-target="#edit_product" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i> تعديل </button>
                         </div>
                         <div class="col-lg-6">
-                            <button type="submit" class="btn no-bg" data-toggle="modal" data-target="#exampleModalCenter-11" aria-label="Close" data-dismiss="modal"><i class="far fa-trash-alt"></i> حذف </button>
+                            <button type="submit" v-on:click="getProductId(product.id)" class="btn no-bg" data-toggle="modal" data-target="#exampleModalCenter-11" aria-label="Close" data-dismiss="modal"><i class="far fa-trash-alt"></i> حذف </button>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ export default {
           console.log(res.data['status']['message']);
           $('#exampleModalCenter-11').modal('hide');
         }else {
-          console.log(res.data['status']['status']);
+          console.log(res.data['status']['message']);
         }
       })
       .catch(e=>{

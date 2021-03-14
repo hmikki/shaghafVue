@@ -42,10 +42,10 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                    <li class="breadcrumb-item"><a href="#">الطلبات</a></li>
-                    <li class="breadcrumb-item"><a href="#">الطلبات الحالية</a></li>
-                    <li class="breadcrumb-item"><a href="#">تفاصيل الطلب</a></li>
+                    <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
+                    <li class="breadcrumb-item"><a style="cursor: pointer" v-on:click="changeRoute()">الطلبات</a></li>
+                    <li class="breadcrumb-item"><a style="cursor: pointer" v-on:click="changeRoute()">الطلبات الحالية</a></li>
+                    <li class="breadcrumb-item"><router-link to="/orders_details">تفاصيل الطلب</router-link></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ Order.title }} {{ Order.Freelancer.name }}</li>
                 </ol>
             </nav>
@@ -138,7 +138,7 @@
                                 <button type="submit" class="btn" v-on:click.prevent="updateOrder(10)">لم يتم الاستلام</button>
                               </div>
                               <div class="tab-button" id="chat" v-show="(Order.status === 2)">
-                                <router-link to="/chats"> <button type="submit" class="btn">بدء المحادثة</button> </router-link>
+                                <router-link v-on:click="createRoom()" to="/chats"> <button type="submit" class="btn">بدء المحادثة</button> </router-link>
                               </div>
                             </div>
                         </div>
@@ -174,10 +174,13 @@ export default {
         user_type : sessionStorage.getItem('user_type'),
         Balance:[],
         availableBalance:'',
+        chatRoom:[],
+        user_id:'',
       }
   },
     created() {
       this.fetchOrderDetails();
+      this.createRoom();
     },
     methods:{
       fetchOrderDetails(){
@@ -196,6 +199,8 @@ export default {
           if (res.data['status']['status'] === "success"){
             this.Order = res.data['Order'];
             this.OrderStatuses = res.data['OrderStatuses'];
+            const customer_id = res.data['Order']['user_id'];
+            sessionStorage.setItem('customer_id', customer_id);
             console.log(res.data['status']['status']);
           }else {
             console.log(res.data['status']['message']);
@@ -257,6 +262,49 @@ export default {
               console.log(e);
             });
       },
+      changeRoute(){
+        const user_type = sessionStorage.getItem('user_type');
+        if (user_type === '1'){
+          this.$router.push('/orders');
+        }else if (user_type === '2'){
+          this.$router.push('/orders_2');
+        }else {
+          this.$router.push('/');
+        }
+      },
+      createRoom(){
+        const token = sessionStorage.getItem('access_token_1');
+        const user_type = sessionStorage.getItem('user_type');
+        if (user_type === '1'){
+          this.user_id = sessionStorage.getItem('freelancer_id');
+        }else{
+          this.user_id = sessionStorage.getItem('customer_id');
+        }
+        axios.post('http://18.194.157.202/api/chats/rooms/create',
+            {
+              user_id : this.user_id,
+            },
+            {
+              headers:{
+                'Authorization': 'Bearer ' + token,
+                'X-localization' : 'ar',
+              }
+            })
+        .then(res=>{
+          if (res.data['status']['status'] === "success"){
+            this.chatRoom = res.data['ChatRoom'];
+            const room_id = res.data['ChatRoom']['id'];
+            sessionStorage.setItem('room_id', room_id);
+            console.log(res.data['ChatRoom']);
+            console.log(res.data['status']['status']);
+          }else{
+            console.log(res.data['status']['status']);
+          }
+        })
+        .catch(e=>{
+          console.log(e);
+        })
+      }
     }
 }
 </script>
