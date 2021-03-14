@@ -32,8 +32,8 @@
                     <div class="form-group">
                         <label for="formGroupExampleInput"> نوع الخدمة</label>
                       <select class="form-control minimal" id="exampleFormControlSelect3">
-                        <option>خدمات</option>
-                        <option>منتجات</option>
+                        <option :value="type = 1">خدمات</option>
+                        <option :value="type = 1">منتجات</option>
                       </select>
                     </div>
 
@@ -87,7 +87,7 @@ export default {
           category_id: '',
           sub_category_id:'',
           price:'',
-          type:'',
+          type:null,
           files: '',
         }
     },
@@ -142,6 +142,7 @@ export default {
               this.Product = res.data['Product'];
               $('#exampleModalCenter-9').modal('hide');
               console.log(res.data['status']['status']);
+              console.log(res.data['Product']);
             } else {
               console.log(res.data['status']['message']);
             }

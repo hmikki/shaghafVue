@@ -32,8 +32,8 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect3"> نوع الخدمة</label>
                       <select class="form-control minimal" id="exampleFormControlSelect3">
-                        <option :v-model="type = '1'">خدمات</option>
-                        <option :v-model="type = '2'">منتجات</option>
+                        <option :value="type = 1">خدمات</option>
+                        <option :value="type = 2">منتجات</option>
                       </select>
                     </div>
 
@@ -85,7 +85,7 @@ export default {
         category_id:'',
         sub_category_id:'',
         price:'',
-        type:'',
+        type:null,
         files: '',
       }
   },

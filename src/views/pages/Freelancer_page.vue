@@ -44,7 +44,7 @@
                             <div class="pre-works said-about-us">
                                 <div class="col-lg-11 o-h">
                                     <h6>الأعمال السابقة</h6>
-                                  <carousel :items-to-show="1" :wrap-around="true">
+                                  <carousel :items-to-show="1" :wrap-around="true" style="width: 100%">
                                     <Slide>
                                       <div class="col-lg-3" v-for="(portfolio, index) in Portfolios" :key="index">
                                         <img :src="portfolio.media" alt="portfolio" style="max-width: 150px">
@@ -84,8 +84,8 @@
                 <div class="pro-ser col-3">
                   <!-- start navs section -->
                   <div class="col-lg most-l">
-                    <a href="javascript:;" class="active">منتجات</a>
-                    <a href="javascript:;">خدمات</a>
+                    <a href="javascript:;" class="active" v-on:click.prevent="fetchFreelancerProducts(2)">منتجات</a>
+                    <a href="javascript:;" v-on:click.prevent="fetchFreelancerProducts(1)">خدمات</a>
                   </div>
                 </div>
               </div>
@@ -206,7 +206,7 @@ export default {
           console.log(e);
         })
       },
-      fetchFreelancerProducts(){
+      fetchFreelancerProducts(val){
       const token = sessionStorage.getItem('access_token_1');
       axios.get('http://18.194.157.202/api/products',
           {
@@ -215,6 +215,7 @@ export default {
               'X-localization' : 'ar',
             },
             params:{
+              type: val,
               user_id : sessionStorage.getItem('freelancer_id'),
             }
           })

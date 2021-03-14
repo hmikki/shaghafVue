@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-const API_URL = 'http://3.124.189.172';
+const API_URL = 'http://18.194.157.202';
 export class APIService{
 
     constructor(){

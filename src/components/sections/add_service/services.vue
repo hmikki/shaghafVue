@@ -1,5 +1,14 @@
 <template>
   <edit_order></edit_order>
+  <div class="row justify-content-center">
+    <div class="pro-ser col-3">
+      <!-- start navs section -->
+      <div class="col-lg most-l">
+        <a href="javascript:;" class="active" v-on:click.prevent="fetchService(2)">منتجات</a>
+        <a href="javascript:;" v-on:click.prevent="fetchService(1)">خدمات</a>
+      </div>
+    </div>
+  </div>
     <div class="row">
         <div class="col-lg-3" v-for="(product,index) in Products" :key="index">
             <div class="card pro-ser-card" v-tilt>
@@ -68,7 +77,7 @@ export default {
       this.fetchService();
   },
   methods:{
-    fetchService(){
+    fetchService(val){
       const token = sessionStorage.getItem('access_token_1');
       const user_id = sessionStorage.getItem('user_id');
       axios.get('http://18.194.157.202/api/products',
@@ -79,7 +88,7 @@ export default {
             },
             params:{
               user_id : user_id,
-              type: 1,
+              type: val,
             }
           })
           .then(res =>{
