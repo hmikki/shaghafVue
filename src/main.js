@@ -11,6 +11,7 @@ import "firebase/analytics"
 import "firebase/auth"
 import "firebase/firestore"
 import "firebase/messaging"
+import vmApp from './App.vue'
 
 //import '../src/assets/js/bootstrap.bundle.min.js';
 //import '../src/assets/js/bootstrap.min.js';
@@ -23,4 +24,4 @@ import '../src/assets/js/head.js';
 import * as carousel from 'vue3-carousel';
 
 
-createApp(App).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(carousel).use(FileUpload).mount('#app');
+createApp(App).use(vmApp).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(carousel).use(FileUpload).mount('#app');

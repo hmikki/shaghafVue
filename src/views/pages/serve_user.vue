@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div class="container">
-            <div class="sevice-user">
+            <div class="sevice-user orders">
                 <nav aria-label="breadcrumb">
                   <div>
                     <ol class="breadcrumb">
@@ -23,12 +23,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h4>{{ User.name }}</h4>
-                                <span>{{ User.bio }}</span>
+                                <h4>{{ User['name'] }}</h4>
+                                <span>{{ User['bio'] }}</span>
                             </div>
                             <div class="card-footer">
                                 <div class="row">
-                                    <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i> {{User.City.name}}</span></div>
+                                    <div class="col-3 p-0"><span><i class="fas fa-map-marker-alt"></i> {{ User.City.name }} </span></div>
                                     <div class="col-lg-2"></div>
                                     <div class="col-4 star">
                                         <span class="fa fa-star" :class="{'checked' : User.rate >= '1'}"></span>
@@ -46,9 +46,9 @@
                             <div class="pre-works said-about-us">
                                 <div class="col-lg-11 o-h">
                                     <h6>الأعمال السابقة</h6>
-                                  <carousel :items-to-show="1" :wrap-around="true" style="width: 100%">
-                                    <Slide>
-                                      <div class="col-lg-3" v-for="(portfolio, index) in Portfolios" :key="index">
+                                  <carousel :items-to-show="1" :wrap-around="true">
+                                    <Slide v-for="slide in 4" :key="slide">
+                                      <div v-for="(portfolio, index) in Portfolios" :key="index">
                                         <img :src="portfolio.media" style="max-width: 150px">
                                       </div>
                                     </Slide>
@@ -82,29 +82,57 @@
                         </div>
                     </div>
                 </div>
-              <div class="row justify-content-center">
-                <div class="pro-ser col-3">
-                  <!-- start navs section -->
-                  <div class="col-lg most-l">
-                    <a class="active" v-on:click.prevent="fetchProducts(2)" style="cursor: pointer">منتجات</a>
-                    <a v-on:click.prevent="fetchProducts(1)" style="cursor: pointer">خدمات</a>
-                  </div>
+              <div class="row d-flex justify-content-center">
+                <div class="modal-tab col-3">
+                  <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
+                    <li class="nav-item col-6">
+                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="fetchProducts(2)">منتجات</a>
+                    </li>
+                    <li class="nav-item col-6">
+                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="fetchProducts(1)">خدمات</a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div class="row pb-5">
-                <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
-                  <div class="card pro-ser-card">
-                    <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
-                    <div class="card-body">
-                      <h6 class="card-title">{{product['name']}}</h6>
-                      <p class="card-text">{{ product['description'] }}</p>
-                      <hr>
-                      <div class="row">
-                        <div class="col-lg-3"></div>
-                        <div class="col-lg-6"><span class="count count-pr">السعر : {{ product.price }}</span></div>
-                        <div class="col-lg-3"></div>
+              <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                  <div class="row pb-5">
+                    <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
+                      <div class="card pro-ser-card">
+                        <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
+                        <div class="card-body">
+                          <h6 class="card-title">{{product['name']}}</h6>
+                          <p class="card-text">{{ product['description'] }}</p>
+                          <hr>
+                          <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-6"><span class="count count-pr">السعر : {{ product.price }}</span></div>
+                            <div class="col-lg-3"></div>
+                          </div>
+                          <a class="btn pro-ser-button" data-toggle="modal" data-target="#exampleModalCenter-12" aria-label="Close" data-dismiss="modal" :v-model="product_id = product.id">أطلب الان</a>
+                        </div>
                       </div>
-                        <a class="btn pro-ser-button" data-toggle="modal" data-target="#exampleModalCenter-12" aria-label="Close" data-dismiss="modal" :v-model="product_id = product.id">أطلب الان</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="pills-profile-tab">
+                  <div class="row pb-5">
+                    <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
+                      <div class="card pro-ser-card">
+                        <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
+                        <div class="card-body">
+                          <h6 class="card-title">{{product['name']}}</h6>
+                          <p class="card-text">{{ product['description'] }}</p>
+                          <hr>
+                          <div class="row">
+                            <div class="col-lg-3"></div>
+                            <div class="col-lg-6"><span class="count count-pr">السعر : {{ product.price }}</span></div>
+                            <div class="col-lg-3"></div>
+                          </div>
+                          <a class="btn pro-ser-button" data-toggle="modal" data-target="#exampleModalCenter-12" aria-label="Close" data-dismiss="modal" :v-model="product_id = product.id">أطلب الان</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -198,7 +226,6 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import jquery from 'jquery';
 let $ = jquery;
 
-
 export default {
     name: 'serve_user',
     components:{
@@ -216,7 +243,9 @@ export default {
     },
   data(){
       return{
-        User:[],
+        User:{
+          City:[],
+        },
         Portfolios:[],
         Products:[],
         Product:[],
@@ -226,15 +255,16 @@ export default {
         quantity :1,
         note :'',
         product_id:'',
-        lat: '',
-        lng: '' ,
+        lat: null,
+        lng: null ,
+        address:'',
       }
   },
   created() {
       this.fetchUser();
       this.fetchUserPortfolios();
       this.fetchProducts();
-
+      this.locatorButtonPressed();
 
   },
   methods:{
@@ -250,6 +280,7 @@ export default {
         .then(res=>{
           if (res.data['status']['status'] === "success"){
             this.User = res.data['User'];
+            this.User.City = res.data['User']['City'];
             this.lat = res.data['User']['lat'];
             this.lng = res.data['User']['lng'];
             const user_id = res.data['User']['id'];
@@ -365,8 +396,6 @@ export default {
       locatorButtonPressed() {
       navigator.geolocation.getCurrentPosition(
           position => {
-            this.lng = position.coords.longitude;
-                this.lat = position.coords.latitude;
             console.log(position.coords.latitude);
             console.log(position.coords.longitude);
           },
@@ -378,7 +407,7 @@ export default {
 
   },
   setup() {
-    const center = { lat: 32, lng: 35.25 }
+    const center = { lat: 31.506432, lng: 34.455552 }
     return { center }
   },
 }

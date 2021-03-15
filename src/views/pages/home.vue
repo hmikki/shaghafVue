@@ -41,6 +41,6 @@ export default {
   },
     mounted() {
         console.log('Home mounted.')
-    }
+    },
 }
 </script>

@@ -33,7 +33,7 @@
                                     <label for="password"> <i class="fas fa-lock"></i> كلمة المرور</label>
                                     <input type="password" class="form-control" id="password" placeholder="ادخل كلمة المرور" v-model="password" required>
                                 </div>
-                                <a href="" data-toggle="modal" data-target="#exampleModalCenter-1"  aria-label="Close" data-dismiss="modal">هل نسيت كلمة المرور؟</a>
+                                <a data-toggle="modal" data-target="#exampleModalCenter-1"  aria-label="Close" data-dismiss="modal">هل نسيت كلمة المرور؟</a>
                                 <div class="tab-button">
                                     <button type="submit" class="btn" v-on:click.prevent="login()">تسجيل الدخول</button>
                                 </div>

@@ -3,10 +3,10 @@
   <deposit></deposit>
   <div class="wrapper">
     <div class="container">
-      <div class="sevice-user financial-operations orders">
+      <div class="financial-operations">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
             <li class="breadcrumb-item active" aria-current="page">عملياتي المالية</li>
           </ol>
         </nav>
@@ -74,7 +74,7 @@
                     <p class="balance-op-p">{{ transaction['type_str'] }} : <span>{{ transaction['status_str'] }}</span></p>
                   </div>
                   <div class="col-lg-2 balance-op-link">
-                    <a href=""><i class="fas fa-chevron-left"></i></a>
+                    <a><i class="fas fa-chevron-left"></i></a>
                   </div>
                 </div>
               </div>
@@ -155,8 +155,6 @@ export default {
         console.log(e);
       })
     },
-
-
-  }
+  },
 }
 </script>

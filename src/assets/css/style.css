@@ -2132,6 +2132,15 @@ a {
 a:hover{
     color: black;
 }
+a{
+    cursor: pointer;
+}
+.carousel__pagination-button{
+    background-color: #dfce3b !important;
+}
+.carousel__pagination-button--active{
+    background-color: #ffc107 !important;
+}
 /**  
 
 End Chats Page

@@ -5,7 +5,7 @@
             <div class="sevice-user">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
                       <li class="breadcrumb-item"><router-link to="/our_serve">خدماتنا</router-link></li>
                       <li class="breadcrumb-item" aria-current="page"><router-link to="/our_serve">التصميم الجرافيكي</router-link></li>
                         <li class="breadcrumb-item active" aria-current="page">{{Freelancer['name']}}</li>
@@ -278,6 +278,9 @@ export default {
   setup() {
     const center = { lat: 32, lng: 35.25 }
     return { center }
+  },
+  updated() {
+    this.refresh(this);
   },
 }
 </script>

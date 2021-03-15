@@ -63,6 +63,9 @@ export default {
       device_type :'Server',
     }
   },
+  updated() {
+    this.refresh(this);
+  },
   created() {
     this.getNotifications();
   },

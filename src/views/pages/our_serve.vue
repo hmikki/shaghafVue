@@ -5,8 +5,8 @@
             <div class="our-services">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                        <li class="breadcrumb-item"><a href="#">خدماتنا</a></li>
+                      <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
+                      <li class="breadcrumb-item"><router-link to="/our_serve">خدماتنا</router-link></li>
                         <li class="breadcrumb-item active" aria-current="page">التصميم الجرافيكي</li>
                     </ol>
                 </nav>
@@ -143,6 +143,6 @@ export default {
     getFreelancerId(freelancer_id){
       sessionStorage.setItem('freelancer_id', freelancer_id);
     }
-  }
+  },
 }
 </script>

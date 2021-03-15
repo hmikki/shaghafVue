@@ -6,7 +6,7 @@
             <div class="sevice-user orders orders-2 add-orders">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
                         <li class="breadcrumb-item active" aria-current="page">الطلبات</li>
                     </ol>
                 </nav>
@@ -27,7 +27,7 @@
                   <div class="row">
                     <div class="col-lg-3" v-for="(order, index) in Orders" :key="index" v-on:click.prevent="getOrderId(order.id)">
                       <div class="card pro-ser-card">
-                          <img class="card-img-top" :src="order['Product']['first_image']" alt="Card image cap">
+                          <img class="card-img-top" :src="order.Product.first_image" alt="Card image cap">
                         <div class="card-body">
                           <h6 class="card-title">{{ order.Product.name }}</h6>
                           <p class="card-text">{{ order.Product.description }}</p>
@@ -41,7 +41,7 @@
 
                           <div class="color-1">
                             <button type="submit" class="btn" v-on:click.prevent="getCustomerId(order.user_id)">
-                              {{ order.status_str }}  </button>
+                              status  </button>
                           </div>
                         </div>
                       </div>
@@ -53,9 +53,7 @@
                   <div class="row">
                     <div class="col-lg-3" v-for="(order, index) in Orders" :key="index" v-on:click.prevent="getOrderId(order.id)">
                       <div class="card pro-ser-card">
-                        <router-link to="/orders_details">
-                          <img class="card-img-top" :src="order['Product']['first_image']" alt="Card image cap">
-                        </router-link>
+                        <img class="card-img-top" :src="order.Product.first_image" alt="Card image cap">
                         <div class="card-body">
                           <h6 class="card-title">{{ order.Product.name }}</h6>
                           <p class="card-text">{{ order.Product.description }}</p>
@@ -69,7 +67,7 @@
 
                           <div class="color-1">
                             <button type="submit" class="btn" v-on:click.prevent="getCustomerId(order.user_id)">
-                              {{ order.status_str }}  </button>
+                              status  </button>
                           </div>
                         </div>
                       </div>
@@ -96,11 +94,11 @@ export default {
     data(){
       return{
         Orders: {
-          product: [],
           Freelancer: [],
           User:[],
           is_completed: null
         },
+        Product: [],
       }
     },
   created() {
@@ -139,8 +137,6 @@ export default {
       sessionStorage.setItem('customer_id', id);
       this.$router.push('/orders_details');
     }
-
-
-  }
+  },
 }
 </script>

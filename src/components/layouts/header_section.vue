@@ -14,10 +14,10 @@
         <nav class="navbar navbar-light bg-light">
             <div class="container">
                 <div class="row w-100">
-                    <div class="col-lg-3 page-logo" onclick="location.href='index.php';">
+                    <div class="col-lg-3 page-logo">
                         <div class="row login100-pic js-tilt" data-tilt v-tilt>
                             <div class="col-lg-5">
-                               <a> <img src="../../assets/img/logo.svg" alt=""> </a>
+                               <a :href="'/'"> <img src="../../assets/img/logo.svg" alt=""> </a>
                             </div>
                             <div class="col-lg-7 padding">
                               <a class="navbar-brand">منصة شغف</a>
@@ -31,12 +31,12 @@
                         </div>
                     </form>
 
-                    <header_guest v-show="token === null"></header_guest>
-                    <header_login_section v-show="token != null"></header_login_section>
+                    <header_guest id="guest" v-show="token === null"></header_guest>
+                    <header_login_section id="h-login" v-show="token != null"></header_login_section>
                 </div>
                 <div class="row  navbar-expand-lg w-100 p-top">
                     <div class="col-lg-2"></div>
-                    <nav_section v-show="token === null"></nav_section>
+                    <nav_section id="h-nav" v-show="token === null"></nav_section>
                     <div class="col-lg-2"></div>
                 </div>
             </div>

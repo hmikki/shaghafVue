@@ -20,7 +20,7 @@ const routes = [
   {
     path: '/serve_user',
     name: 'serve_user',
-    component: () => import('../views/pages/serve_user.vue')
+    component: () => import('../views/pages/serve_user.vue'),
   },
   {
     path: '/user_services',

@@ -6,7 +6,7 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
                     <li class="breadcrumb-item active" aria-current="page">حسابي</li>
                 </ol>
             </nav>
@@ -19,8 +19,8 @@
                                 <h5>بيانات الحساب</h5>
                             </div>
                             <div class="siting-body">
-                                <div class="edit-c"><a href="" data-tooltip="edit settings" data-toggle="modal" data-target="#exampleModalCenter-4" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
-                                <div class="verify-c"><a data-tooltip="verify account" href="" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
+                                <div class="edit-c"><a data-tooltip="edit settings" data-toggle="modal" data-target="#exampleModalCenter-4" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
+                                <div class="verify-c"><a data-tooltip="verify account" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
                                 <div class="form-group">
                                     <label for="formGroupExampleInput"><i class="fas fa-user"></i> الاسم كاملا</label>
                                     <input type="text" class="form-control" id="formGroupExampleInput" :placeholder="User.name" disabled>
@@ -104,6 +104,6 @@ export default {
             })
       }
     },
-  }
+  },
 }
 </script>

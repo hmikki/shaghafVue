@@ -5,7 +5,7 @@
             <div class=" orders">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                        <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
                         <li class="breadcrumb-item active" aria-current="page">الطلبات</li>
                     </ol>
                 </nav>
@@ -145,9 +145,7 @@ export default {
       sessionStorage.setItem('freelancer_id', id);
       this.$router.push('/orders_details');
     }
-
-
-  }
+  },
 
 }
 </script>

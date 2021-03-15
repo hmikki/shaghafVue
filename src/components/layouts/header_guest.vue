@@ -6,10 +6,10 @@
       <div class="col-lg-10 l-r">
         <div class="row">
           <div class="col-lg b-l">
-            <a id="LogNavBtn" href="" data-toggle="modal" data-target="#exampleModalCenter"> <i class="far fa-user f-aws"></i> تسجيل الدخول</a>
+            <a id="LogNavBtn" data-toggle="modal" data-target="#exampleModalCenter"> <i class="far fa-user f-aws"></i> تسجيل الدخول</a>
           </div>
           <div class="col-lg b-r">
-            <a id="RegNavBtn" href="" data-toggle="modal" data-target="#exampleModalCenter">انشاء حساب</a>
+            <a id="RegNavBtn" data-toggle="modal" data-target="#exampleModalCenter">انشاء حساب</a>
           </div>
         </div>
       </div>

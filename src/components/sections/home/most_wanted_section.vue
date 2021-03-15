@@ -15,9 +15,9 @@
                     </div>
                 </div>
               <div class="container">
-                <carousel :items-to-show="1.5" :wrap-around="true">
-                  <Slide>
-                      <div class="carousel__item col-lg-6" v-for="(freelancer, index) in Freelancers" :key="index">
+                <carousel :items-to-show="1" :wrap-around="true">
+                  <Slide v-for="freelancer in 4" :key="freelancer">
+                      <div class="carousel__item col-lg-4" v-for="(freelancer, index) in Freelancers" :key="index">
                         <router-link v-on:click="getFreelancerId(freelancer.id)" to="/Freelancer_page">
                           <div class="card">
                             <div class="img-o-h">

@@ -8,7 +8,7 @@
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                  <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
                     <li class="breadcrumb-item active" aria-current="page">حسابي</li>
                 </ol>
             </nav>
@@ -21,9 +21,9 @@
                                 <h5>بيانات الحساب</h5>
                             </div>
                             <div class="siting-body">
-                                <div class="edit-c"><a href="" data-toggle="modal" data-target="#exampleModalCenter-5" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
-                                <div class="verify-c"><a data-tooltip="verify account" href="" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
-                                <div class="add-c"><a data-tooltip="add portfolio" href="" data-toggle="modal" data-target="#add_portfolio" aria-label="Close" data-dismiss="modal"><i class="fas fa-plus-circle"></i></a></div>
+                                <div class="edit-c"><a data-toggle="modal" data-target="#exampleModalCenter-5" aria-label="Close" data-dismiss="modal"><i class="fas fa-pen"></i></a></div>
+                                <div class="verify-c"><a data-tooltip="verify account" data-toggle="modal" data-target="#exampleModalCenter-2" aria-label="Close" data-dismiss="modal"><i class="fas fa-check"></i></a></div>
+                                <div class="add-c"><a data-tooltip="add portfolio" data-toggle="modal" data-target="#add_portfolio" aria-label="Close" data-dismiss="modal"><i class="fas fa-plus-circle"></i></a></div>
                               <div class="acount-user-img">
                                     <img :src="User.avatar" id="profile-image" alt="">
                                     <input type="file" class="d-none" id="file" ref="file" v-on:change="handleImage()" accept="image/*">
@@ -97,7 +97,7 @@
                                     <label for="inputPassword"> <i class="fas fa-lock"></i> كلمة المرور</label>
                                     <input type="password" class="form-control" id="inputPassword" placeholder="***********************" disabled>
                                 </div>
-                                <a href="" data-toggle="modal" data-target="#exampleModalCenter-6" aria-label="Close" data-dismiss="modal">هل تريد تغيير كلمة المرور؟</a>
+                                <a data-toggle="modal" data-target="#exampleModalCenter-6" aria-label="Close" data-dismiss="modal">هل تريد تغيير كلمة المرور؟</a>
                             </div>
                         </div>
                     </div>
@@ -188,6 +188,6 @@ export default {
         $('#error').modal();
       }
     }
-  }
+  },
 }
 </script>

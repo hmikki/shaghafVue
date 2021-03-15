@@ -6,25 +6,25 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav nav-ul">
         <li class="nav-item active scroll">
-          <a class="nav-link" href="#">الرئيسية <span class="sr-only">(current)</span></a>
+          <a class="nav-link" data-to="#first-s">الرئيسية <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item li-onepage">
-          <a class="nav-link scroll" href="" data-to="#about-us">من نحن</a>
+          <a class="nav-link scroll" data-to="#about-us">من نحن</a>
         </li>
         <li class="nav-item li-onepage">
-          <a class="nav-link scroll" href="" data-to="#our-serve">خدماتنا</a>
+          <a class="nav-link scroll" data-to="#our-serve">خدماتنا</a>
         </li>
         <li class="nav-item li-onepage">
-          <a class="nav-link scroll" href="" data-to="#most-wanted">الاكثر طلبا</a>
+          <a class="nav-link scroll" data-to="#most-wanted">الاكثر طلبا</a>
         </li>
         <li class="nav-item li-onepage">
-          <a class="nav-link scroll" href="" data-to="#said-about-us">قالوا عنا</a>
+          <a class="nav-link scroll" data-to="#said-about-us">قالوا عنا</a>
         </li>
         <li class="nav-item li-onepage">
-          <a class="nav-link scroll" href="" data-to="#our-goals">اهدافنا</a>
+          <a class="nav-link scroll" data-to="#our-goals">اهدافنا</a>
         </li>
         <li class="nav-item li-onepage">
-          <a class="nav-link scroll" href="" data-to="#contact-us">تواصل معنا</a>
+          <a class="nav-link scroll" data-to="#contact-us">تواصل معنا</a>
         </li>
       </ul>
     </div>

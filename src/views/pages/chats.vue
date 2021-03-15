@@ -23,7 +23,7 @@
           <div class="col-lg-8">
             <div class="chat-l">
               <div class="row">
-                <div class="col-lg-12 chat-cur pb-5" onclick="location.href='#';">
+                <div class="col-lg-12 chat-cur pb-5">
                   <div class="row">
                     <div class="col-lg-10 mr-5 chat-p">
                       <img class="col-lg-2 b-r-half" :src="chatRoom['User']['avatar']" alt="avatar">
@@ -68,7 +68,7 @@
                   </form>
                 </div>
                 <div class="col-lg-1 d-flex-chat upload-voice">
-                  <a href="">
+                  <a>
                     <i class="fas fa-microphone">
                       <audio-player></audio-player>
                     </i>
@@ -320,7 +320,9 @@ export default {
     getRoomId(room_id){
       sessionStorage.setItem('room_id', room_id);
     },
-
-  }
+  },
+  updated() {
+    this.refresh(this);
+  },
 }
 </script>
