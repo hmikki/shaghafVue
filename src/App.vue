@@ -47,7 +47,6 @@
 <script>
 import header_section from "@/components/layouts/header_section";
 import footer_section from "@/components/layouts/footer_section";
-import axios from "axios";
 import Pusher from "pusher-js";
 
 
@@ -64,33 +63,9 @@ export default {
   updated() {
   },
   created() {
-    this.getNotifications();
     this.pusher();
   },
   methods:{
-    getNotifications() {
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/notifications',
-          {
-            headers:{
-              'Authorization' :'Bearer ' +token,
-              'X-localization' : 'ar'
-            },
-            params:{
-              device_token: 'BCUvW2TRd4xbzM7D7ncJO8r5mJNoOtnSat9Dtso9IQRXhNALvFqSFBxgYTAzuToxuVRUpgVLym0yXKrOgwh3Nt4'
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          console.log(res.data['Notifications']);
-        }else {
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
-        console.log(e);
-      })
-    },
     pusher(){
       Pusher.logToConsole = true;
       let pusher = new Pusher('da99af9260d89f306342', {

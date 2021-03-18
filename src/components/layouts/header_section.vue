@@ -31,12 +31,12 @@
                         </div>
                     </form>
 
-                    <header_guest id="guest" v-show="token === null"></header_guest>
-                    <header_login_section id="h-login" v-show="token != null"></header_login_section>
+                    <header_guest id="guest" v-if="token === null"></header_guest>
+                    <header_login_section id="h-login" v-if="token != null"></header_login_section>
                 </div>
                 <div class="row  navbar-expand-lg w-100 p-top">
                     <div class="col-lg-2"></div>
-                    <nav_section id="h-nav" v-show="token === null"></nav_section>
+                    <nav_section id="h-nav" v-if="token === null"></nav_section>
                 </div>
             </div>
         </nav>

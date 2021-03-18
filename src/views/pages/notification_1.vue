@@ -10,8 +10,8 @@
       <section class="notification">
         <div class="row">
           <div class="col">
-            <h6>شغف</h6>
-            <p>هي منصة الكترونية تمكن المستخدم من التسويق عن منتجاته للعميل وتسهيل عملية التواصل بين الطرفين بهدف تنظيف عمليات عرض المنتجات بالسوق السعودي بطريقة مميزة</p>
+            <h6>{{ Notification.title }}</h6>
+            <p>{{ Notification.message }}</p>
           </div>
         </div>
       </section>
@@ -19,10 +19,50 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
-  name: 'notification_1',
   mounted() {
     console.log('notification 1 mounted.')
+  },
+  data(){
+    return{
+      Notification:[],
+    }
+  },
+  created() {
+    this.getNotification();
+  },
+  methods:{
+    getNotification() {
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/notifications/read',
+            {
+                notification_id : sessionStorage.getItem('notification_id')
+            },
+            {
+              headers:{
+                'Authorization' :'Bearer ' +token,
+                'X-localization' : 'ar'
+              },
+            })
+            .then(res=>{
+              if (res.data['status']['status'] === "success"){
+                this.Notification = res.data['Notification']
+                console.log(res.data['Notification']);
+              }else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e=>{
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
+
+    },
   }
 }
 </script>

@@ -22,6 +22,8 @@
                                             <div class="dropdown-divider"></div>
                                             <router-link ref="link" to="" class="dropdown-item" v-on:click.prevent="changeRoute()" style="cursor: pointer" >اعدادات الحساب</router-link>
                                             <div class="dropdown-divider"></div>
+                                            <router-link ref="link" to="/notifications" class="dropdown-item" style="cursor: pointer" >اشعاراتي</router-link>
+                                            <div class="dropdown-divider"></div>
                                             <router-link ref="link" to="" class="dropdown-item" v-on:click.prevent="logout()" style="cursor: pointer">تسجيل خروج</router-link>
                                         </div>
                                     </div>
