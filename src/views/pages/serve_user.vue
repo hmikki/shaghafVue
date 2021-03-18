@@ -70,10 +70,10 @@
                                       <GoogleMap
                                           api-key="AIzaSyCrtMEBxgNcO0-bqdMFxo5hev35ugBZMhI"
                                           style="width: 100%; height: 500px"
-                                          :center="center"
+                                          :center="{ lat, lng}"
                                           :zoom="15"
-                                          :init="initializeGoogleMap" :markers="markers" :getUserLocation="true">
-                                        <Marker :options="{ position: center }" />
+                                          :init="initializeGoogleMap">
+                                        <Marker :options="{ position: { lat, lng} }" />
                                       </GoogleMap>
                                       <!--                                        <img src="../../assets/img/map.svg" alt="">-->
                                     </div>
@@ -109,8 +109,7 @@
                             <div class="col-lg-6"><span class="count count-pr">السعر : {{ product.price }}</span></div>
                             <div class="col-lg-3"></div>
                           </div>
-                          <a class="btn pro-ser-button" data-toggle="modal" data-target="#exampleModalCenter-12" aria-label="Close" data-dismiss="modal" :v-model="product_id = product.id">أطلب الان</a>
-                        </div>
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -130,8 +129,7 @@
                             <div class="col-lg-6"><span class="count count-pr">السعر : {{ product.price }}</span></div>
                             <div class="col-lg-3"></div>
                           </div>
-                          <a class="btn pro-ser-button" data-toggle="modal" data-target="#exampleModalCenter-12" aria-label="Close" data-dismiss="modal" :v-model="product_id = product.id">أطلب الان</a>
-                        </div>
+                          </div>
                       </div>
                     </div>
                   </div>
@@ -255,8 +253,8 @@ export default {
         quantity :1,
         note :'',
         product_id:'',
-        lat: null,
-        lng: null ,
+        lat: 31,
+        lng: 32 ,
         address:'',
       }
   },
@@ -265,133 +263,161 @@ export default {
       this.fetchUserPortfolios();
       this.fetchProducts();
       this.locatorButtonPressed();
-
   },
   methods:{
       fetchUser(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/auth/me',
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' :'ar'
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.User = res.data['User'];
-            this.User.City = res.data['User']['City'];
-            this.lat = res.data['User']['lat'];
-            this.lng = res.data['User']['lng'];
-            const user_id = res.data['User']['id'];
-            sessionStorage.setItem('user_id', user_id);
-            console.log(res.data['User']);
-          }else {
-            console.log(res.data['status']['status']);
-          }
-        })
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/auth/me',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar'
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.User = res.data['User'];
+                  this.User.City = res.data['User']['City'];
+                  if (res.data['User']['lat'] != null) {
+                    this.lat = parseFloat(res.data['User']['lat']);
+                  }
+                  if (res.data['User']['lng']) {
+                    this.lng = parseFloat(res.data['User']['lng']);
+                  }
+                  const user_id = res.data['User']['id'];
+                  sessionStorage.setItem('user_id', user_id);
+                  console.log(res.data['User']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
       },
       fetchUserPortfolios(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/portfolios',
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization': 'ar',
-              },
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Portfolios = res.data['Portfolios'];
-            console.log(res.data['Portfolios']);
-          }else {
-            console.log(res.data['status']['status'])
-          }
-        })
-        .catch(e=>{
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/portfolios',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Portfolios = res.data['Portfolios'];
+                  console.log(res.data['Portfolios']);
+                } else {
+                  console.log(res.data['status']['status'])
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       fetchProducts(val){
-      const token = sessionStorage.getItem('access_token_1');
-      const user_id = sessionStorage.getItem('user_id');
-      axios.get('http://18.194.157.202/api/products',
-          {
-            headers:{
-              'Authorization': 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              user_id : user_id,
-              type: val,
-              per_page : 10,
-            }
-          })
-      .then(res =>{
-        if (res.data['status']['status'] === "success"){
-          this.Products = res.data['Products'];
-          console.log(res.data['Products']);
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          const user_id = sessionStorage.getItem('user_id');
+          axios.get('http://18.194.157.202/api/products',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+                params: {
+                  user_id: user_id,
+                  type: val,
+                  per_page: 10,
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Products = res.data['Products'];
+                  console.log(res.data['Products']);
 
-        }else {
-          console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
         }
-      })
     },
       creatrOrder(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/orders/store',
-          {
-            delivered_date: this.delivered_date,
-            delivered_time : this.delivered_time,
-            product_id : this.product_id,
-            quantity :this.quantity,
-            note : this.note,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Order = res.data['Order'];
-              console.log(res.data['Order']);
-              console.log(res.data['status']['status']);
-              $('#exampleModalCenter-12').modal('hide');
-            }else {
-              console.log(res.data['status']['message']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.post('http://18.194.157.202/api/orders/store',
+              {
+                delivered_date: this.delivered_date,
+                delivered_time: this.delivered_time,
+                product_id: this.product_id,
+                quantity: this.quantity,
+                note: this.note,
+              },
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Order = res.data['Order'];
+                  console.log(res.data['Order']);
+                  console.log(res.data['status']['status']);
+                  $('#exampleModalCenter-12').modal('hide');
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
     },
       fetchProduct(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/products/show',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              product_id : this.product_id,
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Product = res.data['Product'];
-              console.log(res.data['Product']);
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
-
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/products/show',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+                params: {
+                  product_id: this.product_id,
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Product = res.data['Product'];
+                  console.log(res.data['Product']);
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
     },
       locatorButtonPressed() {
       navigator.geolocation.getCurrentPosition(
@@ -407,7 +433,7 @@ export default {
 
   },
   setup() {
-    const center = { lat: 31.506432, lng: 34.455552 }
+    const center = { lat: 31, lng: 32}
     return { center }
   },
 }

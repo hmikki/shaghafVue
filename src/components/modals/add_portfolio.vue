@@ -12,21 +12,26 @@
           <div class="container">
             <div class="form-group">
               <label for="type"> النوع:</label>
-              <select class="form-control minimal" id="type">
-                <option :value="type = '1'">1</option>
-                <option :value="type = '2'">2</option>
+              <select class="form-control minimal" id="type" v-on:change="getPortfolioTypeValue()">
+                <option>select</option>
+                <option :value="1">1</option>
+                <option :value="2">2</option>
               </select>
             </div>
             <div class="form-group">
-            <label for="description"></label>
+            <label for="description">التفاصيل : </label>
               <textarea class="form-control" id="description" rows="3" v-model="description">تفاصيل نموذج العمل</textarea>
           </div>
-          <div class="form-group">
-          <label for="file"></label>
+          <div class="form-group" v-show="this.type === '1'">
+          <label for="file">الصورة : </label>
             <form id="file-upload-form" class="">
               <input id="file" ref="file" type="file" name="fileUpload" accept="image/*"/>
             </form>
         </div>
+            <div class="form-group" v-show="this.type === '2'">
+              <label for="file">الفيديو</label>
+                <input id="video" class="form-control" type="text" name="video" value="" placeholder="أدخل رابط الفيديو"/>
+            </div>
           </div>
           <div class="tab-button">
             <button type="submit" class="btn" id="dep" v-on:click.prevent="addPortfolio()">اضافة</button>
@@ -61,29 +66,40 @@ export default {
   },
   methods:{
     addPortfolio(){
-      let file = this.$refs.file.files[0];
-      let formData = new FormData();
-      formData.append('media',file);
-      formData.append('type' , this.type);
-      formData.append('description', this.description);
-      console.log(file);
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/portfolios/store',
-          formData,
-          {
-            headers:{
-              'Authorization': 'Bearer '+token,
-              'X-localization' : 'ar',
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          console.log(res.data['status']['status']);
-          console.log(res.data['Portfolio']);
-        }else {
-          console.log(res.data['status']['message']);
-        }
-      })
+      try {
+        let file = this.$refs.file.files[0];
+        let formData = new FormData();
+        formData.append('media', file);
+        formData.append('type', this.type);
+        formData.append('description', this.description);
+        console.log(file);
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/portfolios/store',
+            formData,
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                console.log(res.data['status']['status']);
+                console.log(res.data['Portfolio']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
+    },
+    getPortfolioTypeValue(){
+      var PortfolioType = document.getElementById('type').value;
+      this.type = PortfolioType;
     }
   }
 }

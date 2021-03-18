@@ -45,26 +45,33 @@ export default {
     },
     methods:{
         forgetPassword(){
-          const token = sessionStorage.getItem('access_token_1');
+          try {
+            const token = sessionStorage.getItem('access_token_1');
             axios.post('http://18.194.157.202/api/auth/forget_password',
                 {
-                    mobile: this.mobile
+                  mobile: this.mobile
                 },
                 {
-                  headers:{
-                    'Authorization' : 'Bearer ' +token,
-                    'X-localization' : 'ar',
+                  headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-localization': 'ar',
                   },
                 })
-                .then( res=>{
-                  if (res.data['status']['status'] === "success"){
+                .then(res => {
+                  if (res.data['status']['status'] === "success") {
                     this.User = res.data['status']['status'];
                     console.log(res.data['status']['status']);
-                  }else {
+                  } else {
                     console.log(res.data['status']['status'])
                   }
-                console.log('code sent, check your mobile messages');
-            })
+                  console.log('code sent, check your mobile messages');
+                })
+                .catch(e => {
+                  console.log(e);
+                })
+          }catch (e){
+            console.log(e);
+          }
         }
     }
 }

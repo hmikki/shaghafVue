@@ -51,26 +51,30 @@ export default {
     },
     methods:{
       fetchOrder2() {
-        const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/orders',
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar',
-              }
-            })
-            .then(res=>{
-              if (res.data['status']['status'] === "success"){
-                this.Orders = res.data['Orders'];
-                console.log(res.data['Orders']);
-                console.log(res.data['status']['status']);
-              }else {
-                console.log(res.data['status']['message']);
-              }
-            })
-            .catch(e=>{
-              console.log(e);
-            })
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/orders',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Orders = res.data['Orders'];
+                  console.log(res.data['Orders']);
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
       }
     }
 }

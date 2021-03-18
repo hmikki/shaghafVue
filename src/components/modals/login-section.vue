@@ -1,4 +1,6 @@
 <template>
+  <profile_status></profile_status>
+  <welcome></welcome>
     <!-- Modal -->
     <div class="modal fade login-register" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -52,13 +54,17 @@
 import axios from "axios";
 import register_section from "@/components/modals/register_section";
 import Jquery from 'jquery';
+import profile_status from "@/components/modals/profileStatus";
+import welcome from "@/components/modals/welcome";
 let $ = Jquery;
 //import Pusher from 'pusher-js';
 
 export default {
   name: 'login',
   components:{
-    register_section
+    profile_status,
+    register_section,
+    welcome
   },
     mounted() {
         console.log('Component mounted.')
@@ -112,16 +118,17 @@ export default {
     methods:{
 
         login( ){
+          try {
             axios.post('http://18.194.157.202/api/auth/login',
                 {
-              'mobile': this.mobile,
-              'password': this.password,
-            },
+                  'mobile': this.mobile,
+                  'password': this.password,
+                },
                 {
-                  'X-localization' : 'ar',
+                  'X-localization': 'ar',
                 })
-                .then(res =>{
-                if(res.data['status']['status'] === "success"){
+                .then(res => {
+                  if (res.data['status']['status'] === "success") {
                     this.User = res.data['User'];
                     const token = res.data['User']['access_token'];
                     const user_id = res.data['User']['id'];
@@ -131,26 +138,29 @@ export default {
                     sessionStorage.setItem('user_id', user_id);
                     sessionStorage.setItem('user_type', user_type);
                     $('#exampleModalCenter').modal('hide');
-                  /*if (res.data['User']['type'] === '1'){
-                    this.$router.push('/my_account');
-                  }else if (res.data['User']['type'] === '2'){
-                    this.$router.push('/my_account_2');
-                  }else {
-                    this.$router.push('/');
-                  }*/
                     console.log(res.data['status']['status']);
                     console.log(res.data['User']['access_token']);
 
-                }else {
-                  console.log(res);
-                  //sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
-                  console.log('error');
-                }
+                  } else {
+                    console.log(res);
+                    sessionStorage.removeItem('access_token_1') // if the request fails, remove any possible user token if possible
+                    console.log('error');
+                  }
+                  if ((res.data['User']['type'] === '2') && (res.data['User']['profile_completed'] === false)){
+                       // alert('not completed');
+                        $('#exampleModalCenter').modal('hide');
+                        $('#profile_status').modal('show');
+                  }else {
+                    $('#welcome').modal('show');
+                  }
 
-            })
-                .catch(e=>{
+                })
+                .catch(e => {
                   console.log(e);
                 });
+          }catch (e){
+            console.log(e);
+          }
 
         },
 

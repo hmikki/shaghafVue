@@ -68,27 +68,29 @@ export default {
     },
     methods:{
         fetchReviews(){
+          try {
             axios.get('http://18.194.157.202/api/home/get_reviews',
                 {
-                  headers:{
-                    'X-localization' : 'ar',
+                  headers: {
+                    'X-localization': 'ar',
                   },
-                  params:{
-
+                  params: {}
+                })
+                .then(res => {
+                  if (res.data['status']['status'] === "success") {
+                    this.Reviews = res.data['Reviews'];
+                    console.log(res.data['status']['status']);
+                    console.log(res.data['Reviews']);
+                  } else {
+                    console.log(res.data['status']['status']);
                   }
                 })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Reviews = res.data['Reviews'];
-              console.log(res.data['status']['status']);
-              console.log(res.data['Reviews']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
+                .catch(e => {
+                  console.log(e);
+                })
+          }catch (e){
             console.log(e);
-          })
+          }
         },
     }
 }

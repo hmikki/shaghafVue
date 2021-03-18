@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment</title>
+</head>
+<body>
+<form action="/" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
+<script>
+    let checkoutId = sessionStorage.getItem('payment_token');
+    importScripts("https://test.oppwa.com/v1/paymentWidgets.js?checkoutId="+ checkoutId);
+</script>
+</body>
+</html>

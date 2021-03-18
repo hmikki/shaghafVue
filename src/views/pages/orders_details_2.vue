@@ -117,50 +117,63 @@ export default {
   },
   methods:{
     fetchOrderDetails(){
-      axios.get('http://18.194.157.202/api/orders/show',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              order_id: this.order_id,
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Order = res.data['Order'];
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['message']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+
+        axios.get('http://18.194.157.202/api/orders/show',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+              params: {
+                order_id: this.order_id,
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Order = res.data['Order'];
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     changeOrderStatus(){
-      axios.post('http://18.194.157.202/api/orders/update',
-          {
-            order_id: '',
-            status:'',
-            cancel_reason:'',
-            reject_reason:''
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Order = res.data['Order'];
-          console.log(res.data['status']['status']);
-        }else {
-          console.log(res.data['status']['message']);
-        }
-      })
+      try {
+
+        axios.post('http://18.194.157.202/api/orders/update',
+            {
+              order_id: '',
+              status: '',
+              cancel_reason: '',
+              reject_reason: ''
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Order = res.data['Order'];
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     }
   },
 }

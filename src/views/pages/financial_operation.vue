@@ -111,49 +111,58 @@ export default {
   },
   methods:{
     fetchBalance(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/transactions/my_balance',
-          {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar'
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/transactions/my_balance',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar'
               }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Balance = res.data['Balance'];
-          console.log(res.data['Balance']);
-          console.log(res.data['status']['status']);
-        }else{
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Balance = res.data['Balance'];
+                console.log(res.data['Balance']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
         console.log(e);
-      })
+      }
     },
     fetchTransaction(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/transactions',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar'
-            },
-            params:{
-              per_page : 10
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Transactions = res.data['Transactions'];
-          console.log(res.data['Transactions']);
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
-        console.log(e);
-      })
+      try {
+
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/transactions',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar'
+              },
+              params: {
+                per_page: 10
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Transactions = res.data['Transactions'];
+                console.log(res.data['Transactions']);
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e) {
+        console(e);
+      }
     },
   },
 }

@@ -50,18 +50,22 @@ export default {
   },
   methods:{
       fetchServices(){
-        axios.get('http://18.194.157.202/api/home/install')
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Categories = res.data['data']['Categories'];
-            console.log(res.data['data']['Categories']);
-          }else {
-            console.log(res.data['status']['status']);
-          }
-        })
-        .catch(e=>{
+        try {
+          axios.get('http://18.194.157.202/api/home/install')
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Categories = res.data['data']['Categories'];
+                  console.log(res.data['data']['Categories']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       fetchFreelancers(){
       axios.get('http://18.194.157.202/api/home/get_freelancers',

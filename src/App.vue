@@ -36,7 +36,7 @@
 @import "https://cdn.jsdelivr.net/npm/intl-tel-input@16.0.3/build/css/intlTelInput.css";
 @import "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css";
 @import "assets/css/owl.theme.default.css";
-@import "assets/css/style.css";
+@import "assets/css/sty.css";
 @import "assets/css/responsive.css";
 @import "assets/css/slick-theme.css";
 @import "assets/css/slick.css";

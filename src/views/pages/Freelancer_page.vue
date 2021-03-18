@@ -162,73 +162,85 @@ export default {
   },
   methods:{
       fetchFreelancer() {
-        axios.get('http://18.194.157.202/api/home/get_freelancer', {
-          headers:{
-            'X-localization' : 'ar',
-          },
-          params:{
-            user_id : sessionStorage.getItem('freelancer_id')
-          }
-        },)
-            .then(res => {
-              if (res.data['status']['status'] === "success"){
-                this.Freelancer = res.data['Freelancer'];
-                console.log(res.data['Freelancer']);
-              }else {
-                console.log(res.data['status']['status']);
-              }
-            })
-            .catch(e=>{
-              console.log(e);
-            })
+        try {
+          axios.get('http://18.194.157.202/api/home/get_freelancer', {
+            headers: {
+              'X-localization': 'ar',
+            },
+            params: {
+              user_id: sessionStorage.getItem('freelancer_id')
+            }
+          },)
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Freelancer = res.data['Freelancer'];
+                  console.log(res.data['Freelancer']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
       },
       fetchFreelancerPortfolios(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/portfolios',
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization': 'ar',
-              },
-              params:{
-                user_id : sessionStorage.getItem('freelancer_id')
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Portfolios = res.data['Portfolios'];
-            console.log(res.data['Portfolios']);
-          }else {
-            console.log(res.data['status']['status'])
-          }
-        })
-        .catch(e=>{
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/portfolios',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+                params: {
+                  user_id: sessionStorage.getItem('freelancer_id')
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Portfolios = res.data['Portfolios'];
+                  console.log(res.data['Portfolios']);
+                } else {
+                  console.log(res.data['status']['status'])
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       fetchFreelancerProducts(val){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/products',
-          {
-            headers:{
-              'Authorization': 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              type: val,
-              user_id : sessionStorage.getItem('freelancer_id'),
-              per_page : 10,
-            }
-          })
-      .then(res =>{
-        if (res.data['status']['status'] === "success"){
-          this.Products = res.data['Products'];
-          console.log(res.data['Products']);
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/products',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+                params: {
+                  type: val,
+                  user_id: sessionStorage.getItem('freelancer_id'),
+                  per_page: 10,
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Products = res.data['Products'];
+                  console.log(res.data['Products']);
 
-        }else {
-          console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+        }catch (e){
+          console.log(e);
         }
-      })
     },
       getProductId(product_id) {
         sessionStorage.setItem('product_id', product_id);
@@ -278,9 +290,6 @@ export default {
   setup() {
     const center = { lat: 32, lng: 35.25 }
     return { center }
-  },
-  updated() {
-    this.refresh(this);
   },
 }
 </script>

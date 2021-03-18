@@ -29,6 +29,7 @@
       </ul>
     </div>
   </div>
+  <div class="col-lg-2"></div>
 </template>
 <script>
 import jquery from 'jquery';

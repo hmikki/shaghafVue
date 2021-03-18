@@ -137,7 +137,7 @@
                               <div class="tab-button" id="notReceived" v-show="((Order.status === 7) && (this.user_type === '1'))">
                                 <button type="submit" class="btn" v-on:click.prevent="updateOrder(10)">لم يتم الاستلام</button>
                               </div>
-                              <div class="tab-button" id="chat" v-show="(Order.status === 2)">
+                              <div class="tab-button" id="chat">
                                 <router-link v-on:click="createRoom()" to="/chats"> <button type="submit" class="btn">بدء المحادثة</button> </router-link>
                               </div>
                             </div>
@@ -184,83 +184,95 @@ export default {
     },
     methods:{
       fetchOrderDetails(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/orders/show',
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar',
-              },
-              params:{
-                order_id: sessionStorage.getItem('order_id'),
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Order = res.data['Order'];
-            this.OrderStatuses = res.data['OrderStatuses'];
-            const customer_id = res.data['Order']['user_id'];
-            sessionStorage.setItem('customer_id', customer_id);
-            console.log(res.data['status']['status']);
-          }else {
-            console.log(res.data['status']['message']);
-          }
-        })
-        .catch(e=>{
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/orders/show',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+                params: {
+                  order_id: sessionStorage.getItem('order_id'),
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Order = res.data['Order'];
+                  this.OrderStatuses = res.data['OrderStatuses'];
+                  const customer_id = res.data['Order']['user_id'];
+                  sessionStorage.setItem('customer_id', customer_id);
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       updateOrder(order_status){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/orders/update',
-            {
-                order_id : sessionStorage.getItem('order_id'),
-                status : order_status,
-            },
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar',
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.post('http://18.194.157.202/api/orders/update',
+              {
+                order_id: sessionStorage.getItem('order_id'),
+                status: order_status,
               },
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            console.log(res.data['status']['status']);
-          }else {
-            console.log(res.data['status']['status']);
-          }
-        })
-        .catch(e=>{
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       reviewOrder(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/orders/review',
-            {
-              order_id:this.order_id,
-              rate:this.rate,
-              review:this.review,
-            },
-            {
-              headers: {
-                'Authorization': 'Bearer ' + token,
-                'X-localization': 'ar'
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.post('http://18.194.157.202/api/orders/review',
+              {
+                order_id: this.order_id,
+                rate: this.rate,
+                review: this.review,
               },
-            }
-        )
-            .then(res=>{
-              if (res.data['status']['status']){
-                this.Order = res.data['Order'];
-                $('#rate').modal('hide');
-                console.log(res.data['status']['status']);
-              }else {
-                console.log(res.data['status']['message']);
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar'
+                },
               }
-            })
-            .catch(e=>{
-              console.log(e);
-            });
+          )
+              .then(res => {
+                if (res.data['status']['status']) {
+                  this.Order = res.data['Order'];
+                  $('#rate').modal('hide');
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              });
+        }catch (e){
+          console.log(e);
+        }
       },
       changeRoute(){
         const user_type = sessionStorage.getItem('user_type');
@@ -273,37 +285,41 @@ export default {
         }
       },
       createRoom(){
-        const token = sessionStorage.getItem('access_token_1');
-        const user_type = sessionStorage.getItem('user_type');
-        if (user_type === '1'){
-          this.user_id = sessionStorage.getItem('freelancer_id');
-        }else{
-          this.user_id = sessionStorage.getItem('customer_id');
-        }
-        axios.post('http://18.194.157.202/api/chats/rooms/create',
-            {
-              user_id : this.user_id,
-            },
-            {
-              headers:{
-                'Authorization': 'Bearer ' + token,
-                'X-localization' : 'ar',
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.chatRoom = res.data['ChatRoom'];
-            const room_id = res.data['ChatRoom']['id'];
-            sessionStorage.setItem('room_id', room_id);
-            console.log(res.data['ChatRoom']);
-            console.log(res.data['status']['status']);
-          }else{
-            console.log(res.data['status']['status']);
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          const user_type = sessionStorage.getItem('user_type');
+          if (user_type === '1') {
+            this.user_id = sessionStorage.getItem('freelancer_id');
+          } else {
+            this.user_id = sessionStorage.getItem('customer_id');
           }
-        })
-        .catch(e=>{
+          axios.post('http://18.194.157.202/api/chats/rooms/create',
+              {
+                user_id: this.user_id,
+              },
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.chatRoom = res.data['ChatRoom'];
+                  const room_id = res.data['ChatRoom']['id'];
+                  sessionStorage.setItem('room_id', room_id);
+                  console.log(res.data['ChatRoom']);
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       }
     },
 }

@@ -10,6 +10,7 @@
                         <li class="breadcrumb-item active" aria-current="page">الطلبات</li>
                     </ol>
                 </nav>
+
               <div class="row d-flex justify-content-center">
                 <div class="modal-tab col-3">
                   <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
@@ -33,7 +34,7 @@
                           <p class="card-text">{{ order.Product.description }}</p>
                           <hr>
                           <div class="row bg-h">
-                            <div class="col-lg-6"><span class="count count-pr">{{ order.price }}</span></div>
+                            <div class="col-lg-6"><span class="count count-pr">{{ order.total }}</span></div>
                             <div class="col-lg-6">
                               <span class="count">عدد الخدمة : {{ order.quantity }}</span>
                             </div>
@@ -41,7 +42,7 @@
 
                           <div class="color-1">
                             <button type="submit" class="btn" v-on:click.prevent="getCustomerId(order.user_id)">
-                              status  </button>
+                              {{ order['status_str'] }}  </button>
                           </div>
                         </div>
                       </div>
@@ -59,7 +60,7 @@
                           <p class="card-text">{{ order.Product.description }}</p>
                           <hr>
                           <div class="row bg-h">
-                            <div class="col-lg-6"><span class="count count-pr">{{ order.price }}</span></div>
+                            <div class="col-lg-6"><span class="count count-pr">{{ order.total }}</span></div>
                             <div class="col-lg-6">
                               <span class="count">عدد الخدمة : {{ order.quantity }}</span>
                             </div>
@@ -67,7 +68,7 @@
 
                           <div class="color-1">
                             <button type="submit" class="btn" v-on:click.prevent="getCustomerId(order.user_id)">
-                              status  </button>
+                              {{ order['status_str'] }}  </button>
                           </div>
                         </div>
                       </div>
@@ -93,12 +94,11 @@ export default {
     },
     data(){
       return{
-        Orders: {
-          Freelancer: [],
-          User:[],
-          is_completed: null
-        },
+        Orders: [],
         Product: [],
+        Freelancer: [],
+        User:[],
+        is_completed: 0,
       }
     },
   created() {
@@ -106,29 +106,34 @@ export default {
   },
   methods:{
     fetchOrders(val){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/orders',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              is_completed : val,
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Orders = res.data['Orders'];
-              console.log(res.data['Orders']);
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['message']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/orders',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+              params: {
+                is_completed: val,
+                per_page: 10,
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Orders = res.data['Orders'];
+                console.log(res.data['Orders']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     getOrderId(order_id){
       sessionStorage.setItem('order_id', order_id);

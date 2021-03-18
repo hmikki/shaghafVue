@@ -84,24 +84,32 @@ export default {
   },
   methods:{
     userDetails(){
+      try {
       const token = sessionStorage.getItem('access_token_1');
       if(!token){
         console.log('You need to login first');
-      }else{
-        axios.get('http://18.194.157.202/api/auth/me',{
-          headers:{
-            'Authorization': 'Bearer '+token
+      }
+      else {
+        axios.get('http://18.194.157.202/api/auth/me', {
+          headers: {
+            'Authorization': 'Bearer ' + token
           }
         })
-            .then(res=>{
-              if(res.data['status']['status'] === "success"){
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
                 this.User = res.data['User'];
                 console.log(token);
                 console.log(res.data['status']['status']);
-              }else {
+              } else {
                 console.log(res.data['status']['status']);
               }
             })
+            .catch(e => {
+              console.log(e);
+            })
+      }
+      }catch (e){
+        console.log(e);
       }
     },
   },

@@ -26,7 +26,7 @@
                     </div>
                     <form class="form-inline col-lg-5">
                         <div class="row w-100">
-                            <input class="form-control mr-sm-2 search-t col-lg" type="search" placeholder="بحث عن خدمة" aria-label="Search" v-model="name">
+                            <input class="form-control search-t col-lg" type="search" placeholder="بحث عن خدمة" aria-label="Search" v-model="name">
                             <button class="btn btn-outline my-2 my-sm-0 search-b col-lg-2" type="submit" v-on:click.prevent="search()"><i class="fas fa-search"></i></button>
                         </div>
                     </form>
@@ -37,7 +37,6 @@
                 <div class="row  navbar-expand-lg w-100 p-top">
                     <div class="col-lg-2"></div>
                     <nav_section id="h-nav" v-show="token === null"></nav_section>
-                    <div class="col-lg-2"></div>
                 </div>
             </div>
         </nav>
@@ -70,29 +69,32 @@ export default {
       name: '',
     }
   },
-  created() {
+  computed() {
   },
   methods:{
     search(){
-      axios.get('http://18.194.157.202/api/home/get_freelancers', {
-        headers:{
-          'X-localization' : 'ar',
-        },
-        params:{
-        }
-      },)
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Freelancers = res.data['Freelancers'].filter(this.name);
-          console.log(res.data['status']['status']);
-          console.log(res.data['Freelancers']);
-        }else {
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
+      try {
+        axios.get('http://18.194.157.202/api/home/get_freelancers', {
+          headers: {
+            'X-localization': 'ar',
+          },
+          params: {}
+        },)
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Freelancers = res.data['Freelancers'].filter(this.name);
+                console.log(res.data['status']['status']);
+                console.log(res.data['Freelancers']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
         console.log(e);
-      })
+      }
     }
   }
 }

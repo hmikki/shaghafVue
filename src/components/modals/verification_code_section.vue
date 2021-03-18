@@ -46,62 +46,68 @@ export default {
     },
     methods:{
         verification(){
+          try {
 
-          console.log(this.code);
-          const token = sessionStorage.getItem('access_token_1');
+            console.log(this.code);
+            const token = sessionStorage.getItem('access_token_1');
             axios.post('http://18.194.157.202/api/auth/verify',
                 {
                   code: this.code,
                   type: this.type,
                 },
                 {
-                  headers:{
-                    'Authorization' : 'Bearer ' + token,
+                  headers: {
+                    'Authorization': 'Bearer ' + token,
                     'X-localization': 'ar'
                   }
                 })
-                .then(res=>{
-                  if (res.data['status']['status'] === "success"){
+                .then(res => {
+                  if (res.data['status']['status'] === "success") {
                     this.User = res.data['status']['status'];
                     $('#exampleModalCenter-2').modal('hide');
                     $('#success').modal();
                     console.log(res.data['status']['status']);
-                  }else {
+                  } else {
                     console.log(res.data['status']['message']);
                     $('#success').modal();
                   }
-
-
-            })
-          .catch(e=>{
+                })
+                .catch(e => {
+                  console.log(e);
+                })
+          }catch (e){
             console.log(e);
-          })
+          }
         },
         resendVerification(){
-          const token = sessionStorage.getItem('access_token_1');
+          try {
+            const token = sessionStorage.getItem('access_token_1');
             axios.get('http://18.194.157.202/api/auth/resend_verify',
                 {
-                headers:{
-                    'Authorization' : 'Bearer ' +token,
+                  headers: {
+                    'Authorization': 'Bearer ' + token,
                     'X-localization': 'ar',
-                },
-                params:{
+                  },
+                  params: {
                     type: this.type
-                }
-            })
-                .then(res=>{
-                  sessionStorage.setItem('message',res.data['status']['message']);
-                    if (res.data['status']['status'] === "success"){
-                      $('#exampleModalCenter-2').modal('hide');
-                      console.log(res.data['status']['status']);
-                    }else {
-                      console.log(res.data['status']['status']);
-                    }
+                  }
+                })
+                .then(res => {
+                  sessionStorage.setItem('message', res.data['status']['message']);
+                  if (res.data['status']['status'] === "success") {
+                    $('#exampleModalCenter-2').modal('hide');
+                    console.log(res.data['status']['status']);
+                  } else {
+                    console.log(res.data['status']['status']);
+                  }
                   $('#success').modal();
                 })
-          .catch(e=>{
+                .catch(e => {
+                  console.log(e);
+                })
+          }catch (e){
             console.log(e);
-          })
+          }
         }
     }
 }

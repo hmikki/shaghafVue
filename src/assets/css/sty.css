@@ -1,3 +1,4 @@
+
 *{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -14,10 +15,28 @@ header .header-1{
     padding: 10px;
     text-align: start
 }
+.ltr-rtl{
+    padding-right: 0
+}
+.ml-lang{
+    margin-left: auto
+}
+.mr-lang{
+    margin-right: auto
+}
+.text-start{
+    text-align: start
+}
 .logo-h{
     display: flex;
     width: 100%;
     justify-content: center;
+}
+.m-lang{
+    margin-right: 3rem!important;
+}
+.pr-lang{
+    padding-right: 0 !important
 }
 .logo-h .row{
     width: 100%
@@ -81,7 +100,7 @@ header .dropdown-menu{
     border-color: #EFEFEF;
 }
 header .dropdown-menu a:hover{
-        background-color: #EFEFEF;
+    background-color: #EFEFEF;
 }
 header .dropdown-divider {
     border-top: 1px solid #E6E6E6;
@@ -137,7 +156,7 @@ header img{
     padding: 0
 }
 .f-aws{
-        font-size: 15px;
+    font-size: 15px;
     background-color: #fee101;
     border-radius: 50%;
     padding: 8px;
@@ -349,10 +368,10 @@ ul{
 .text-con{
     position: absolute;
     z-index: 9999;
-    
+
 }
 .text-c{
-        width: 38px;
+    width: 38px;
     height: 13px;
     background-color: #fee101;
     display: flex;
@@ -369,6 +388,9 @@ ul{
 .our-serve h5{
     padding-bottom: 20px
 }
+.pre-works .slick-slide {
+    width: 100% !important
+}
 .service{
     display: block;
     width: 100%;
@@ -383,7 +405,7 @@ ul{
     padding-top: 10px
 }
 .service img{
-    padding-top: 30px   
+    padding-top: 30px
 }
 .test{
     position: absolute;
@@ -395,7 +417,7 @@ ul{
 .order-card-img{
     border: 3px solid #fff;
     border-radius: 50%;
-    width: 31%;
+    width: 35%;
     background: #fff;
     padding: 0;
     margin: auto;
@@ -437,7 +459,6 @@ ul{
     transform: scale(1.3)
 }
 .card{
-    min-height: 330px;
     position: relative;
     border-radius: 20px;
     cursor: pointer;
@@ -450,7 +471,7 @@ ul{
     text-align: center
 }
 .card-body p{
-    
+
 }
 .m-w-top{
     margin-bottom: 0rem;
@@ -497,7 +518,7 @@ ul{
     background-color: transparent;
 }
 .most-l a{
-        padding: 7px 15px;
+    padding: 7px 15px;
     border: 1px solid #000;
     border-radius: 30px;
     color: #000;
@@ -539,7 +560,7 @@ ul{
     font-size: 10px
 }
 .star .checked {
-  color: #FEE101;
+    color: #FEE101;
 }
 .star span{
     color: #C4C4C4
@@ -560,13 +581,36 @@ ul{
 }
 .co-p{
     padding: 60px 0;
-    background-color: #FEE101;    
+    background-color: #FEE101;
 }
 .said-about-us{
     padding: 60px 0
 }
 .said-cur-p{
     padding: 0 15px
+}
+.last-class .slick-track{
+    width: 100%;
+    display: flex
+}
+.last-class .image-lc{
+    padding: 0 5px
+}
+.last-class .image-lc img{
+    width: 9rem;
+    display: flex;
+    border-radius: 7px;
+}
+.last-class .slick-prev {
+    left: -2.4rem;
+}
+.last-class .slick-next {
+    left: -2.5rem;
+    top: 5.5rem;
+    right: auto
+}
+.last-class .slick-next:before{
+    padding: 4px 7px 4px 9px;
 }
 .said-about-us p {
     text-align: start;
@@ -616,8 +660,6 @@ ul{
     font-size: 1rem
 }
 .b-sh{
-    width: 150px;
-    min-height: 250px;
     border: 1px solid #EDEDED;
     border-radius: 30px;
     padding: 20px 15px;
@@ -643,7 +685,7 @@ ul{
 }
 .our-goals ul li p{
     display: flex;
-    align-items: center; 
+    align-items: center;
 }
 .our-goals ul li p span{
     display: inline-flex;
@@ -780,19 +822,19 @@ ul{
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 /* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 .phone-n{
     margin: 0
 }
 .modal-body .form-group{
-        justify-content: start;
+    justify-content: start;
     display: flex;
     width: 100%;
     flex-wrap: wrap;
@@ -834,29 +876,29 @@ input[type=number] {
     color: #FEE101
 }
 .switch-field {
-	display: inline-flex;
-	overflow: hidden;
+    display: inline-flex;
+    overflow: hidden;
 }
 
 .switch-field input {
-	position: absolute !important;
-	clip: rect(0, 0, 0, 0);
-	height: 1px;
-	width: 1px;
-	border: 0;
-	overflow: hidden;
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
 }
 
 .switch-field label {
-	background-color: #F4F4F4;
-	color: #000000;
-	font-size: 1rem;
-	line-height: 1;
-	text-align: center;
-	padding: 8px 16px;
-	margin-left: -1px;
-	border: 1px solid #F4F4F4;
-	transition: all 0.1s ease-in-out;
+    background-color: #F4F4F4;
+    color: #000000;
+    font-size: 1rem;
+    line-height: 1;
+    text-align: center;
+    padding: 8px 16px;
+    margin-left: -1px;
+    border: 1px solid #F4F4F4;
+    transition: all 0.1s ease-in-out;
     height: 100%
 }
 .switch-field label i{
@@ -864,21 +906,21 @@ input[type=number] {
     margin-left: 5px
 }
 .switch-field label:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .switch-field input:checked + label {
-	background-color: #FEE101;
-	box-shadow: none;
+    background-color: #FEE101;
+    box-shadow: none;
     margin-bottom: 0;
     border-radius: 10px
 }
 .switch-field label:first-of-type {
-	border-radius: 0 10px 10px 0px;
+    border-radius: 0 10px 10px 0px;
 }
 
 .switch-field label:last-of-type {
-	border-radius: 10px 0 0 10px;
+    border-radius: 10px 0 0 10px;
 }
 .r-ch1{
     width: 30%;
@@ -924,10 +966,10 @@ input[type=number] {
     padding: 0 20px
 }
 .vcode-input {
-  width: 100px;
-  height: 40px;
-  text-align: center;
-  font-size: 18px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 18px;
 }
 .vcode{
     direction: ltr;
@@ -989,7 +1031,7 @@ input[type=number] {
     top: 30px
 }
 .chat{
-        padding: 7px 10px;
+    padding: 7px 10px;
     border: 1px solid #fff;
     background-color: #fff;
     border-radius: 50%;
@@ -1023,7 +1065,7 @@ input[type=number] {
     display: flex;
 }
 .sevice-user .card-footer{
-    background-color: #FEE101 
+    background-color: #FEE101
 }
 .sevice-user .card-footer i,.sevice-user .card-footer .star .checked{
     color: #000
@@ -1180,7 +1222,7 @@ input[type=number] {
 }
 .m-name span{
     width: 40% !important;
-        display: flex !important;
+    display: flex !important;
     background-color: #FEE101;
     justify-content: center;
     align-items: center;
@@ -1295,7 +1337,7 @@ input[type=number] {
     color: #000
 }
 .change-pas .modal-body .tab-a,.change-sit .modal-body .tab-a{
-    padding-bottom: 20px;   
+    padding-bottom: 20px;
 }
 /** Start Orders Details **/
 .orders-details{
@@ -1354,42 +1396,42 @@ input[type=number] {
 
 /*----- TIMELINE MARKER -----*/
 .timeline-marker {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 15px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 15px;
 }
 .timeline-marker:before {
-  background: #FF6B6B;
-  border: 3px solid transparent;
-  border-radius: 100%;
-  content: "";
-  display: block;
-  height: 15px;
-  position: absolute;
-  top: 4px;
-  left: 0;
-  width: 15px;
-  transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
+    background: #FF6B6B;
+    border: 3px solid transparent;
+    border-radius: 100%;
+    content: "";
+    display: block;
+    height: 15px;
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 15px;
+    transition: background 0.3s ease-in-out, border 0.3s ease-in-out;
 }
 .timeline-marker:after {
-  content: "";
-  width: 3px;
-  background: #CCD5DB;
-  display: block;
-  position: absolute;
-  top: 24px;
-  bottom: 0;
-  left: 6px;
+    content: "";
+    width: 3px;
+    background: #CCD5DB;
+    display: block;
+    position: absolute;
+    top: 24px;
+    bottom: 0;
+    left: 6px;
 }
 .timeline-item:last-child .timeline-marker:after {
-  content: none;
+    content: none;
 }
 
 .timeline-item:not(.period):hover .timeline-marker:before {
-  background: transparent;
-  border: 3px solid #FF6B6B;
+    background: transparent;
+    border: 3px solid #FF6B6B;
 }
 .doted-bor{
     position: relative;
@@ -1430,7 +1472,7 @@ input[type=number] {
 .orders-details .tab-button button{
     border: 1px solid #000000;
     border-radius: 30px;
-    padding: 10px 30px;   
+    padding: 10px 30px;
 }
 .refused{
     font-size: 12px;
@@ -1497,128 +1539,128 @@ input[type=number] {
 /** For Upload Img **/
 
 .uploader {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 600px;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
 }
 .uploader label {
-  width: 100%;
-  padding: 1rem 1.5rem;
-  text-align: center;
-  background: #F4F4F4;
-  border-radius: 7px;
-  border: 3px solid #eee;
-  transition: all 0.2s ease;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    background: #F4F4F4;
+    border-radius: 7px;
+    border: 3px solid #eee;
+    transition: all 0.2s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .uploader label:hover {
-  border-color: #F4F4F4;
+    border-color: #F4F4F4;
 }
 .uploader label.hover {
-  border: 3px solid #454cad;
-  box-shadow: inset 0 0 0 6px #eee;
+    border: 3px solid #454cad;
+    box-shadow: inset 0 0 0 6px #eee;
 }
 .uploader label.hover #start i.fa {
-  transform: scale(0.8);
-  opacity: 0.3;
+    transform: scale(0.8);
+    opacity: 0.3;
 }
 .uploader #start {
-  width: 100%;
+    width: 100%;
 }
 .uploader #start.hidden {
-  display: none;
+    display: none;
 }
 .uploader #start i.fa {
-  font-size: 50px;
-  margin-bottom: 1rem;
-  transition: all 0.2s ease-in-out;
+    font-size: 50px;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease-in-out;
 }
 .uploader #response {
-  width: 100%;
+    width: 100%;
 }
 .uploader #response.hidden {
-  display: none;
+    display: none;
 }
 .uploader #response #messages {
-  margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 .uploader #file-image {
-  display: inline;
-  margin: 0 auto 0.5rem auto;
-  width: auto;
-  height: auto;
-  max-width: 180px;
+    display: inline;
+    margin: 0 auto 0.5rem auto;
+    width: auto;
+    height: auto;
+    max-width: 180px;
 }
 .uploader #file-image.hidden {
-  display: none;
+    display: none;
 }
 .uploader #notimage {
-  display: block;
-  width: 100%;
+    display: block;
+    width: 100%;
 }
 .uploader #notimage.hidden {
-  display: none;
+    display: none;
 }
 .uploader progress,
 .uploader .progress {
-  display: inline;
-  margin: 0 auto;
-  width: 100%;
-  max-width: 180px;
-  height: 8px;
-  border: 0;
-  border-radius: 4px;
-  background-color: #eee;
-  overflow: hidden;
+    display: inline;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 180px;
+    height: 8px;
+    border: 0;
+    border-radius: 4px;
+    background-color: #eee;
+    overflow: hidden;
 }
 .uploader .progress[value]::-webkit-progress-bar {
-  border-radius: 4px;
-  background-color: #eee;
+    border-radius: 4px;
+    background-color: #eee;
 }
 .uploader .progress[value]::-webkit-progress-value {
-  background: linear-gradient(to right, #393f90 0%, #454cad 50%);
-  border-radius: 4px;
+    background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+    border-radius: 4px;
 }
 .uploader .progress[value]::-moz-progress-bar {
-  background: linear-gradient(to right, #393f90 0%, #454cad 50%);
-  border-radius: 4px;
+    background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+    border-radius: 4px;
 }
 .uploader input[type=file] {
-  display: none;
+    display: none;
 }
 .uploader div {
-  margin: 0 0 0.5rem 0;
-  color: #5f6982;
+    margin: 0 0 0.5rem 0;
+    color: #5f6982;
 }
 .uploader div img {
-  max-height: 70px;
+    max-height: 70px;
     width: 100%
 }
 .uploader .btn {
-  display: inline-block;
-  margin: 0.5rem 0.5rem 1rem 0.5rem;
-  clear: both;
-  font-family: inherit;
-  font-weight: 700;
-  font-size: 14px;
-  text-decoration: none;
-  text-transform: initial;
-  border: none;
-  border-radius: 0.2rem;
-  outline: none;
-  padding: 0 1rem;
-  height: 36px;
-  line-height: 36px;
-  color: #fff;
-  transition: all 0.2s ease-in-out;
-  box-sizing: border-box;
-  background: #454cad;
-  border-color: #454cad;
-  cursor: pointer;
+    display: inline-block;
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+    clear: both;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    text-transform: initial;
+    border: none;
+    border-radius: 0.2rem;
+    outline: none;
+    padding: 0 1rem;
+    height: 36px;
+    line-height: 36px;
+    color: #fff;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    background: #454cad;
+    border-color: #454cad;
+    cursor: pointer;
 }
 .Identity img{
     width: 100%
@@ -1637,16 +1679,13 @@ input[type=number] {
 }
 .acount-sitting-2 .secound-m textarea,.acount-sitting-2 .secound-m select{
     border: 1px solid #ced4da !important;
-    color: #495057 
+    color: #495057
 }
 .acount-sitting-2 .edit-c{
-     top: 8%;   
-}
-.acount-sitting-2 .verify-c{
     top: 8%;
 }
 .thanks .modal-body{
-    padding: 40px 
+    padding: 40px
 }
 .thanks .modal-body h4{
     font-weight: bold
@@ -1660,33 +1699,33 @@ input[type=number] {
     text-align: center
 }
 .rate:not(:checked) > input {
-  position: absolute;
-  top: -9999px;
+    position: absolute;
+    top: -9999px;
 }
 .rate:not(:checked) > label {
-  width: 1em;
-  overflow: hidden;
-  white-space: nowrap;
-  cursor: pointer;
-  font-size: 4rem;
-  color: #EFEFEF;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 4rem;
+    color: #EFEFEF;
 }
 .rate:not(:checked) > label:before {
-  content: "★ ";
+    content: "★ ";
 }
 .rate > input:checked ~ label {
-  color: #ffc700;
+    color: #ffc700;
 }
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-  color: #deb217;
+    color: #deb217;
 }
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
 .rate > input:checked ~ label:hover,
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
-  color: #c59b08;
+    color: #c59b08;
 }
 .rate-page h5{
     text-align: start
@@ -1730,7 +1769,7 @@ input[type=number] {
     border: 1px solid #000
 }
 .add-orders .card-body button i{
-    margin-left: 5px; 
+    margin-left: 5px;
 }
 .add-orders .card,.sevice-user .card,.orders-details .card,.orders-2 .card{
     cursor: default !important;
@@ -1760,20 +1799,20 @@ input[type=number] {
     font-weight: bold
 }
 select.minimal {
-  background-image: linear-gradient(45deg, transparent 50%, #000 50%),
+    background-image: linear-gradient(45deg, transparent 50%, #000 50%),
     linear-gradient(135deg, #000 50%, transparent 50%);
-  background-position: calc(10% - 20px) calc(1em + 2px),
+    background-position: calc(10% - 20px) calc(1em + 2px),
     calc(10% - 15px) calc(1em + 2px);
-  background-size: 5px 5px, 5px 5px, 1px 1.5em;
-  background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    background-repeat: no-repeat;
     color: #000
 }
 select{
-    appearance: none; 
+    appearance: none;
 }
 select:-moz-focusring {
-  color: transparent;
-  text-shadow: 0 0 0 #000;
+    color: transparent;
+    text-shadow: 0 0 0 #000;
 }
 /** Start Orders 2 **/
 .orders-2 .color-1 button{
@@ -1812,7 +1851,7 @@ select:-moz-focusring {
 }
 /** Start Financial Operations **/
 .financial-operations .balance{
-        padding: 30px;
+    padding: 30px;
     background-color: #fff;
     box-shadow: 0px 0px 12px -5px #707070;
     border-radius: 10px;
@@ -1883,25 +1922,14 @@ select:-moz-focusring {
     background-color: #eee;
     border: none
 }
-.orders .modal-tab,.orders .modal-tab li{
-    padding: 0!important
-}
-.orders .modal-tab .nav-pills .nav-link.active,.orders .modal-tab .nav-pills .show>.nav-link,.orders .modal-tab ul a,.orders .modal-tab{
-    color: #000;
-    font-size: 0.9rem
-}
-.orders .modal-tab{
-    background-color: #eee;
-    border: none
-}
 .collection-request h5{
     padding: 20px 0px 0px;
-    margin-bottom: 0;   
+    margin-bottom: 0;
 }
 .collection-request .secound-m .vc-m{
     font-size: 1.5rem;
     font-weight: bold;
-    color: #FEE101;   
+    color: #FEE101;
 }
 .collection-request .model-img{
     padding: 0
@@ -1924,7 +1952,7 @@ select:-moz-focusring {
 }
 .confirm-order img{
     border: 2px solid #FEE101;
-    border-radius: 17px;  
+    border-radius: 17px;
 }
 .confirm-order-content{
     text-align: right;
@@ -1986,18 +2014,16 @@ select:-moz-focusring {
     font-weight: bold;
 }
 .total-price h6{
-    text-align: right;
+    text-align: start;
     padding-right: 0
 }
 .total-price p{
-    text-align: left;
+    text-align: end;
     color: #FEE101;
     padding-left: 0;
 }
-/**  
-
-Start Chats Page 
-
+/**
+Start Chats Page
 **/
 .chats{
     padding-bottom: 3rem
@@ -2030,8 +2056,7 @@ Start Chats Page
 .chat-p p{
     color: #919191;
     font-weight: bold;
-    font-size: 0.8rem;
-    overflow: hidden;
+    font-size: 0.8rem
 }
 .chat-cur{
     cursor: pointer
@@ -2051,7 +2076,7 @@ Start Chats Page
     margin-bottom: 0
 }
 .r-litter{
-    margin-bottom: 2rem;  
+    margin-bottom: 2rem;
 }
 .r-litter span{
     display: flex
@@ -2062,12 +2087,11 @@ Start Chats Page
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 15px;
     background-color: #F2F2F2;
-    color: #000;
-    overflow-wrap: anywhere;
+    color: #000
 }
 .new-w{
     flex: 0 0 11.666667%;
-    max-width: 11.666667%; 
+    max-width: 11.666667%;
 }
 .new-w{
     width: 100%;
@@ -2113,16 +2137,166 @@ Start Chats Page
     background-color: #fff;
     border: none;
 }
+/**
+End Chats Page
+**/
+/**
+loader
+**/
 
-.card-img-top{
-    border-top-left-radius: calc(1.25rem - 1px);
-    border-top-right-radius: calc(1.25rem - 1px);
+.loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #fee101;
+    z-index: 9999999;
+}
+body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    background: #fee101;
+}
+.circle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #fff;
+    left: 15%;
+    transform-origin: 50%;
+    animation: circle 0.5s alternate infinite ease;
 }
 
-.map{
+@keyframes circle {
+    0% {
+        top: 60px;
+        height: 5px;
+        border-radius: 50px 50px 25px 25px;
+        transform: scaleX(1.7);
+    }
+    40% {
+        height: 20px;
+        border-radius: 50%;
+        transform: scaleX(1);
+    }
+    100% {
+        top: 0%;
+    }
+}
+.circle:nth-child(2) {
+    left: 45%;
+    animation-delay: 0.2s;
+}
+.circle:nth-child(3) {
+    left: auto;
+    right: 15%;
+    animation-delay: 0.3s;
+}
+.shadow {
+    width: 20px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 62px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 15%;
+    filter: blur(1px);
+    animation: shadow 0.5s alternate infinite ease;
+}
+
+@keyframes shadow {
+    0% {
+        transform: scaleX(1.5);
+    }
+    40% {
+        transform: scaleX(1);
+        opacity: 0.7;
+    }
+    100% {
+        transform: scaleX(0.2);
+        opacity: 0.4;
+    }
+}
+.shadow:nth-child(4) {
+    left: 45%;
+    animation-delay: 0.2s;
+}
+.shadow:nth-child(5) {
+    left: auto;
+    right: 15%;
+    animation-delay: 0.3s;
+}
+
+.loader-wrapper span {
+    position: absolute;
+    top: 50%;
+    font-family: "Lato";
+    font-size: 20px;
+    letter-spacing: 12px;
+    color: #fff;
+    left: 44%;
+}
+/* footer  */
+/**
+Start notifications Page
+**/
+.notifications a{
+    text-decoration: none
+}
+.notifications .alert{
+    margin: 7% 0;
+    text-align: start;
+    transition: all .4s ease-in-out;
+}
+.notifications .alert:hover{
+    transform: scale(1.1);
+}
+.notifications span{
+    color: #4D4F5C;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center
+}
+.notifications span:last-of-type{
+    justify-content: flex-end;
+}
+.notifications p{
+    font-size: 0.84rem
+}
+.notifications .alert-success {
+    color: #1A1A1A;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px -4px #707070;
+    border: none
+}
+.notifications .alert-icon {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    padding: 0.5rem;
+    background-color: #FFF4E5;
+    color: #FFCA83;
+}
+.notification{
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
-    height: 300px;
-    background-color: azure;
+    padding: 6% 0 ;
+    justify-content: flex-start
+}
+.notification h6,.notification p{
+    text-align: start
 }
 .carousel__prev, .carousel__next{
     background-color: #fee101 !important;
@@ -2142,8 +2316,6 @@ a{
 .carousel__pagination-button--active{
     background-color: #ffc107 !important;
 }
-/**  
-
-End Chats Page
-
+/**
+End notifications Page
 **/

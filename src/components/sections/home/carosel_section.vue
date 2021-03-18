@@ -40,19 +40,26 @@ export default {
     },
     methods : {
     fetchAdvertisments(){
-      axios.get('http://18.194.157.202/api/home/advertisements',{
-        headers:{
-          'X-localization':'ar',
-        }
-      })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Advertisments = res.data['Advertisements'];
-          console.log(res.data['Advertisements']);
-        }else {
-          console.log(res.data['status']['message']);
-        }
-      });
+      try {
+        axios.get('http://18.194.157.202/api/home/advertisements', {
+          headers: {
+            'X-localization': 'ar',
+          }
+        })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Advertisments = res.data['Advertisements'];
+                console.log(res.data['Advertisements']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     }
     },
 };

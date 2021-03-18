@@ -5,31 +5,28 @@
             <div class="radio-chose">
                 <label for="radio-one" class="r-ch1"><i class="far fa-user-circle"></i> نوع التسجيل</label>
                 <div class="switch-field r-ch2">
-                    <input type="radio" id="radio-one" name="switch-one" value="yes" v-bind:v-model="type= '1'" checked/>
+                    <input type="radio" id="radio-one" name="switch-one" value="yes" v-on:click="getTypeValue(1)" checked/>
                     <label for="radio-one"><i class="fas fa-check-circle"></i> عميل شغف</label>
-                    <input type="radio" id="radio-two" name="switch-one" value="no" v-bind:v-model="type= '1'" />
+                    <input type="radio" id="radio-two" name="switch-one" value="no" v-on:click="getTypeValue(2)">
                     <label for="radio-two"><i class="fas fa-check-circle"></i> شريك شغف</label>
                 </div>
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput"><i class="fas fa-user"></i> الاسم كاملا</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="ادخال الاسم كاملا" v-model="name" required>
+                <label for="name"><i class="fas fa-user"></i> الاسم كاملا</label>
+                <input type="text" class="form-control" id="name" placeholder="ادخال الاسم كاملا" v-model="name" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1"> <i class="fas fa-phone-alt"></i> رقم الجوال</label>
+                <label for="mobile"> <i class="fas fa-phone-alt"></i> رقم الجوال</label>
 
                 <div class="row w-100 phone-n">
-                    <input class="form-control mr-sm-2 search-t col-lg" type="number" placeholder="ادخال رقم الجوال" aria-label="Search" v-model="mobile" required>
+                    <input class="form-control mr-sm-2 search-t col-lg" id="mobile" type="number" placeholder="ادخال رقم الجوال" aria-label="Search" v-model="mobile" required>
                     <span class="flag-img">(+966) <img src="src/assets/img/saudi-arabia.svg" alt=""></span>
                 </div> </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">المدينة</label>
-                <select class="form-control minimal" id="exampleFormControlSelect1" v-bind:v-model="city_id= '1'">
-                    <option v-bind:v-model="city_id= '1'">المملكة العربية السعودية - المدينة المنورة </option>
-                    <option v-bind:v-model="city_id= '1'">2</option>
-                    <option v-bind:v-model="city_id= '1'">3</option>
-                    <option v-bind:v-model="city_id= '1'">4</option>
-                    <option v-bind:v-model="city_id= '1'">5</option>
+                <select class="form-control minimal" id="exampleFormControlSelect1">
+                  <option>اختر مدينة</option>
+                  <option v-for="(city, index) in Cities" :key="index" :value="city_id = city.id"> {{city.name}} </option>
                 </select>
             </div>
             <div class="form-group">
@@ -40,6 +37,19 @@
                 <label for="inputPassword"> <i class="fas fa-lock"></i> كلمة المرور</label>
                 <input type="password" class="form-control" id="inputPassword" placeholder="ادخل كلمة المرور" v-model="password" required>
             </div>
+          <div class="form-group" v-show="this.type === 2">
+            <label for="providerType"><i class="fas fa-envelope"></i> نوع الحساب </label>
+            <select class="form-control" id="providerType" v-on:change.prevent="getProviderTypeValue()">
+              <option>اختر</option>
+              <option :value="1">حساب شخصي</option>
+              <option :value="2">حساب شركة</option>
+            </select>
+          </div>
+          <div class="form-group" v-show="(this.provider_type === '2')">
+            <label for="formGroupExampleInput2">اسم الشركة</label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="" v-model="company_name">
+
+          </div>
             <div class="form-group">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="gridCheck" required>
@@ -66,6 +76,7 @@ export default {
     data(){
         return{
             User: [],
+            Cities:[],
             name: '',
             mobile: '',
             email: '',
@@ -73,13 +84,17 @@ export default {
             type: '',
             country_id : '1',
             city_id : '',
+            provider_type: '',
+          company_name:''
         }
     },
     created() {
-        this.register();
+        this.getCities();
     },
     methods:{
         register(){
+          //let formData - new FormData();
+          try {
             axios.post('http://18.194.157.202/api/auth/register',
                 {
                   'name': this.name,
@@ -87,35 +102,70 @@ export default {
                   'email': this.email,
                   'password': this.password,
                   'type': this.type,
-                  'country_id' : this.country_id,
-                  'city_id' : this.city_id,
+                  'country_id': this.country_id,
+                  'city_id': this.city_id,
+                  'provider_type' : this.provider_type,
+                  'company_name' : this.company_name,
                 },
                 {
-                  headers:{
-                    'X-localization' : 'ar',
+                  headers: {
+                    'X-localization': 'ar',
                   }
                 })
-                .then(res=>{
-                      if(res.data['status']['status'] === 'success'){
-                        this.User = res.data['User'];
-                        const access_token = res.data['User']['access_token'];
-                        const email = res.data['User']['email'];
-                        const password = res.data['User']['password'];
-                        sessionStorage.setItem('access_token', access_token);
-                        sessionStorage.setItem('email', email);
-                        sessionStorage.setItem('password', password);
-                        $('#exampleModalCenter').modal('hide');
-                        $('#exampleModalCenter-2').modal('show');
-                        console.log(res.data['User']['access_token'] + '/n' + res.data['User']['email'] + '/n' + res.data['User']['password']);
-                        console.log(res.data['status']['status']);
-                        }else {
-                        sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
-                          console.log(res.data['status']['message']);
-                        }
-            }) .catch(e => {
-                this.errors.push(e);
+                .then(res => {
+                  if (res.data['status']['status'] === 'success') {
+                    this.User = res.data['User'];
+                    const access_token = res.data['User']['access_token'];
+                    const email = res.data['User']['email'];
+                    const password = res.data['User']['password'];
+                    sessionStorage.setItem('access_token', access_token);
+                    sessionStorage.setItem('email', email);
+                    sessionStorage.setItem('password', password);
+                    $('#exampleModalCenter').modal('hide');
+                    $('#exampleModalCenter-2').modal('show');
+                    console.log(res.data['User']);
+                    console.log(res.data['status']['status']);
+                  } else {
+                    //sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
+                    console.log(res.data['status']['message']);
+                  }
+                }).catch(e => {
+              this.errors.push(e);
             });
+          }catch (e){
+            console.log(e);
+          }
         },
+        getCities(){
+          try {
+            axios.get('http://18.194.157.202/api/home/install',
+                {
+                  headers:{
+                    'X-localization' : 'ar'
+                  }
+                })
+            .then(res=>{
+              if (res.data['status']['status'] === "success"){
+                this.Cities = res.data['data']['Countries'][0]['Cities'];
+                console.log(res.data['data']['Countries'][0]['Cities']);
+              }else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e=>{
+              console.log(e);
+            })
+          }catch (e){
+            console.log(e);
+          }
+        },
+      getTypeValue(val){
+        this.type = val;
+      },
+      getProviderTypeValue(){
+        let provider = document.getElementById('providerType').value;
+        this.provider_type = provider;
+      },
 
     }
 }

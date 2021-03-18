@@ -112,52 +112,64 @@ export default {
   },
   methods:{
     fetchService(val){
-      const token = sessionStorage.getItem('access_token_1');
-      const user_id = sessionStorage.getItem('user_id');
-      axios.get('http://18.194.157.202/api/products',
-          {
-            headers:{
-              'Authorization': 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              user_id : user_id,
-              type: val,
-            }
-          })
-          .then(res =>{
-            if (res.data['status']['status'] === "success"){
-              this.Products = res.data['Products'];
-              console.log(res.data['Products']);
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        const user_id = sessionStorage.getItem('user_id');
+        axios.get('http://18.194.157.202/api/products',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+              params: {
+                user_id: user_id,
+                type: val,
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Products = res.data['Products'];
+                console.log(res.data['Products']);
 
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     deleteService(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/products/destroy',
-          {
-            product_id: sessionStorage.getItem('product_id'),
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          console.log(res.data['status']['message']);
-          $('#exampleModalCenter-11').modal('hide');
-        }else {
-          console.log(res.data['status']['message']);
-        }
-      })
-      .catch(e=>{
+      try {
+
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/products/destroy',
+            {
+              product_id: sessionStorage.getItem('product_id'),
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                console.log(res.data['status']['message']);
+                $('#exampleModalCenter-11').modal('hide');
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
         console.log(e);
-      })
+      }
     },
     getProductId(product_id){
       sessionStorage.setItem('product_id',product_id);

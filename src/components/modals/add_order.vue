@@ -50,7 +50,7 @@
                     </div>
                     <div class="row">
                       <div class="col-lg-6">
-                        <h6 class="text-right">صورة الخدمة</h6>                                                                          <!-- Upload  -->
+                        <h6 class="text-start">صورة الخدمة</h6>                                                                          <!-- Upload  -->
                           <form id="file-upload-form" class="">
                           <input id="files" ref="files" multiple type="file" name="fileUpload" accept="image/*"/>
                         </form>
@@ -96,78 +96,93 @@ export default {
     },
   methods: {
     fetchAllCategories() {
-      axios.get('http://18.194.157.202/api/home/categories',
-          {
-            headers: {
-              'X-localization': 'ar',
-            }
-          })
-          .then(res => {
-            if (res.data['status']['status'] === "success") {
-              this.Categories = res.data['Categories'];
+      try {
+        axios.get('http://18.194.157.202/api/home/categories',
+            {
+              headers: {
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Categories = res.data['Categories'];
 
-              console.log(res.data['status']['status']);
-            } else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e => {
-            console.log(e);
-          })
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     addService() {
-      this.files = this.$refs.files.files;
-      let formData = new FormData();
-      for( var i = 0; i < this.files.length; i++ ){
-        let file = this.files[i];
-        formData.append('media[' + i + ']', file);
+      try {
+        this.files = this.$refs.files.files;
+        let formData = new FormData();
+        for (var i = 0; i < this.files.length; i++) {
+          let file = this.files[i];
+          formData.append('media[' + i + ']', file);
+        }
+        formData.append('name', this.name);
+        formData.append('description', this.description);
+        formData.append('category_id', this.category_id);
+        formData.append('sub_category_id', this.sub_category_id);
+        formData.append('price', this.price);
+        formData.append('type', this.type);
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/products/store',
+            formData,
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Product = res.data['Product'];
+                $('#exampleModalCenter-9').modal('hide');
+                console.log(res.data['status']['status']);
+                console.log(res.data['Product']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
       }
-      formData.append('name', this.name);
-      formData.append('description', this.description);
-      formData.append('category_id', this.category_id);
-      formData.append('sub_category_id', this.sub_category_id);
-      formData.append('price', this.price);
-      formData.append('type', this.type);
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/products/store',
-          formData,
-          {
-            headers: {
-              'Authorization': 'Bearer ' + token,
-              'X-localization': 'ar',
-            },
-          })
-          .then(res => {
-            if (res.data['status']['status'] === "success") {
-              this.Product = res.data['Product'];
-              $('#exampleModalCenter-9').modal('hide');
-              console.log(res.data['status']['status']);
-              console.log(res.data['Product']);
-            } else {
-              console.log(res.data['status']['message']);
-            }
-          })
     },
     addSubCategories() {
-      var select = document.getElementById('categories').value;
-      console.log(select);
-      axios.get('http://18.194.157.202/api/home/categories',
-          {
-            headers: {
-              'X-localization': 'ar',
-            }
-          })
-          .then(res => {
-            if (res.data['status']['status'] === "success") {
-              this.SubCategories = res.data['Categories'][select - 1]['SubCategories'];
-              console.log(res.data['Categories'][select - 1]['SubCategories']);
-            } else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e => {
-            console.log(e);
-          })
+      try {
+        var select = document.getElementById('categories').value;
+        console.log(select);
+        axios.get('http://18.194.157.202/api/home/categories',
+            {
+              headers: {
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.SubCategories = res.data['Categories'][select - 1]['SubCategories'];
+                console.log(res.data['Categories'][select - 1]['SubCategories']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
 
   }

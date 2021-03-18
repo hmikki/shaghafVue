@@ -50,63 +50,65 @@ export default {
   },
   methods:{
     createTransaction(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/transactions/generate_checkout',
-          {
-            value: this.value,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              const transaction_id = res.data['Transaction']['id'];
-              const payment_token = res.data['Transaction']['payment_token'];
-              sessionStorage.setItem('transaction_id', transaction_id);
-              sessionStorage.setItem('payment_token', payment_token);
-              $('#deposit').modal('hide');
-              console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
-              //let url = 'https://test.oppwa.com/v1/checkouts/'+ sessionStorage.getItem('payment_token') +'/payment';
-              //console.log(url);
-              this.$router.push('/payment_form');
-              //window.location.replace(url);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/transactions/generate_checkout',
+            {
+              value: this.value,
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                const transaction_id = res.data['Transaction']['id'];
+                const payment_token = res.data['Transaction']['payment_token'];
+                sessionStorage.setItem('transaction_id', transaction_id);
+                sessionStorage.setItem('payment_token', payment_token);
+                $('#deposit').modal('hide');
+                console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
+                //let url = 'https://test.oppwa.com/v1/checkouts/'+ sessionStorage.getItem('payment_token') +'/payment';
+                //console.log(url);
+                this.$router.push('/payment_form');
+                //window.location.replace(url);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     checkBalance(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/transactions/my_balance',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar'
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Balance = res.data['Balance'];
-              console.log(res.data['Balance']);
-              console.log(res.data['status']['status']);
-            }else{
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
-      if (this.Balance['AvailableBalance'] < this.value){
-          $("#deposit").modal('hide');
-          $("#check_balance").modal();
-      }else {
-        this.createTransaction();
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/transactions/my_balance',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar'
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Balance = res.data['Balance'];
+                console.log(res.data['Balance']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
       }
     },
   }

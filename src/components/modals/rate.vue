@@ -58,32 +58,37 @@ export default {
   },
   methods:{
     reviewOrder(){
+      try {
         axios.post('http://18.194.157.202/api/orders/review',
             {
-                order_id:this.order_id,
-                rate:this.rate,
-                review:this.review,
+              order_id: this.order_id,
+              rate: this.rate,
+              review: this.review,
             },
-        {
-          headers: {
-            'Authorization': 'Bearer ' + token,
-            'X-localization': 'ar'
-          },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar'
+              },
             }
         )
-            .then(res=>{
-              if (res.data['status']['status']){
+            .then(res => {
+              if (res.data['status']['status']) {
                 this.Order = res.data['Order'];
                 console.log(res.data['status']['status']);
-              }else {
+              } else {
                 console.log(res.data['status']['message']);
               }
             })
-            .catch(e=>{
+            .catch(e => {
               console.log(e);
             });
+      }catch (e){
+        console.log(e);
+      }
       },
     updateOrder(order_status){
+      try {
       const token = sessionStorage.getItem('access_token_1');
       axios.post('http://18.194.157.202/api/orders/update',
           {
@@ -106,6 +111,9 @@ export default {
           .catch(e=>{
             console.log(e);
           })
+      }catch (e){
+        console.log(e);
+      }
     }
 
   }

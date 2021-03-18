@@ -56,32 +56,36 @@ export default {
   },
   methods:{
       changeSetting(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/auth/update',
-            {
-              arguments:{
-                name: this.name,
-                mobile: this.mobile,
-                email: this.email,
-              }
-            },
-            {
-                headers:{
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.post('http://18.194.157.202/api/auth/update',
+              {
+                arguments: {
+                  name: this.name,
+                  mobile: this.mobile,
+                  email: this.email,
+                }
+              },
+              {
+                headers: {
                   'Authorization': 'Bearer ' + token
                 }
-        })
-        .then(res=>{
-          if (res.data['status']['status']){
-            this.User = res.data['User'];
-            $('#exampleModalCenter-4').modal('hide');
-            console.log(res.data['User']);
-          }else {
-            console.log(res.data['status']['message']);
-          }
-          })
-        .catch(e=>{
+              })
+              .then(res => {
+                if (res.data['status']['status']) {
+                  this.User = res.data['User'];
+                  $('#exampleModalCenter-4').modal('hide');
+                  console.log(res.data['User']);
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-          })
+        }
       }
   }
 }

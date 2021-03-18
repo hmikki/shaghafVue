@@ -43,30 +43,34 @@ export default {
   },
   methods:{
     updateOrder(order_status){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/orders/update',
-          {
-            order_id : sessionStorage.getItem('order_id'),
-            status : order_status,
-            reject_reason : this.cancel_reason,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/orders/update',
+            {
+              order_id: sessionStorage.getItem('order_id'),
+              status: order_status,
+              reject_reason: this.cancel_reason,
             },
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              console.log(res.data['status']['status']);
-              $('#reject').modal('hide');
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                console.log(res.data['status']['status']);
+                $('#reject').modal('hide');
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     }
   }
 }

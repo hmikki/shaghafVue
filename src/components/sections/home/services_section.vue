@@ -38,19 +38,26 @@ export default {
     },
     methods : {
         fetchCategories(){
-            axios.get('http://18.194.157.202/api/home/categories',{
-                headers:{
-                    'X-localization':'ar',
-                }
+          try {
+            axios.get('http://18.194.157.202/api/home/categories', {
+              headers: {
+                'X-localization': 'ar',
+              }
             })
                 .then(res => {
-                  if (res.data['status']['status'] === "success"){
+                  if (res.data['status']['status'] === "success") {
                     this.Categories = res.data['Categories'];
                     console.log(res.data['Categories']);
-                  }else {
-                   console.log(res.data['status']['status']);
+                  } else {
+                    console.log(res.data['status']['status']);
                   }
-                });
+                })
+                .catch(e => {
+                  console.log(e);
+                })
+          }catch (e){
+            console.log(e);
+          }
         },
     },
 }

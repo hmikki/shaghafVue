@@ -94,107 +94,123 @@ export default {
   },
   methods:{
       fetchAllCategories(){
-      axios.get('http://18.194.157.202/api/home/categories',
-          {
-            headers:{
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Categories = res.data['Categories'];
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+        try {
+          axios.get('http://18.194.157.202/api/home/categories',
+              {
+                headers: {
+                  'X-localization': 'ar',
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Categories = res.data['Categories'];
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
     },
       fetchDetails(){
-        const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/products/show',
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar',
-              },
-              params:{
-                product_id : sessionStorage.getItem('product_id')
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Product = res.data['Product'];
-            console.log(res.data['status']['status']);
-          }else {
-            console.log(res.data['status']['message']);
-          }
-        })
-        .catch(e=>{
+        try {
+          const token = sessionStorage.getItem('access_token_1');
+          axios.get('http://18.194.157.202/api/products/show',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                },
+                params: {
+                  product_id: sessionStorage.getItem('product_id')
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Product = res.data['Product'];
+                  console.log(res.data['status']['status']);
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       editService(){
-        console.log(this.product_id);
-        this.files = this.$refs.files.files;
-        let formData = new FormData();
-        for( var i = 0; i < this.files.length; i++ ){
-          let file = this.files[i];
-          formData.append('media[' + i + ']', file);
-        }
-        formData.append('product_id', sessionStorage.getItem('product_id'));
-        formData.append('name', this.name);
-        formData.append('description', this.description);
-        formData.append('category_id', this.category_id);
-        formData.append('sub_category_id', this.sub_category_id);
-        formData.append('price', this.price);
-        formData.append('type', this.type);
-        const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/products/update',
-            formData,
-            {
-              headers:{
-                'Authorization' : 'Bearer ' +token,
-                'X-localization' : 'ar',
-                'Content-Type': 'multipart/form-data'
-              },
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Product = res.data['Product'];
-            console.log(res.data['status']['status']);
-            console.log(res.data['Product']);
-            $('#edit_product').modal('hide');
-          }else {
-            console.log(res.data['status']['message']);
+        try {
+          console.log(this.product_id);
+          this.files = this.$refs.files.files;
+          let formData = new FormData();
+          for (var i = 0; i < this.files.length; i++) {
+            let file = this.files[i];
+            formData.append('media[' + i + ']', file);
           }
-        })
-        .catch(e=>{
+          formData.append('product_id', sessionStorage.getItem('product_id'));
+          formData.append('name', this.name);
+          formData.append('description', this.description);
+          formData.append('category_id', this.category_id);
+          formData.append('sub_category_id', this.sub_category_id);
+          formData.append('price', this.price);
+          formData.append('type', this.type);
+          const token = sessionStorage.getItem('access_token_1');
+          axios.post('http://18.194.157.202/api/products/update',
+              formData,
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                  'Content-Type': 'multipart/form-data'
+                },
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Product = res.data['Product'];
+                  console.log(res.data['status']['status']);
+                  console.log(res.data['Product']);
+                  $('#edit_product').modal('hide');
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
           console.log(e);
-        })
+        }
       },
       showSubCategories(){
-      var select = document.getElementById('cats').value;
-      console.log(select);
-      axios.get('http://18.194.157.202/api/home/categories',
-          {
-            headers:{
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.SubCategories = res.data['Categories'][select -1]['SubCategories'];
-              console.log(res.data['Categories'][select-1]['SubCategories']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+        try {
+          var select = document.getElementById('cats').value;
+          console.log(select);
+          axios.get('http://18.194.157.202/api/home/categories',
+              {
+                headers: {
+                  'X-localization': 'ar',
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.SubCategories = res.data['Categories'][select - 1]['SubCategories'];
+                  console.log(res.data['Categories'][select - 1]['SubCategories']);
+                } else {
+                  console.log(res.data['status']['status']);
+                }
+              })
+              .catch(e => {
+                console.log(e);
+              })
+        }catch (e){
+          console.log(e);
+        }
     }
   }
 }

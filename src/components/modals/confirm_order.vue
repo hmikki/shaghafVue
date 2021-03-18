@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="row confirm-order">
-                <div class="col-lg-4 pr-0">
+                <div class="col-lg-4 pr-lang">
                   <img class="w-100" :src="Product['first_image']" alt="">
                 </div>
                 <div class="col-lg-7 confirm-order-content">
@@ -102,82 +102,93 @@ export default {
   },
   methods:{
     creatrOrder(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/orders/store',
-          {
-            delivered_date: this.delivered_date,
-            delivered_time : this.delivered_time,
-            product_id : sessionStorage.getItem('product_id'),
-            quantity :this.quantity,
-            note : this.note,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Order = res.data['Order'];
-          console.log(res.data['Order']);
-          console.log(res.data['status']['status']);
-          $('#exampleModalCenter-12').modal('hide');
-        }else {
-          console.log(res.data['status']['message']);
-        }
-      })
-      .catch(e=>{
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/orders/store',
+            {
+              delivered_date: this.delivered_date,
+              delivered_time: this.delivered_time,
+              product_id: sessionStorage.getItem('product_id'),
+              quantity: this.quantity,
+              note: this.note,
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Order = res.data['Order'];
+                console.log(res.data['Order']);
+                console.log(res.data['status']['status']);
+                $('#exampleModalCenter-12').modal('hide');
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
         console.log(e);
-      })
+      }
     },
     fetchProduct(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/products/show',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            },
-            params:{
-              product_id : sessionStorage.getItem('product_id'),
-            }
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/products/show',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+              params: {
+                product_id: sessionStorage.getItem('product_id'),
+              }
             })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.Product = res.data['Product'];
-          console.log(res.data['Product']);
-          console.log(res.data['status']['status']);
-        }else {
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Product = res.data['Product'];
+                console.log(res.data['Product']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
         console.log(e);
-      })
-
+      }
     },
     fetchUser() {
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/auth/me',
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          this.User = res.data['User'];
-          this.user_id = res.data['User']['id'];
-          console.log(res.data['User']['id']);
-        }else {
-          console.log(res.data['status']['status']);
-        }
-      })
-      .catch(e=>{
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/auth/me',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.User = res.data['User'];
+                this.user_id = res.data['User']['id'];
+                console.log(res.data['User']['id']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
         console.log(e);
-      })
+      }
     },
 
   }

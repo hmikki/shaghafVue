@@ -81,64 +81,76 @@ export default {
   },
   methods:{
     fetchServices(){
-      axios.get('http://18.194.157.202/api/home/categories',
-          {
-            headers:{
-              'X-localization':'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Categories = res.data['Categories'];
-              console.log(res.data['Categories']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+        axios.get('http://18.194.157.202/api/home/categories',
+            {
+              headers: {
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Categories = res.data['Categories'];
+                console.log(res.data['Categories']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
 
     fetchFreelancers(){
-      axios.get('http://18.194.157.202/api/home/get_freelancers',
-          {
-            headers:{
-              'X-localization':'ar',
-            },
-            params:{
-              'category_id' : this.category_id,
-            },
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Freelancers = res.data['Freelancers'];
-              console.log(res.data['Freelancers']);
-            }else {
-              console.log(res.data['Freelancers']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+        axios.get('http://18.194.157.202/api/home/get_freelancers',
+            {
+              headers: {
+                'X-localization': 'ar',
+              },
+              params: {
+                'category_id': this.category_id,
+              },
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Freelancers = res.data['Freelancers'];
+                console.log(res.data['Freelancers']);
+              } else {
+                console.log(res.data['Freelancers']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     fetchAllFreelancers(){
-      axios.get('http://18.194.157.202/api/home/get_freelancers', {
-        headers:{
-          'X-localization' : 'ar',
-        },
-      },)
-          .then(res => {
-            if (res.data['status']['status'] === "success"){
-              this.Freelancers = res.data['Freelancers'];
-              console.log(res.data['Freelancers']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+        axios.get('http://18.194.157.202/api/home/get_freelancers', {
+          headers: {
+            'X-localization': 'ar',
+          },
+        },)
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Freelancers = res.data['Freelancers'];
+                console.log(res.data['Freelancers']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     getFreelancerId(freelancer_id){
       sessionStorage.setItem('freelancer_id', freelancer_id);

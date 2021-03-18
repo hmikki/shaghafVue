@@ -25,7 +25,7 @@
               <div class="row">
                 <div class="col-lg-12 chat-cur pb-5">
                   <div class="row">
-                    <div class="col-lg-10 mr-5 chat-p">
+                    <div class="col-lg-10 m-lang chat-p">
                       <img class="col-lg-2 b-r-half" :src="chatRoom['User']['avatar']" alt="avatar">
                       <h4>{{ chatRoom['User']['name'] }}</h4>
                     </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="col-lg-12" v-for="(message, index) in Messages" :key="index" :class="{'l-litter' :message.user_id === user_id , 'm-litter' : message.user_id !== user_id}">
-                    <div class="col-lg-6 mb-3 ml-auto">
+                    <div class="col-lg-6 mb-3 ml-lang">
                       <p v-show="message.type === 1" class=" ch-messsage">{{message.message}}</p>
                       <img v-show="message.type === 3" :src="'http://18.194.157.202/'+ message.message" >
                       <audio controls v-show="message.type === 2">
@@ -125,6 +125,7 @@ export default {
     this.fetchRooms();
     this.openChat();
     this.fetchMessages();
+    /********** Pusher *************/
     Pusher.logToConsole = true;
     let pusher = new Pusher('da99af9260d89f306342', {
       cluster: 'ap1'
@@ -139,180 +140,209 @@ export default {
   },
   methods:{
     fetchRooms(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/chats/rooms',
-          {
-            headers:{
-              'Authorization': 'Bearer ' +token,
-              'X-localization': 'ar',
-            },
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Rooms = res.data['ChatRooms'];
-              console.log(res.data['ChatRooms']);
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/chats/rooms',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Rooms = res.data['ChatRooms'];
+                console.log(res.data['ChatRooms']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     openChat(){
-      const user_type = sessionStorage.getItem('user_type');
-      if (user_type === '1'){
-        this.user_id = sessionStorage.getItem('freelancer_id');
-      }else{
-        this.user_id = sessionStorage.getItem('customer_id');
+      try {
+
+        const user_type = sessionStorage.getItem('user_type');
+        if (user_type === '1') {
+          this.user_id = sessionStorage.getItem('freelancer_id');
+        } else {
+          this.user_id = sessionStorage.getItem('customer_id');
+        }
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/chats/rooms/create',
+            {
+              user_id: this.user_id,
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.chatRoom = res.data['ChatRoom'];
+                console.log(res.data['ChatRoom']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
       }
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/chats/rooms/create',
-          {
-            user_id : this.user_id,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' :'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.chatRoom = res.data['ChatRoom'];
-              console.log(res.data['ChatRoom']);
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
     },
     getMessage(data){
       this.Messages.push(data);
     },
     fetchMessages(){
-      console.log(this.room_id);
-      const token = sessionStorage.getItem('access_token_1');
-      axios.get('http://18.194.157.202/api/chats/rooms/messages',
-          {
-            headers:{
-              'Authorization': 'Bearer ' +token,
-              'X-localization': 'ar',
-            },
-            params:{
-              chat_room_id: sessionStorage.getItem('room_id'),
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              this.Messages = res.data['ChatRoomMessages'];
-              console.log(res.data['ChatRoomMessages']);
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['status']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+
+        console.log(this.room_id);
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get('http://18.194.157.202/api/chats/rooms/messages',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+              params: {
+                chat_room_id: sessionStorage.getItem('room_id'),
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.Messages = res.data['ChatRoomMessages'];
+                console.log(res.data['ChatRoomMessages']);
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['status']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     sendMessage(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
-          {
-            'chat_room_id': sessionStorage.getItem('room_id'),
-            'type': this.type,
-            'message' : this.message,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['message']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
+      try {
+
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
+            {
+              'chat_room_id': sessionStorage.getItem('room_id'),
+              'type': this.type,
+              'message': this.message,
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
     },
     sendFile(){
-      let file = this.$refs.file.files[0];
-      let formData = new FormData();
-      formData.append('message',file);
-      console.log(file);
-      if (file.type === "image/png"){
-        this.type= 3;
-        console.log(this.type);
-      }else {
-        this.type= 4;
-        console.log(this.type);
+      try {
+
+        let file = this.$refs.file.files[0];
+        let formData = new FormData();
+        formData.append('message', file);
+        console.log(file);
+        if (file.type === "image/png") {
+          this.type = 3;
+          console.log(this.type);
+        } else {
+          this.type = 4;
+          console.log(this.type);
+        }
+        formData.append('type', this.type);
+        formData.append('chat_room_id', sessionStorage.getItem('room_id'));
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
+            formData,
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e)
       }
-      formData.append('type',this.type);
-      formData.append('chat_room_id', sessionStorage.getItem('room_id'));
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
-          formData,
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['message']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
     },
     previewFile() {
-      const preview = document.querySelector('img');
-      const file = document.querySelector('input[type=file]').files[0];
-      const reader = new FileReader();
-      reader.addEventListener("load", function () {
-        // convert image file to base64 string
-        preview.src = reader.result;
-      }, false);
-      if (file) {
-        reader.readAsDataURL(file);
+      try {
+        const preview = document.querySelector('img');
+        const file = document.querySelector('input[type=file]').files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+          // convert image file to base64 string
+          preview.src = reader.result;
+        }, false);
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
+            {
+              'chat_room_id': this.room_id,
+              'type': this.type,
+              'message': file,
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                console.log(res.data['status']['status']);
+              } else {
+                console.log(res.data['status']['message']);
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
       }
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/chats/rooms/messages/create',
-          {
-            'chat_room_id': this.room_id,
-            'type': this.type,
-            'message' : file,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' +token,
-              'X-localization' : 'ar',
-            }
-          })
-          .then(res=>{
-            if (res.data['status']['status'] === "success"){
-              console.log(res.data['status']['status']);
-            }else {
-              console.log(res.data['status']['message']);
-            }
-          })
-          .catch(e=>{
-            console.log(e);
-          })
     },
     getUserId(user_id){
       sessionStorage.setItem('user_id', user_id);
@@ -320,9 +350,6 @@ export default {
     getRoomId(room_id){
       sessionStorage.setItem('room_id', room_id);
     },
-  },
-  updated() {
-    this.refresh(this);
   },
 }
 </script>

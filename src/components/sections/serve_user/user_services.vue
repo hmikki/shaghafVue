@@ -42,23 +42,27 @@ export default {
   },
   methods:{
       fetchProducts(){
-        axios.get('http://18.194.157.202/api/products/',
-            {
-              headers:{
-                'Authorization': 'Bearer ' +token,
-                'X-localization': 'ar',
-              }
-            })
-        .then(res=>{
-          if (res.data['status']['status'] === "success"){
-            this.Products = res.data['Products'];
-            console.log(res.data['Products']);
-          }else {
-            console.log(res.data['status']['message']);
-          }
-        })
-        .catch(e=>
-        console.log(e));
+        try {
+          axios.get('http://18.194.157.202/api/products/',
+              {
+                headers: {
+                  'Authorization': 'Bearer ' + token,
+                  'X-localization': 'ar',
+                }
+              })
+              .then(res => {
+                if (res.data['status']['status'] === "success") {
+                  this.Products = res.data['Products'];
+                  console.log(res.data['Products']);
+                } else {
+                  console.log(res.data['status']['message']);
+                }
+              })
+              .catch(e =>
+                  console.log(e));
+        }catch (e){
+          console.log(e);
+        }
       }
   }
 }
