@@ -73,6 +73,7 @@ export default {
         },
         category_id: sessionStorage.getItem('category_id'),
         Freelancers:[],
+        q: sessionStorage.getItem('q'),
       }
   },
   created() {
@@ -86,7 +87,7 @@ export default {
             {
               headers: {
                 'X-localization': 'ar',
-              }
+              },
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
@@ -136,6 +137,9 @@ export default {
           headers: {
             'X-localization': 'ar',
           },
+          params:{
+            'q' : this.q,
+          }
         },)
             .then(res => {
               if (res.data['status']['status'] === "success") {

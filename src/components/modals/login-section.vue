@@ -143,7 +143,7 @@ export default {
 
                   } else {
                     console.log(res);
-                    sessionStorage.removeItem('access_token_1') // if the request fails, remove any possible user token if possible
+                    //sessionStorage.removeItem('access_token_1') // if the request fails, remove any possible user token if possible
                     console.log('error');
                   }
                   if ((res.data['User']['type'] === '2') && (res.data['User']['profile_completed'] === false)){

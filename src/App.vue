@@ -48,6 +48,7 @@
 import header_section from "@/components/layouts/header_section";
 import footer_section from "@/components/layouts/footer_section";
 import axios from "axios";
+import Pusher from "pusher-js";
 
 
 export default {
@@ -57,17 +58,14 @@ export default {
   },
   data(){
     return{
-      email : sessionStorage.getItem('email'),
-      password : sessionStorage.getItem('password'),
-      device_token: '',
-      device_type :'Server',
+      Message:[],
     }
   },
   updated() {
-    this.refresh(this);
   },
   created() {
     this.getNotifications();
+    this.pusher();
   },
   methods:{
     getNotifications() {
@@ -93,28 +91,24 @@ export default {
         console.log(e);
       })
     },
-    refresh(){
-      const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/auth/refresh',
-          {
-            device_token: this.device_token,
-            device_type: this.device_type,
-          },
-          {
-            headers:{
-              'Authorization' : 'Bearer ' + token,
-              'X-localization' : 'ar'
-            }
-          })
-      .then(res=>{
-        if (res.data['status']['status'] === "success"){
-          const device_token = sessionStorage.getItem('device_token');
-          console.log(device_token);
-        }else {
-          console.log(res.data['status']['message']);
-        }
-      })
-    },
+    pusher(){
+      Pusher.logToConsole = true;
+      let pusher = new Pusher('da99af9260d89f306342', {
+        cluster: 'ap1'
+      });
+      let that = this;
+      let channel = pusher.subscribe('online');
+      channel.bind('SendGlobalNotificationEvent', function(data) {
+        that.Message = data.notification;
+        console.log(data.notification);
+      });
+      let user_id = sessionStorage.getItem('user_id');
+      let channel2 = pusher.subscribe('online.' +user_id);
+      channel2.bind('SendNotificationEvent', function(data) {
+        that.Message=data.notification;
+        console.log(data.notification);
+      });
+    }
   }
 }
 
