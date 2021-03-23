@@ -16,7 +16,7 @@
         </div>
     </div>
 <div>
-  status :{{ Transaction['status_str'] }}
+ {{ Transaction['status_str'] }}
 </div>
 </template>
 <script>
