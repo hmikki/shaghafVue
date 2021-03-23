@@ -10,7 +10,8 @@
       <section class="notifications">
         <div class="row">
           <div class="col-lg-5">
-              <a  v-for="(notification, index) in Notifications" :key="index" v-on:click.prevent="getNotificationId(notification.id)">
+              <a id="notify" v-for="(notification, index) in Notifications" :key="index"
+                 v-on:click.prevent="getNotificationId(notification.id)">
                 <router-link to="/notification_1">
                 <div class="alert alert-success" role="alert">
                   <span> <i class="fas fa-exclamation-circle alert-icon"></i>&nbsp; {{ notification.title }} </span>
@@ -22,6 +23,24 @@
           </div>
           <div class="col-lg-2"></div>
         </div>
+        <div class="overflow-auto">
+          <b-pagination
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              aria-controls="my-table"
+          ></b-pagination>
+
+          <p class="mt-3">Current Page: {{ currentPage }}</p>
+
+          <b-table
+              id="my-table"
+              :Notifications="Notifications"
+              :per-page="perPage"
+              :current-page="currentPage"
+              small
+          ></b-table>
+        </div>
       </section>
     </div>
   </div>
@@ -29,13 +48,23 @@
 <script>
 import axios from "axios";
 
+
 export default {
   mounted() {
     console.log('notification mounted.')
   },
+  components:{
+  },
   data(){
     return{
       Notifications:[],
+      perPage: 10,
+      currentPage: 1,
+    }
+  },
+  computed: {
+    rows() {
+      return this.Notifications.length
     }
   },
   created() {
@@ -51,9 +80,6 @@ export default {
                 'Authorization' :'Bearer ' +token,
                 'X-localization' : 'ar'
               },
-              params:{
-                per_page : 10,
-              }
             })
             .then(res=>{
               if (res.data['status']['status'] === "success"){
@@ -72,7 +98,7 @@ export default {
     },
     getNotificationId(notification_id){
       sessionStorage.setItem('notification_id', notification_id);
-    }
+    },
   }
 }
 </script>

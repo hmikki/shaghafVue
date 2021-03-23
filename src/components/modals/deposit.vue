@@ -68,11 +68,10 @@ export default {
                 const payment_token = res.data['Transaction']['payment_token'];
                 sessionStorage.setItem('transaction_id', transaction_id);
                 sessionStorage.setItem('payment_token', payment_token);
+                sessionStorage.setItem('amount', this.value);
                 $('#deposit').modal('hide');
                 console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
-                //let url = 'https://test.oppwa.com/v1/checkouts/'+ sessionStorage.getItem('payment_token') +'/payment';
-                //console.log(url);
-                this.$router.push('/payment_form');
+                this.$router.push('/payment');
                 //window.location.replace(url);
               } else {
                 console.log(res.data['status']['status']);

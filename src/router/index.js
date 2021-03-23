@@ -78,9 +78,9 @@ const routes = [
     component: () => import('../views/pages/financial_operation.vue')
   },
   {
-    path: '/payment_form',
-    name: 'payment_form',
-    component: () => import('../components/sections/payment_form.vue')
+    path: '/payment',
+    name: 'payment',
+    component: () => import('../components/sections/payment')
   },
   {
     path: '/Freelancer_page',

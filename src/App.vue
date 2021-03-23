@@ -67,22 +67,26 @@ export default {
   },
   methods:{
     pusher(){
-      Pusher.logToConsole = true;
-      let pusher = new Pusher('da99af9260d89f306342', {
-        cluster: 'ap1'
-      });
-      let that = this;
-      let channel = pusher.subscribe('online');
-      channel.bind('SendGlobalNotificationEvent', function(data) {
-        that.Message = data.notification;
-        console.log(data.notification);
-      });
-      let user_id = sessionStorage.getItem('user_id');
-      let channel2 = pusher.subscribe('online.' +user_id);
-      channel2.bind('SendNotificationEvent', function(data) {
-        that.Message=data.notification;
-        console.log(data.notification);
-      });
+      try {
+        Pusher.logToConsole = true;
+        let pusher = new Pusher('da99af9260d89f306342', {
+          cluster: 'ap1'
+        });
+        let that = this;
+        let channel = pusher.subscribe('online');
+        channel.bind('SendGlobalNotificationEvent', function(data) {
+          that.Message = data.notification;
+          console.log(data.notification);
+        });
+        let user_id = sessionStorage.getItem('user_id');
+        let channel2 = pusher.subscribe('online.' +user_id);
+        channel2.bind('SendNotificationEvent', function(data) {
+          that.Message=data.notification;
+          console.log(data.notification);
+        });
+      }catch (e){
+        console.log(e);
+      }
     }
   }
 }
