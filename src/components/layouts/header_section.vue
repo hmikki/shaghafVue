@@ -1,5 +1,5 @@
 <template>
-  <login_section></login_section>
+  <login_section v-on:RefreshHeader="RefreshHeader"></login_section>
   <forget_password_section></forget_password_section>
   <verification_code_section></verification_code_section>
     <header>
@@ -22,29 +22,6 @@
             </div>
           </div>
         </a>
-
-<!--        <div class="Webnotification red" id="notificationRed">
-          <div class="bateria">
-            <div class="icon"></div>
-          </div>
-          <div class="message">
-            <span>Telefone com bateria fraca</span>
-            <p>
-              Carregue a bateria do seu celular para continuar usando o aplicativo</p>
-            <a id="closeNotificationRed" data-to="#notificationRed"><i class="fa fa-times"></i></a>
-          </div>
-        </div>
-        <div class="Webnotification green" id="notificationGreen">
-          <div class="bateria">
-            <div class="icon"></div>
-          </div>
-          <div class="message">
-            <span>Telefone com bateria fraca</span>
-            <p>
-              Carregue a bateria do seu celular para continuar usando o aplicativo</p>
-            <a id="closeNotificationGreen" data-to="#notificationGreen"><i class="fa fa-times"></i></a>
-          </div>
-        </div>-->
       </div>
         <nav class="navbar navbar-light bg-light">
             <div class="container">
@@ -67,7 +44,7 @@
                     </form>
 
                     <header_guest id="guest" v-if="token === null"></header_guest>
-                    <header_login_section id="h-login" v-if="token != null"></header_login_section>
+                    <header_login_section id="h-login" v-on:RefreshHeader="RefreshHeader" v-if="token != null"></header_login_section>
                 </div>
                 <div class="row  navbar-expand-lg w-100 p-top">
                     <div class="col-lg-2"></div>
@@ -166,7 +143,10 @@ export default {
         $('#notify').hide();
         this.$router.push('/');
       }
-    }
+    },
+    RefreshHeader(){
+      this.token = sessionStorage.getItem('access_token_1');
+    },
   }
 }
 </script>
