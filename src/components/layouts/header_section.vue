@@ -1,5 +1,5 @@
 <template>
-  <login_section></login_section>
+  <login_section v-on:RefreshHeader="RefreshHeader"></login_section>
   <forget_password_section></forget_password_section>
   <verification_code_section></verification_code_section>
     <header>
@@ -67,7 +67,7 @@
                     </form>
 
                     <header_guest id="guest" v-if="token === null"></header_guest>
-                    <header_login_section id="h-login" v-if="token != null"></header_login_section>
+                    <header_login_section v-on:RefreshHeader="RefreshHeader" id="h-login" v-if="token != null"></header_login_section>
                 </div>
                 <div class="row  navbar-expand-lg w-100 p-top">
                     <div class="col-lg-2"></div>
@@ -97,7 +97,7 @@ export default {
     verification_code_section
   },
   mounted() {
-        console.log('Header mounted.');
+      console.log('Header mounted.');
     },
   data(){
     return{
@@ -166,6 +166,9 @@ export default {
         $('#notify').hide();
         this.$router.push('/');
       }
+    },
+    RefreshHeader(){
+      this.token = sessionStorage.getItem('access_token_1');
     }
   }
 }

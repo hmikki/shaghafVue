@@ -95,6 +95,7 @@ export default {
                     $('#MyAccountDropdown').hide();
                     $('#logout').modal('show');
                     console.log(res.data['status']['status']);
+                    this.$emit('RefreshHeader');
                   } else {
                     console.log(res.data['status']['message']);
                   }

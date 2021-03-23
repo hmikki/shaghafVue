@@ -140,20 +140,19 @@ export default {
                     $('#exampleModalCenter').modal('hide');
                     console.log(res.data['status']['status']);
                     console.log(res.data['User']['access_token']);
-
+                    this.$emit('RefreshHeader');
+                    if ((res.data['User']['type'] === '2') && (res.data['User']['profile_completed'] === false)){
+                      // alert('not completed');
+                      $("#exampleModalCenter").modal('hide');
+                      $('#profile_status').modal('show');
+                    }else {
+                      $('#welcome').modal('show');
+                    }
                   } else {
                     console.log(res);
                     //sessionStorage.removeItem('access_token_1') // if the request fails, remove any possible user token if possible
                     console.log('error');
                   }
-                  if ((res.data['User']['type'] === '2') && (res.data['User']['profile_completed'] === false)){
-                       // alert('not completed');
-                        $('#exampleModalCenter').modal('hide');
-                        $('#profile_status').modal('show');
-                  }else {
-                    $('#welcome').modal('show');
-                  }
-
                 })
                 .catch(e => {
                   console.log(e);
