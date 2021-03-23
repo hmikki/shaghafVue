@@ -98,7 +98,6 @@ export default {
   },
   created() {
     this.fetchProduct();
-    console.log(this.product_id);
   },
   methods:{
     creatrOrder(){

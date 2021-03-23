@@ -80,7 +80,12 @@ const routes = [
   {
     path: '/payment',
     name: 'payment',
-    component: () => import('../components/sections/payment')
+    component: () => import('../components/sections/payment.vue')
+  },
+  {
+    path: '/paymentStatus',
+    name: 'paymentStatus',
+    component: () => import('../components/modals/paymentStatus.vue')
   },
   {
     path: '/Freelancer_page',
