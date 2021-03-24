@@ -1,7 +1,7 @@
 <template>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
 
-        <form v-on:submit="register()" action="" accept-charset="UTF-8">
+        <form action="" accept-charset="UTF-8">
             <div class="radio-chose">
                 <label for="radio-one" class="r-ch1"><i class="far fa-user-circle"></i> نوع التسجيل</label>
                 <div class="switch-field r-ch2">
@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="tab-button">
-                <button type="submit" class="btn">إنشاء حساب</button>
+                <button type="submit" v-on:click.prevent="register()" class="btn">إنشاء حساب</button>
             </div>
         </form>
     </div>
@@ -67,6 +67,7 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery'
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
@@ -81,15 +82,16 @@ export default {
             mobile: '',
             email: '',
             password: '',
-            type: '',
+            type: '1',
             country_id : '1',
             city_id : '',
             provider_type: '',
-          company_name:''
+            company_name:''
         }
     },
     created() {
         this.getCities();
+        console.log(this.type);
     },
     methods:{
         register(){
@@ -98,7 +100,7 @@ export default {
             axios.post('http://18.194.157.202/api/auth/register',
                 {
                   'name': this.name,
-                  'mobile': this.mobile,
+                  'mobile': '966'+this.mobile,
                   'email': this.email,
                   'password': this.password,
                   'type': this.type,
@@ -127,7 +129,11 @@ export default {
                     console.log(res.data['status']['status']);
                   } else {
                     //sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
-                    console.log(res.data['status']['message']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        res.data.status.message,
+                        'error'
+                    )
                   }
                 }).catch(e => {
               this.errors.push(e);
@@ -161,6 +167,7 @@ export default {
         },
       getTypeValue(val){
         this.type = val;
+        console.log(this.type);
       },
       getProviderTypeValue(){
         let provider = document.getElementById('providerType').value;

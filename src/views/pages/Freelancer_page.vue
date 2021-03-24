@@ -122,15 +122,15 @@
         <div class="modal-body secound-m">
           <div class="form-group">
             <label for="deliveredDate"><img src="../../assets/img/calendar.svg" alt=""> تاريخ التسليم</label>
-            <input type="date" class="form-control" id="deliveredDate" placeholder="05873131316" v-model="delivered_date">
+            <input type="date" class="form-control" id="deliveredDate" placeholder="05873131316" v-model="delivered_date" required>
           </div>
           <div class="form-group">
             <label for="deliveredTime"><img src="../../assets/img/clock-1.svg" alt=""> توقيت التسليم</label>
-            <input type="time" class="form-control" id="deliveredTime" placeholder="05873131316" v-model="delivered_time">
+            <input type="time" class="form-control" id="deliveredTime" placeholder="05873131316" v-model="delivered_time" required>
           </div>
           <div class="form-group">
             <label for="notes"><img :src="User.avatar" alt=""> الملاحظات</label>
-            <textarea class="form-control" id="notes" rows="5" v-model="note">
+            <textarea class="form-control" id="notes" rows="5" v-model="note" required>
                                         </textarea>
           </div>
           <div class="row">
@@ -250,7 +250,7 @@ export default {
                   this.Freelancer = res.data['Freelancer'];
                   console.log(res.data['Freelancer']);
                 } else {
-                  console.log(res.data['status']['status']);
+                  alert(res.data['status']['status']);
                 }
               })
               .catch(e => {
@@ -276,9 +276,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Portfolios = res.data['Portfolios'];
-                  console.log(res.data['Portfolios']);
                 } else {
-                  console.log(res.data['status']['status'])
+                  alert(res.data['status']['status'])
                 }
               })
               .catch(e => {
@@ -309,7 +308,7 @@ export default {
                   console.log(res.data['Products']);
 
                 } else {
-                  console.log(res.data['status']['status']);
+                  alert(res.data['status']['status']);
                 }
               })
         }catch (e){
@@ -339,11 +338,9 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Order = res.data['Order'];
-                console.log(res.data['Order']);
-                console.log(res.data['status']['status']);
                 $('#exampleModalCenter-12').modal('hide');
               } else {
-                console.log(res.data['status']['message']);
+                alert(res.data['status']['message']);
               }
             })
             .catch(e => {
@@ -369,10 +366,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Product = res.data['Product'];
-                console.log(res.data['Product']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                alert(res.data['status']['status']);
               }
             })
             .catch(e => {
@@ -386,12 +381,10 @@ export default {
     navigator.geolocation.getCurrentPosition(
         position => {
           this.lng = position.coords.longitude;
-              this.lat = position.coords.latitude;
-          console.log(position.coords.latitude);
-          console.log(position.coords.longitude);
+          this.lat = position.coords.latitude;
         },
         error => {
-          console.log(error.message);
+          alert(error.message);
         },
     )
   }
