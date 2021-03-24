@@ -59,9 +59,6 @@ import jquery from 'jquery';
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
   created() {
     $(document).ready(function(){
       $('.li-onepage a').click(function(e) {

@@ -39,8 +39,5 @@ export default {
     goals_section,
     contact_section,
   },
-    mounted() {
-        console.log('Home mounted.')
-    },
 }
 </script>

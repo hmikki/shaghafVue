@@ -20,10 +20,5 @@
 </template>
 
 <script>
-export default {
-    mounted() {
-        console.log('Thank you mounted.')
-    },
-
-}
+export default {}
 </script>

@@ -25,17 +25,6 @@
 <script>
 
 export default {
-  name:'deposit',
-  mounted() {
-    console.log('check balance mounted');
-  },
-  data(){
-    return {}
-  },
-  created(){
-  },
-  methods:{
-
-  }
+  name:'check_balance',
 }
 </script>

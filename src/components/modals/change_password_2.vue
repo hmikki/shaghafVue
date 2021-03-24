@@ -36,10 +36,8 @@
 <script>
 import axios from "axios";
 import thanks_message from "@/components/modals/thanks_message";
+import * as Swal from "sweetalert2";
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
   components:{
     thanks_message,
   },
@@ -71,9 +69,18 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.User = res.data['User'];
-                    console.log(res.data['status']['status']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم تحديث كلمة المرور بنجاح',
+                        'success'
+                    );
+                  }else {
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'خطأ في البيانات المدخلة',
+                        'error'
+                    );
                   }
-                  console.log(res.data['status']['message']);
                 })
                 .catch(e => {
                   console.log(e);

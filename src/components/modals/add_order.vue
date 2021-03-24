@@ -69,13 +69,10 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-
-    mounted() {
-        console.log('Component mounted.')
-    },
     data(){
         return{
           Categories:[],
@@ -106,10 +103,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Categories = res.data['Categories'];
-
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -146,10 +141,17 @@ export default {
               if (res.data['status']['status'] === "success") {
                 this.Product = res.data['Product'];
                 $('#exampleModalCenter-9').modal('hide');
-                console.log(res.data['status']['status']);
-                console.log(res.data['Product']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تمت اضافة الخدمة بنجاح',
+                    'success'
+                );
               } else {
-                console.log(res.data['status']['message']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {
@@ -162,7 +164,6 @@ export default {
     addSubCategories() {
       try {
         var select = document.getElementById('categories').value;
-        console.log(select);
         axios.get('http://18.194.157.202/api/home/categories',
             {
               headers: {
@@ -172,9 +173,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.SubCategories = res.data['Categories'][select - 1]['SubCategories'];
-                console.log(res.data['Categories'][select - 1]['SubCategories']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {

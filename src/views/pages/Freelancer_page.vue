@@ -193,6 +193,7 @@ import { GoogleMap, Marker } from 'vue3-google-map'
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 
@@ -248,9 +249,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Freelancer = res.data['Freelancer'];
-                  console.log(res.data['Freelancer']);
                 } else {
-                  alert(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -277,7 +277,7 @@ export default {
                 if (res.data['status']['status'] === "success") {
                   this.Portfolios = res.data['Portfolios'];
                 } else {
-                  alert(res.data['status']['status'])
+                  console.log()
                 }
               })
               .catch(e => {
@@ -305,19 +305,14 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Products = res.data['Products'];
-                  console.log(res.data['Products']);
-
                 } else {
-                  alert(res.data['status']['status']);
+                  console.log();
                 }
               })
         }catch (e){
           console.log(e);
         }
     },
-      /*getProductId(product_id) {
-        sessionStorage.setItem('product_id', product_id);
-      },*/
     creatrOrder(product_id){
       try {
         const token = sessionStorage.getItem('access_token_1');
@@ -339,8 +334,17 @@ export default {
               if (res.data['status']['status'] === "success") {
                 this.Order = res.data['Order'];
                 $('#exampleModalCenter-12').modal('hide');
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تم انشاء الطلب بنجاح',
+                    'success'
+                );
               } else {
-                alert(res.data['status']['message']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {
@@ -367,7 +371,7 @@ export default {
               if (res.data['status']['status'] === "success") {
                 this.Product = res.data['Product'];
               } else {
-                alert(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -378,15 +382,20 @@ export default {
       }
     },
     locatorButtonPressed() {
-    navigator.geolocation.getCurrentPosition(
-        position => {
-          this.lng = position.coords.longitude;
-          this.lat = position.coords.latitude;
-        },
-        error => {
-          alert(error.message);
-        },
-    )
+        try {
+          navigator.geolocation.getCurrentPosition(
+              position => {
+                this.lng = position.coords.longitude;
+                this.lat = position.coords.latitude;
+              },
+              error => {
+                alert(error.message);
+              },
+          )
+        }catch (e){
+          console.log();
+        }
+
   }
 
   },

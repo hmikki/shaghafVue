@@ -1,5 +1,4 @@
 <template>
-  <checkBalance></checkBalance>
   <reject></reject>
   <cancel></cancel>
   <div class="modal fade thanks rate-page" id="rate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -10,7 +9,7 @@
         </button>
         <div class="modal-body secound-m">
           <h4 class="vc-m">كيف كان طلبك من الشريك</h4>
-          <p class="vc-m">{{ Order.Freelancer['name'] }}</p>
+          <p class="vc-m">{{ (Order.Freelancer)? Order.Freelancer['name'] : '' }}</p>
           <div class="rate">
             <input type="radio" id="star5" name="rate" value="5" v-model="rate" />
             <label for="star5" title="text">5 stars</label>
@@ -46,7 +45,7 @@
                     <li class="breadcrumb-item"><a style="cursor: pointer" v-on:click="changeRoute()">الطلبات</a></li>
                     <li class="breadcrumb-item"><a style="cursor: pointer" v-on:click="changeRoute()">الطلبات الحالية</a></li>
                     <li class="breadcrumb-item"><router-link to="/orders_details">تفاصيل الطلب</router-link></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ Order.title }} {{ Order.Freelancer.name }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ Order.title }} {{ (Order.Freelancer)? Order.Freelancer.name :'' }}</li>
                 </ol>
             </nav>
             <div class="row">
@@ -58,11 +57,11 @@
                                 <div class="card pro-ser-card">
                                     <img class="card-img-top" src="../../assets/img/product-1.svg" alt="Card image cap">
                                     <div class="card-body">
-                                        <h6 class="card-title">{{ Order.Product.name }}</h6>
-                                        <p class="card-text">{{ Order.Product.description }}</p>
+                                        <h6 class="card-title">{{ (Order.Product)? Order.Product.name : '' }}</h6>
+                                        <p class="card-text">{{ (Order.Product)? Order.Product.description : '' }}</p>
                                         <hr>
                                         <div class="row bg-h">
-                                            <div class="col-lg-5"><span class="count count-pr"> {{Order['Product']['price']}} </span></div>
+                                            <div class="col-lg-5"><span class="count count-pr"> {{(Order.Product)? Order.Product.price:''}} </span></div>
                                             <div class="col-lg-2"></div>
                                             <div class="col-lg-5">
                                                 <span class="count">عدد الخدمة : {{ Order.quantity }}</span>
@@ -70,7 +69,7 @@
                                         </div>
                                         <div class="m-name">
                                             <span class="count">المنفذ</span>
-                                            <p>{{ Order.Freelancer.name }}</p>
+                                            <p>{{ (Order.Freelancer)? Order.Freelancer.name : '' }}</p>
                                         </div>
 
                                     </div>
@@ -151,10 +150,10 @@
 </template>
 <script>
 import axios from "axios";
-import checkBalance from "@/components/modals/checkBalance";
 import cancel from "@/components/modals/cancel";
 import reject from "@/components/modals/reject";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
@@ -164,7 +163,6 @@ export default {
   components:{
       cancel,
       reject,
-      checkBalance,
   },
     data(){
       return{
@@ -202,9 +200,8 @@ export default {
                   this.OrderStatuses = res.data['OrderStatuses'];
                   const customer_id = res.data['Order']['user_id'];
                   sessionStorage.setItem('customer_id', customer_id);
-                  console.log(res.data['status']['status']);
                 } else {
-                  console.log(res.data['status']['message']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -230,9 +227,17 @@ export default {
               })
               .then(res => {
                 if (res.data['status']['status'] === "success") {
-                  console.log(res.data['status']['status']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'تم تحديث حالة الطلب',
+                      'success'
+                  );
                 } else {
-                  console.log(res.data['status']['status']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'لا يمكن تحديث حالة الطلب',
+                      'error'
+                  );
                 }
               })
               .catch(e => {
@@ -262,9 +267,17 @@ export default {
                 if (res.data['status']['status']) {
                   this.Order = res.data['Order'];
                   $('#rate').modal('hide');
-                  console.log(res.data['status']['status']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'تم التقييم',
+                      'success'
+                  )
                 } else {
-                  console.log(res.data['status']['message']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'لم يتم التقييم',
+                      'error'
+                  );
                 }
               })
               .catch(e => {
@@ -308,10 +321,8 @@ export default {
                   this.chatRoom = res.data['ChatRoom'];
                   const room_id = res.data['ChatRoom']['id'];
                   sessionStorage.setItem('room_id', room_id);
-                  console.log(res.data['ChatRoom']);
-                  console.log(res.data['status']['status']);
                 } else {
-                  console.log(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {

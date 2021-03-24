@@ -51,16 +51,14 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
   name:'collection_request',
-  mounted() {
-    console.log('collection mounted');
-  },
   data(){
     return{
-      name:'hhh',
+      name:'',
       iban :'',
       swift_code : '',
       address_1 :'',
@@ -92,9 +90,17 @@ export default {
             .then(res=>{
               if (res.data['status']['status'] === "success"){
                 $('#exampleModalCenter-11').modal('hide');
-                console.log('success');
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تمت العملية بنجاح',
+                    'success'
+                );
               }else {
-                console.log('fail');
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e=>{

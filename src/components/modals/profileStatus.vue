@@ -29,9 +29,6 @@ import jquery from 'jquery';
 let $ = jquery;
 export default {
   name: 'profile_status',
-    mounted() {
-        console.log('profile status mounted.')
-    },
   methods:{
     hideModal(){
       $('#profile_status').modal('hide')

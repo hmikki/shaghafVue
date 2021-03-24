@@ -2034,6 +2034,7 @@ Start Chats Page
     border-radius: 50%;
 }
 .chat-p h4,.chat-p p{
+    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;

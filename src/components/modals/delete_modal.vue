@@ -21,8 +21,5 @@
   </template>
 <script>
 export default {
-  mounted() {
-    console.log('delete mounted');
-  }
 }
 </script>

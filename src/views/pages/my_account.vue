@@ -98,10 +98,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.User = res.data['User'];
-                console.log(token);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {

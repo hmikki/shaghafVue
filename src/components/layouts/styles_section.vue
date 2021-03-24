@@ -11,9 +11,5 @@
     <link rel="stylesheet" type="text/css" href="src/assets/css/responsive.css"><!-- responsive style -->
 </template>
 <script>
-export default {
-    mounted() {
-        console.log('Styles mounted.')
-    },
-}
+export default {}
 </script>

@@ -25,9 +25,7 @@ import axios from "axios";
 
 export default {
     name: 'Categories',
-    mounted() {
-        console.log('Services mounted')
-    },
+
     data() {
         return {
             Categories : [],
@@ -47,16 +45,15 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.Categories = res.data['Categories'];
-                    console.log(res.data['Categories']);
                   } else {
-                    console.log(res.data['status']['status']);
+                    console.log();
                   }
                 })
                 .catch(e => {
                   console.log(e);
                 })
           }catch (e){
-            console.log(e);
+            console.log();
           }
         },
     },

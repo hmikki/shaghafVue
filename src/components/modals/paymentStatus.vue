@@ -42,9 +42,6 @@ import axios from "axios";
 
 export default {
   name:'paymentStatus',
-    mounted() {
-        console.log('paymentStatus mounted.')
-    },
   data(){
       return{
         Transaction:[],
@@ -70,9 +67,8 @@ export default {
           .then(res=>{
             if (res.data['status']['status'] === "success"){
               this.Transaction = res.data['Transaction'];
-              console.log(res.data['Transaction']);
             }else {
-              console.log(res.data['status']['status']);
+              console.log();
             }
           })
         }catch (e){
@@ -82,10 +78,3 @@ export default {
   }
 }
 </script>
-<style>
-.alert{
-  background: white;
-  padding: 20px;
-  text-align: center;
-}
-</style>

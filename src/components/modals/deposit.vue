@@ -29,6 +29,7 @@
 import axios from "axios";
 import checkBalance from "@/components/modals/checkBalance";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
@@ -70,11 +71,13 @@ export default {
                 sessionStorage.setItem('payment_token', payment_token);
                 sessionStorage.setItem('amount', this.value);
                 $('#deposit').modal('hide');
-                console.log(res.data['status']['status'] + ':' + 'transaction_id = ' + transaction_id + ',' + 'payment_token = ' + payment_token);
                 this.$router.push('/payment');
-                //window.location.replace(url);
               } else {
-                console.log(res.data['status']['status']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {
@@ -97,10 +100,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Balance = res.data['Balance'];
-                console.log(res.data['Balance']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {

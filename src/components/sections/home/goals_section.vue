@@ -34,8 +34,5 @@
 
 <script>
 export default {
-    mounted() {
-        console.log('Goals mounted');
-    }
 }
 </script>

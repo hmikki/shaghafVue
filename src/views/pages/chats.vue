@@ -8,7 +8,7 @@
               <div v-for="(room,index) in Rooms" :key="index" class="col-lg-12 chat-cur" v-on:click.prevent="getUserId(room.User['id']);getRoomId(room.id);openChat(); fetchMessages(room.id)">
                 <div class="row">
                   <div class="col-lg-3">
-                    <img class="b-r-half" :src="room.User['avatar']" alt="">
+                    <img class="b-r-half" :src="(room.User)? room.User.avatar : '' " alt="">
                   </div>
                   <div class="col-lg-9 chat-p">
                     <h4>{{ room.User['name'] }}</h4>
@@ -26,8 +26,8 @@
                 <div class="col-lg-12 chat-cur pb-5">
                   <div class="row">
                     <div class="col-lg-10 m-lang chat-p">
-                      <img class="col-lg-2 b-r-half" :src="chatRoom['User']['avatar']" alt="avatar">
-                      <h4>{{ chatRoom['User']['name'] }}</h4>
+                      <img class="col-lg-2 b-r-half" :src="(chatRoom['User'])?chatRoom['User']['avatar'] : '' " alt="avatar">
+                      <h4>{{ (chatRoom['User'])? chatRoom['User']['name'] : ''}}</h4>
                     </div>
                   </div>
                   <hr class="ml-0 mr-0">
@@ -35,9 +35,9 @@
                 <div class="col-lg-12">
                   <div class="col-lg-12" v-for="(message, index) in Messages" :key="index" :class="{'l-litter' :message.user_id === user_id , 'm-litter' : message.user_id !== user_id}">
                     <div class="col-lg-6 mb-3 ml-lang">
-                      <p v-show="message.type === 1" class=" ch-messsage">{{message.message}}</p>
-                      <img v-show="message.type === 3" :src="'http://18.194.157.202/'+ message.message" >
-                      <audio controls v-show="message.type === 2">
+                      <p v-if="message.type === 1" class=" ch-messsage">{{ (message)?message.message: ''}}</p>
+                      <img v-if="message.type === 3" :src="'http://18.194.157.202/'+ message.message" >
+                      <audio controls v-if="message.type === 2">
                         <source :src="'http://18.194.157.202/' + message.message" type="audio/mpeg">
                         Your browser does not support the audio element.
                       </audio>
@@ -126,17 +126,20 @@ export default {
     this.openChat();
     this.fetchMessages();
     /********** Pusher *************/
-    Pusher.logToConsole = true;
-    let pusher = new Pusher('da99af9260d89f306342', {
-      cluster: 'ap1'
-    });
-    let that = this;
-    this.channel = pusher.subscribe("chat_room." + this.chat_room_id + ".new_message");
-    this.channel.bind('CreateMessageEvent', function(data) {
-      console.log(data.message);
-      that.Messages.push(data.message);
-      console.log(that.Messages);
-    });
+    try {
+      Pusher.logToConsole = true;
+      let pusher = new Pusher('da99af9260d89f306342', {
+        cluster: 'ap1'
+      });
+      let that = this;
+      this.channel = pusher.subscribe("chat_room." + this.chat_room_id + ".new_message");
+      this.channel.bind('CreateMessageEvent', function(data) {
+        that.Messages.push(data.message);
+        console.log(that.Messages);
+      });
+    }catch (e){
+      console.log(e);
+    }
   },
   methods:{
     fetchRooms(){
@@ -153,10 +156,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Rooms = res.data['ChatRooms'];
-                console.log(res.data['ChatRooms']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -189,10 +190,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.chatRoom = res.data['ChatRoom'];
-                console.log(res.data['ChatRoom']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -223,10 +222,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Messages = res.data['ChatRoomMessages'];
-                console.log(res.data['ChatRoomMessages']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -254,9 +251,9 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                console.log(res.data['status']['status']);
+                console.log();
               } else {
-                console.log(res.data['status']['message']);
+                console.log();
               }
             })
             .catch(e => {
@@ -293,9 +290,9 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                console.log(res.data['status']['status']);
+                console.log();
               } else {
-                console.log(res.data['status']['message']);
+                console.log();
               }
             })
             .catch(e => {
@@ -332,9 +329,9 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                console.log(res.data['status']['status']);
+                console.log();
               } else {
-                console.log(res.data['status']['message']);
+                console.log();
               }
             })
             .catch(e => {

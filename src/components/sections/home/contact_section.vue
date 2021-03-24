@@ -39,18 +39,5 @@
 
 <script>
 export default {
-    mounted() {
-        console.log('Component mounted carousel')
-    },
-    data(){
-        return{
-
-        }
-    },
-    created() {
-    },
-    methods:{
-        
-    }
 }
 </script>

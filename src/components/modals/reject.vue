@@ -26,13 +26,11 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
   name:'reject',
-  mounted() {
-    console.log('reject mounted');
-  },
   data(){
     return{
       reject_reason : '',
@@ -59,10 +57,18 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                console.log(res.data['status']['status']);
                 $('#reject').modal('hide');
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تم رفض الطلب',
+                    'success'
+                );
               } else {
-                console.log(res.data['status']['status']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {

@@ -24,6 +24,8 @@
                                             <div class="dropdown-divider"></div>
                                             <router-link ref="link" to="/notifications" class="dropdown-item" style="cursor: pointer" >اشعاراتي</router-link>
                                             <div class="dropdown-divider"></div>
+                                            <router-link ref="link" to="/chats" class="dropdown-item" style="cursor: pointer" >محادثاتي</router-link>
+                                            <div class="dropdown-divider"></div>
                                             <router-link ref="link" to="" class="dropdown-item" v-on:click.prevent="logout()" style="cursor: pointer">تسجيل خروج</router-link>
                                         </div>
                                     </div>
@@ -36,12 +38,10 @@
 import axios from "axios";
 import logout from "@/components/modals/logout";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
   components:{
       logout
   },
@@ -67,10 +67,8 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.User = res.data['User'];
-                    console.log(token);
-                    console.log(res.data['User']);
                   } else {
-                    console.log(res.data['status']['status'])
+                    console.log()
                   }
                 })
                 .catch(e => {
@@ -93,11 +91,18 @@ export default {
                     sessionStorage.removeItem('access_token_1');
                     this.$router.push('/');
                     $('#MyAccountDropdown').hide();
-                    $('#logout').modal('show');
-                    console.log(res.data['status']['status']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم تسجيل الخروج بنجاح',
+                        'success'
+                    );
                     this.$emit('RefreshHeader');
                   } else {
-                    console.log(res.data['status']['message']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'فشل تسجيل الخروج',
+                        'error'
+                    );
                   }
                 })
                 .catch(e => {

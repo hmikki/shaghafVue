@@ -73,9 +73,6 @@ export default {
     forget_password_section,
     verification_code_section
   },
-  mounted() {
-        console.log('Header mounted.');
-    },
   data(){
     return{
       token: sessionStorage.getItem('access_token_1'),
@@ -112,16 +109,12 @@ export default {
         channel.bind('SendGlobalNotificationEvent', function(data) {
           that.Message = data.notification;
           that.type = data.notification.type;
-          console.log(that.type);
-          console.log(data.notification);
         });
         let user_id = sessionStorage.getItem('user_id');
         let channel2 = pusher.subscribe('online.' +user_id);
         channel2.bind('SendNotificationEvent', function(data) {
           that.Message=data.notification;
           that.type = data.notification.type;
-          console.log(that.type);
-          console.log(data.notification);
         });
       }catch (e){
         console.log(e);

@@ -36,9 +36,6 @@ import jquery from 'jquery';
 let $ = jquery;
 
 export default {
-  mounted() {
-    console.log('nav mounted.');
-  },
   created() {
     $(document).ready(function(){
       $('.li-onepage a').click(function(e) {

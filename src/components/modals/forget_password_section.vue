@@ -19,7 +19,7 @@
                             <span class="flag-img">(+966) <img src="../../assets/img/saudi-arabia.svg" alt=""></span>
                         </div> </div>
                     <div class="tab-button">
-                        <button type="submit" class="btn">تأكيد</button>
+                        <button type="submit" class="btn" v-on:click.prevent="forgetPassword()">تأكيد</button>
                     </div>
                     <div class="tab-a"></div>
                 </div>
@@ -29,19 +29,14 @@
 </template>
 <script>
 import axios from "axios";
+import * as Swal from "sweetalert2";
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
     data(){
         return{
             User:[],
             mobile: '',
 
         }
-    },
-    created() {
-        this.forgetPassword();
     },
     methods:{
         forgetPassword(){
@@ -60,11 +55,18 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.User = res.data['status']['status'];
-                    console.log(res.data['status']['status']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم ارسال الكود الى رقم الجوال، تابع الرسائل',
+                        'success'
+                    );
                   } else {
-                    console.log(res.data['status']['status'])
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'خطأ في البيانات المدخلة',
+                        'error'
+                    );
                   }
-                  console.log('code sent, check your mobile messages');
                 })
                 .catch(e => {
                   console.log(e);

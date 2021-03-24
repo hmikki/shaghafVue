@@ -26,20 +26,15 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
   name:'cancel',
-  mounted() {
-    console.log('cancel mounted');
-  },
   data(){
     return{
       cancel_reason : '',
     }
-  },
-  created() {
-
   },
   methods:{
     updateOrder(order_status){
@@ -59,10 +54,18 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                console.log(res.data['status']['status']);
                 $('#cancel').modal('hide');
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تم الغاء الطلب بنجاح',
+                    'success'
+                );
               } else {
-                console.log(res.data['status']['status']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'لم يتم الغاء الطلب',
+                    'error'
+                );
               }
             })
             .catch(e => {

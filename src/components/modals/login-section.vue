@@ -56,6 +56,7 @@ import register_section from "@/components/modals/register_section";
 import Jquery from 'jquery';
 import profile_status from "@/components/modals/profileStatus";
 import welcome from "@/components/modals/welcome";
+import * as Swal from "sweetalert2";
 let $ = Jquery;
 
 export default {
@@ -65,20 +66,15 @@ export default {
     register_section,
     welcome
   },
-    mounted() {
-        console.log('Component mounted.')
-        },
     data(){
       return{
-          User:[
-          ],
+          User:[],
           email: sessionStorage.getItem('email') ,
           mobile :'',
           password: '',
       }
     },
     created() {
-        this.login();
     },
     methods:{
 
@@ -86,7 +82,7 @@ export default {
           try {
             axios.post('http://18.194.157.202/api/auth/login',
                 {
-                  'mobile': this.mobile,
+                  'mobile': '966'+ this.mobile,
                   'password': this.password,
                 },
                 {
@@ -98,23 +94,26 @@ export default {
                     const token = res.data['User']['access_token'];
                     const user_id = res.data['User']['id'];
                     const user_type = res.data['User']['type'];
-                    console.log(token);
                     sessionStorage.setItem('access_token_1', token);
                     sessionStorage.setItem('user_id', user_id);
                     sessionStorage.setItem('user_type', user_type);
                     $('#exampleModalCenter').modal('hide');
-                    console.log(res.data['status']['status']);
-                    console.log(res.data['User']['access_token']);
                     this.$emit('RefreshHeader');
-                  } else {
-                    console.log(res.data['status']['status']);
+                  } else{
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'بيانات الدخول غير صحيحة',
+                        'error');
                   }
                   if ((res.data['User']['type'] === '2') && (res.data['User']['profile_completed'] === false)){
                        // alert('not completed');
                         $('#exampleModalCenter').modal('hide');
                         $('#profile_status').modal('show');
                   }else {
-                    $('#welcome').modal('show');
+                    Swal.fire(
+                        'أهلا بك في منصة شغف',
+                          '',
+                    'success');
                   }
 
                 })

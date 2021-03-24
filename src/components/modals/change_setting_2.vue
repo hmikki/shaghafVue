@@ -111,12 +111,10 @@ import thanks_message from "@/components/modals/thanks_message";
 import location from "@/components/modals/location";
 import axios from "axios";
 import jquery from 'jquery';
+import Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
     components:{
         thanks_message,
         location,
@@ -187,9 +185,17 @@ export default {
                   this.User = res.data['User'];
                   console.log(res.data['status']['message']);
                   $('#exampleModalCenter-5').modal('hide');
-                  console.log(res.data['User']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'تم تحديث البيانات بنجاح',
+                      'success'
+                  );
                 } else {
-                  console.log(res.data['status']['message']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'خطأ في البيانات المدخلة',
+                      'error'
+                  );
                 }
               })
               .catch(e => {

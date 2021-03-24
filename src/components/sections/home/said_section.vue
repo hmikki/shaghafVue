@@ -49,9 +49,6 @@ import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 export default {
-    mounted() {
-        console.log('Reviews mounted')
-    },
   components:{
     Carousel,
     Slide,
@@ -79,10 +76,8 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.Reviews = res.data['Reviews'];
-                    console.log(res.data['status']['status']);
-                    console.log(res.data['Reviews']);
                   } else {
-                    console.log(res.data['status']['status']);
+                    console.log();
                   }
                 })
                 .catch(e => {

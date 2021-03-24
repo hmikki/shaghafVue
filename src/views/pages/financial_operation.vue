@@ -123,10 +123,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Balance = res.data['Balance'];
-                console.log(res.data['Balance']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -153,15 +151,15 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Transactions = res.data['Transactions'];
-                console.log(res.data['Transactions']);
-                console.log(res.data['status']['status']);
+              }else {
+                console.log();
               }
             })
             .catch(e => {
               console.log(e);
             })
       }catch (e) {
-        console(e);
+        console.log(e);
       }
     },
   },

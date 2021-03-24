@@ -27,9 +27,6 @@ import axios from "axios";
 
 export default {
   name: 'carosel_section',
-    mounted() {
-        console.log('Carousel mounted.');
-    },
     data() {
         return {
                 Advertisments :[],
@@ -49,9 +46,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Advertisments = res.data['Advertisements'];
-                console.log(res.data['Advertisements']);
               } else {
-                console.log(res.data['status']['message']);
+                console.log();
               }
             })
             .catch(e => {

@@ -81,9 +81,8 @@ export default {
             .then(res=>{
               if (res.data['status']['status'] === "success"){
                 this.Notifications = res.data['Notifications'];
-                console.log(res.data['Notifications']);
               }else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e=>{

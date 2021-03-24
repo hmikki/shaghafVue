@@ -67,7 +67,6 @@ import { Carousel, Slide , Pagination, Navigation } from 'vue3-carousel';
 
 export default {
     mounted() {
-        console.log('Most_Wanted mounted.');
         $('.most-l a').click(function(){
           $('.most-l a').removeClass("active");
           $(this).addClass("active");
@@ -111,8 +110,11 @@ export default {
               }
             })
                 .then(res => {
-                  this.Categories = res.data['Categories'];
-                  console.log(res.data['Categories']);
+                  if (res.data['status']['status']){
+                    this.Categories = res.data['Categories'];
+                  }else {
+                    console.log();
+                  }
                 })
                 .catch(e => {
                   console.log(e);
@@ -132,9 +134,8 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.Freelancers = res.data['Freelancers'];
-                    console.log(res.data['Freelancers']);
                   } else {
-                    console.log(res.data['status']['status']);
+                    console.log();
                   }
                 })
                 .catch(e => {
@@ -158,9 +159,8 @@ export default {
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
                     this.Freelancers = res.data['Freelancers'];
-                    console.log(res.data['Freelancers']);
                   } else {
-                    console.log(res.data['status']['status']);
+                    console.log();
                   }
                 })
                 .catch(e => {

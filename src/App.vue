@@ -76,16 +76,14 @@ export default {
         let channel = pusher.subscribe('online');
         channel.bind('SendGlobalNotificationEvent', function(data) {
           that.Message = data.notification;
-          console.log(data.notification);
         });
         let user_id = sessionStorage.getItem('user_id');
         let channel2 = pusher.subscribe('online.' +user_id);
         channel2.bind('SendNotificationEvent', function(data) {
           that.Message=data.notification;
-          console.log(data.notification);
         });
       }catch (e){
-        console.log(e);
+        console.log();
       }
     }
   }

@@ -28,12 +28,10 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Verification mounted.')
-    },
     data(){
         return{
             User:[],
@@ -41,8 +39,6 @@ export default {
             type: 2,
             code: '',
         }
-    },
-    created() {
     },
     methods:{
         verification(){
@@ -63,13 +59,19 @@ export default {
                 })
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
-                    this.User = res.data['status']['status'];
                     $('#exampleModalCenter-2').modal('hide');
-                    $('#success').modal();
-                    console.log(res.data['status']['status']);
+                    $('#success').modal('show');
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم التفعيل بنجاح',
+                        'success'
+                    );
                   } else {
-                    console.log(res.data['status']['message']);
-                    $('#success').modal();
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'خطأ في البيانات المدخلة',
+                        'error'
+                    );
                   }
                 })
                 .catch(e => {
@@ -96,9 +98,17 @@ export default {
                   sessionStorage.setItem('message', res.data['status']['message']);
                   if (res.data['status']['status'] === "success") {
                     $('#exampleModalCenter-2').modal('hide');
-                    console.log(res.data['status']['status']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم ارسال رمز التفعيل',
+                        'success'
+                    );
                   } else {
-                    console.log(res.data['status']['status']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'خطأ في البيانات المدخلة',
+                        'error'
+                    );
                   }
                   $('#success').modal();
                 })

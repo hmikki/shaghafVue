@@ -71,9 +71,6 @@ import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Register mounted.');
-    },
     data(){
         return{
             User: [],
@@ -91,11 +88,9 @@ export default {
     },
     created() {
         this.getCities();
-        console.log(this.type);
     },
     methods:{
         register(){
-          //let formData - new FormData();
           try {
             axios.post('http://18.194.157.202/api/auth/register',
                 {
@@ -124,16 +119,18 @@ export default {
                     sessionStorage.setItem('email', email);
                     sessionStorage.setItem('password', password);
                     $('#exampleModalCenter').modal('hide');
-                    $('#exampleModalCenter-2').modal('show');
-                    console.log(res.data['User']);
-                    console.log(res.data['status']['status']);
-                  } else {
-                    //sessionStorage.removeItem('access_token') // if the request fails, remove any possible user token if possible
                     Swal.fire(
                         res.data['status']['status'],
-                        res.data.status.message,
+                        'تم ارسال رمز التفعيل',
+                        'success'
+                    );
+                    $('#exampleModalCenter-2').modal('show');
+                  } else {
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'خطأ في البيانات المدخلة',
                         'error'
-                    )
+                    );
                   }
                 }).catch(e => {
               this.errors.push(e);
@@ -153,9 +150,8 @@ export default {
             .then(res=>{
               if (res.data['status']['status'] === "success"){
                 this.Cities = res.data['data']['Countries'][0]['Cities'];
-                console.log(res.data['data']['Countries'][0]['Cities']);
               }else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e=>{

@@ -68,12 +68,10 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
   data(){
       return{
         Categories:[],
@@ -104,9 +102,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Categories = res.data['Categories'];
-                  console.log(res.data['status']['status']);
                 } else {
-                  console.log(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -132,9 +129,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Product = res.data['Product'];
-                  console.log(res.data['status']['status']);
                 } else {
-                  console.log(res.data['status']['message']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -173,11 +169,18 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Product = res.data['Product'];
-                  console.log(res.data['status']['status']);
-                  console.log(res.data['Product']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'تم التعديل بنجاح',
+                      'success'
+                  );
                   $('#edit_product').modal('hide');
                 } else {
-                  console.log(res.data['status']['message']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'خطأ في البيانات المدخلة',
+                      'error'
+                  );
                 }
               })
               .catch(e => {
@@ -200,9 +203,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.SubCategories = res.data['Categories'][select - 1]['SubCategories'];
-                  console.log(res.data['Categories'][select - 1]['SubCategories']);
                 } else {
-                  console.log(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {

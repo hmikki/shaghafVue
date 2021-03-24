@@ -18,9 +18,6 @@
 </template>
 <script>
 export default {
-    mounted() {
-        console.log('Thank you mounted.')
-    },
   data(){
       return{
         message: sessionStorage.getItem('message'),

@@ -39,13 +39,11 @@
 </template>
 <script>
 import axios from "axios";
+import * as Swal from "sweetalert2";
 const token= sessionStorage.getItem('access_token');
 
 export default {
   name: 'rate',
-    mounted() {
-        console.log('Component mounted.')
-    },
   data(){
       return{
         Order:[],
@@ -53,8 +51,6 @@ export default {
         rate:'',
         review:'',
       }
-  }
-  ,created() {
   },
   methods:{
     reviewOrder(){
@@ -75,9 +71,17 @@ export default {
             .then(res => {
               if (res.data['status']['status']) {
                 this.Order = res.data['Order'];
-                console.log(res.data['status']['status']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تم التقييم بنجاح',
+                    'success'
+                );
               } else {
-                console.log(res.data['status']['message']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {
@@ -103,9 +107,17 @@ export default {
           })
           .then(res=>{
             if (res.data['status']['status'] === "success"){
-              console.log(res.data['status']['status']);
+              Swal.fire(
+                  res.data['status']['status'],
+                  'تم تحديث حالة الطلب بنجاح',
+                  'success'
+              );
             }else {
-              console.log(res.data['status']['status']);
+              Swal.fire(
+                  res.data['status']['status'],
+                  'خطأ في البيانات المدخلة',
+                  'error'
+              );
             }
           })
           .catch(e=>{

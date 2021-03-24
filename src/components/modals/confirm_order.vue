@@ -78,12 +78,10 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 export default {
   name : 'confirm_order',
-  mounted() {
-    console.log('confirm order mounted.');
-  },
   data(){
     return{
       Order:[],
@@ -120,11 +118,18 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Order = res.data['Order'];
-                console.log(res.data['Order']);
-                console.log(res.data['status']['status']);
                 $('#exampleModalCenter-12').modal('hide');
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تم انشاء الطلب بنجاح',
+                    'success'
+                );
               } else {
-                console.log(res.data['status']['message']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {
@@ -177,9 +182,8 @@ export default {
               if (res.data['status']['status'] === "success") {
                 this.User = res.data['User'];
                 this.user_id = res.data['User']['id'];
-                console.log(res.data['User']['id']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {

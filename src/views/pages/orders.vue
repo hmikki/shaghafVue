@@ -131,10 +131,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Orders = res.data['Orders'];
-                console.log(res.data['Orders']);
-                console.log(res.data['status']['status']);
               } else {
-                console.log(res.data['status']['message']);
+                console.log();
               }
             })
             .catch(e => {

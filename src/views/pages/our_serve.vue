@@ -92,9 +92,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Categories = res.data['Categories'];
-                console.log(res.data['Categories']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {
@@ -144,9 +143,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.Freelancers = res.data['Freelancers'];
-                console.log(res.data['Freelancers']);
               } else {
-                console.log(res.data['status']['status']);
+                console.log();
               }
             })
             .catch(e => {

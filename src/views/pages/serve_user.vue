@@ -222,6 +222,7 @@ import { GoogleMap, Marker } from 'vue3-google-map';
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
@@ -287,9 +288,8 @@ export default {
                   }
                   const user_id = res.data['User']['id'];
                   sessionStorage.setItem('user_id', user_id);
-                  console.log(res.data['User']);
                 } else {
-                  console.log(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -312,9 +312,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Portfolios = res.data['Portfolios'];
-                  console.log(res.data['Portfolios']);
                 } else {
-                  console.log(res.data['status']['status'])
+                  console.log()
                 }
               })
               .catch(e => {
@@ -343,10 +342,9 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Products = res.data['Products'];
-                  console.log(res.data['Products']);
 
                 } else {
-                  console.log(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -376,11 +374,18 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Order = res.data['Order'];
-                  console.log(res.data['Order']);
-                  console.log(res.data['status']['status']);
                   $('#exampleModalCenter-12').modal('hide');
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'تم انشاء طلبك بنجاح',
+                      'success'
+                  );
                 } else {
-                  console.log(res.data['status']['message']);
+                  Swal.fire(
+                      res.data['status']['status'],
+                      'خطأ في البيانات المدخلة',
+                      'error'
+                  );
                 }
               })
               .catch(e => {
@@ -406,10 +411,8 @@ export default {
               .then(res => {
                 if (res.data['status']['status'] === "success") {
                   this.Product = res.data['Product'];
-                  console.log(res.data['Product']);
-                  console.log(res.data['status']['status']);
                 } else {
-                  console.log(res.data['status']['status']);
+                  console.log();
                 }
               })
               .catch(e => {
@@ -420,15 +423,20 @@ export default {
         }
     },
       locatorButtonPressed() {
-      navigator.geolocation.getCurrentPosition(
-          position => {
-            console.log(position.coords.latitude);
-            console.log(position.coords.longitude);
-          },
-          error => {
-            console.log(error.message);
-          },
-      )
+        try {
+          navigator.geolocation.getCurrentPosition(
+              position => {
+                console.log(position.coords.latitude);
+                console.log(position.coords.longitude);
+              },
+              error => {
+                console.log(error.message);
+              },
+          )
+        }catch (e){
+          console.log();
+        }
+
     },
 
   },

@@ -34,12 +34,10 @@
 <script>
 import axios from "axios";
 import jquery from 'jquery';
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
     data(){
         return{
             User:[],
@@ -69,9 +67,17 @@ export default {
                   if (res.data['status']['status'] === "success") {
                     this.User = res.data['User'];
                     $('#exampleModalCenter-3').modal('hide');
-                    console.log(res.data['status']['status']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم تغيير كلمة المرور بنجاح',
+                        'success'
+                    );
                   } else {
-                    console.log(res.data['status']['message']);
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'خطأ في البيانات المدخلة',
+                        'error'
+                    );
                   }
                 })
                 .catch(e => {

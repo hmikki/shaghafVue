@@ -144,6 +144,7 @@ import error from "@/components/modals/error";
 import axios from "axios";
 import jquery from 'jquery';
 import add_portfolio from "@/components/modals/add_portfolio";
+import * as Swal from "sweetalert2";
 let $ = jquery;
 
 export default {
@@ -179,10 +180,8 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.User = res.data['User'];
-                console.log(token);
-                console.log(res.data['User'])
               } else {
-                console.log(res.data['status']['status'])
+                console.log()
               }
             })
       }catch (e){
@@ -208,10 +207,17 @@ export default {
           if (res.data['status']['status'] === "success") {
             this.User = res.data['User'];
             $('#profile-image').src = res.data['User']['avatar'];
-            console.log(res.data['status']['status']);
-            console.log(res.data['User']);
+            Swal.fire(
+                res.data['status']['status'],
+                'تم تحديث الصورة الشخصية بنجاح',
+                'success'
+            );
           }else {
-            console.log(res.data['status']['status']);
+            Swal.fire(
+                res.data['status']['status'],
+                'خطأ في الصورة',
+                'error'
+            );
           }
         })
         .catch(e=>{

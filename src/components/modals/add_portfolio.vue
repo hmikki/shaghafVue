@@ -44,13 +44,11 @@
 </template>
 <script>
 import axios from "axios";
+import * as Swal from "sweetalert2";
 
 
 export default {
-  name:'deposit',
-  mounted() {
-    console.log('deposit mounted');
-  },
+  name:'add_portfolio',
   data(){
     return{
       Portfolio:[],
@@ -84,10 +82,17 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                console.log(res.data['status']['status']);
-                console.log(res.data['Portfolio']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'تمت الاضافة بنجاح',
+                    'success'
+                );
               } else {
-                console.log(res.data['status']['message']);
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
               }
             })
             .catch(e => {
