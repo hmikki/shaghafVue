@@ -8,7 +8,7 @@
               <div v-for="(room,index) in Rooms" :key="index" class="col-lg-12 chat-cur" v-on:click.prevent="getUserId(room.User['id']);getRoomId(room.id);openChat(room.User['id']); fetchMessages(room.id)">
                 <div class="row">
                   <div class="col-lg-3">
-                    <img class="b-r-half" :src="(room.User)? room.User.avatar : '' " alt="">
+                    <img class="b-r-half circle-img" :src="(room.User)? room.User.avatar : '' " alt="">
                   </div>
                   <div class="col-lg-9 chat-p">
                     <h4>{{ room.User['name'] }}</h4>
@@ -26,7 +26,7 @@
                 <div class="col-lg-12 chat-cur pb-5">
                   <div class="row">
                     <div class="col-lg-10 m-lang chat-p">
-                      <img class="col-lg-2 b-r-half" :src="(chatRoom.User)? chatRoom.User.avatar : '' " alt="avatar">
+                      <img class="col-lg-2 b-r-half circle-img" :src="(chatRoom.User)? chatRoom.User.avatar : '' " alt="avatar">
                       <h4>{{ (chatRoom.User)? chatRoom.User.name : ''}}</h4>
                     </div>
                   </div>
@@ -390,5 +390,9 @@ export default {
 }
 a.paginate:hover{
   text-decoration: underline;
+}
+.circle-img{
+  width: 50px;
+  height: 50px;
 }
 </style>
