@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="col-lg-12 showMore">
-                    <a class="paginate" v-if="((page >= 1) && (page<=pages.length))" @click="page++; fetchMessages()"> عرض الرسائل السابقة </a>
+                    <a class="paginate" @click="page++; fetchMessages()"> عرض الرسائل السابقة </a>
                     </div>
                   <div class="col-lg-12" v-for="(message, index) in Messages" :key="index" :class="{'l-litter' :message.user_id === user_id , 'm-litter' : message.user_id !== user_id}">
                     <div class="col-lg-6 mb-3 ml-lang">
@@ -230,8 +230,7 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                this.Messages = res.data['ChatRoomMessages'];
-                this.Messages.reverse();
+                res.data['ChatRoomMessages'].reverse().forEach(message=>this.Messages.push(message));
               } else {
                 console.log();
               }
