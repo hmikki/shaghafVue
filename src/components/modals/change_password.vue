@@ -36,6 +36,7 @@ import axios from "axios";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
     data(){
@@ -52,7 +53,7 @@ export default {
         changePassword(){
           try {
             const token = sessionStorage.getItem('access_token_1');
-            axios.post('http://18.194.157.202/api/auth/change_password',
+            axios.post(url+'/api/auth/change_password',
                 {
                   password: this.password,
                   password_confirmation: this.password_confirmation,

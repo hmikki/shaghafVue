@@ -47,7 +47,7 @@
                                 <div class="col-lg-11 o-h">
                                     <h6>الأعمال السابقة</h6>
                                   <carousel :items-to-show="1" :wrap-around="true">
-                                    <Slide v-for="slide in 4" :key="slide">
+                                    <Slide v-for="slide in 1" :key="slide">
                                       <div v-for="(portfolio, index) in Portfolios" :key="index">
                                         <img :src="portfolio.media" style="max-width: 150px">
                                       </div>
@@ -220,10 +220,11 @@
 import axios from "axios";
 import { GoogleMap, Marker } from 'vue3-google-map';
 import 'vue3-carousel/dist/carousel.css';
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import { Carousel, Slide , Pagination, Navigation } from 'vue3-carousel';
+import url from '../../main';
 
 export default {
     name: 'serve_user',
@@ -231,9 +232,9 @@ export default {
       GoogleMap,
       Marker,
       Carousel,
-      Slide,
+      Slide ,
       Pagination,
-      Navigation,
+      Navigation
     },
     mounted() {
         console.log('Component mounted.');
@@ -257,6 +258,7 @@ export default {
         lat: 31,
         lng: 32 ,
         address:'',
+        responsive: { 0: { items: 1, nav: false }, 600: { items: 3, nav: true } }
       }
   },
   created() {
@@ -269,7 +271,7 @@ export default {
       fetchUser(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/auth/me',
+          axios.get(url+'/api/auth/me',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -302,7 +304,7 @@ export default {
       fetchUserPortfolios(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/portfolios',
+          axios.get(url+'/api/portfolios',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -327,7 +329,7 @@ export default {
         try {
           const token = sessionStorage.getItem('access_token_1');
           const user_id = sessionStorage.getItem('user_id');
-          axios.get('http://18.194.157.202/api/products',
+          axios.get(url+'/api/products',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -336,7 +338,7 @@ export default {
                 params: {
                   user_id: user_id,
                   type: val,
-                  per_page: 10,
+                  per_page: 8,
                 }
               })
               .then(res => {
@@ -357,7 +359,7 @@ export default {
       creatrOrder(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.post('http://18.194.157.202/api/orders/store',
+          axios.post(url+'/api/orders/store',
               {
                 delivered_date: this.delivered_date,
                 delivered_time: this.delivered_time,
@@ -398,7 +400,7 @@ export default {
       fetchProduct(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/products/show',
+          axios.get(url+'/api/products/show',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,

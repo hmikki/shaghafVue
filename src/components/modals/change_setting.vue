@@ -38,6 +38,8 @@
 import axios from "axios";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
+import url from '../../main';
+
 let $ = jquery;
 
 export default {
@@ -56,7 +58,7 @@ export default {
       changeSetting(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.post('http://18.194.157.202/api/auth/update',
+          axios.post(url+'/api/auth/update',
               {
                 arguments: {
                   name: this.name,

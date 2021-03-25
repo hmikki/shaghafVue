@@ -13,10 +13,10 @@
                 <div class="modal-tab col-3">
                   <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
                     <li class="nav-item col-6">
-                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="fetchCurrentOrder(0)">الطلبات الحالية</a>
+                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="is_completed= 0;fetchCurrentOrder()">الطلبات الحالية</a>
                     </li>
                     <li class="nav-item col-6">
-                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="fetchCurrentOrder(1)">الطلبات السابقة</a>
+                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="is_completed= 1;fetchCurrentOrder()">الطلبات السابقة</a>
                     </li>
                   </ul>
                 </div>
@@ -53,6 +53,25 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                          <li class="page-item">
+                            <button type="button" class="page-link" v-if="page !== 1" @click="page--; fetchCurrentOrder()"> Previous </button>
+                          </li>
+                          <li class="page-item">
+                            <button type="button" class="page-link" v-for="(pageNumber, index) in pages.slice(page-1, page+5)" :key="index" @click="page = pageNumber; fetchCurrentOrder()"> {{pageNumber}} </button>
+                          </li>
+                          <li class="page-item">
+                            <button type="button" @click="page++; fetchCurrentOrder()" v-if="page < pages.length" class="page-link"> Next </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <div class="col-lg-4"></div>
+                  </div>
                 </div>
 
                 <div class="tab-pane fade" id="transaction" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -86,6 +105,25 @@
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                      <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                          <li class="page-item">
+                            <button type="button" class="page-link" v-if="page !== 1" @click="page--; fetchCurrentOrder()"> Previous </button>
+                          </li>
+                          <li class="page-item">
+                            <button type="button" class="page-link" v-for="(pageNumber, index) in pages.slice(page-1, page+5)" :key="index" @click="page = pageNumber; fetchCurrentOrder()"> {{pageNumber}} </button>
+                          </li>
+                          <li class="page-item">
+                            <button type="button" @click="page++; fetchCurrentOrder()" v-if="page < pages.length" class="page-link"> Next </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                    <div class="col-lg-4"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -95,12 +133,10 @@
 <script>
 
 import axios from "axios";
+import url from '../../main';
 
 export default {
     name:'orders',
-    mounted() {
-        console.log('Component mounted.')
-    },
   data(){
     return {
       Orders: [],
@@ -108,24 +144,27 @@ export default {
       Freelancer: [],
       User:[],
       is_completed: 0,
+      page: 1,
+      perPage: 5,
+      pages: [],
     }
   },
   created() {
       this.fetchCurrentOrder();
   },
   methods:{
-    fetchCurrentOrder(val){
+    fetchCurrentOrder(){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/orders',
+        axios.get(url+'/api/orders',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,
                 'X-localization': 'ar',
               },
               params: {
-                per_page: 10,
-                is_completed: val,
+                page: this.page,
+                is_completed: this.is_completed,
               }
             })
             .then(res => {
@@ -148,8 +187,51 @@ export default {
     getFreelancerId(id){
       sessionStorage.setItem('freelancer_id', id);
       this.$router.push('/orders_details');
+    },
+    setPages () {
+      this.pages = [];
+      let numberOfPages = Math.ceil(this.Orders.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (Orders) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  Orders.slice(from, to);
+    },
+  },
+  computed: {
+    displayedPosts () {
+      return this.paginate(this.Orders);
     }
   },
+  watch: {
+    Orders () {
+      this.setPages();
+    }
+  },
+  filters: {
+    trimWords(value){
+      return value.split(" ").splice(0,20).join(" ") + '...';
+    }
+  }
 
 }
 </script>
+<style>
+button.page-link {
+  display: inline-block;
+}
+button.page-link {
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+}
+.offset{
+  width: 500px !important;
+  margin: 20px auto;
+}
+</style>

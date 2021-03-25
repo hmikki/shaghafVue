@@ -64,6 +64,7 @@ import jquery from 'jquery';
 let $ = jquery;
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide , Pagination, Navigation } from 'vue3-carousel';
+import url from '../../../main';
 
 export default {
     mounted() {
@@ -104,7 +105,7 @@ export default {
     methods:{
         fetchCategories(){
           try {
-            axios.get('http://18.194.157.202/api/home/categories', {
+            axios.get(url+'/api/home/categories', {
               headers: {
                 'X-localization': 'ar',
               }
@@ -125,7 +126,7 @@ export default {
         },
         fetchAllFreelancer(){
           try {
-            axios.get('http://18.194.157.202/api/home/get_freelancers', {
+            axios.get(url+'/api/home/get_freelancers', {
               headers: {
                 'X-localization': 'ar',
               },
@@ -147,7 +148,7 @@ export default {
       },
         fetchFreelancer(){
           try {
-            axios.get('http://18.194.157.202/api/home/get_freelancers', {
+            axios.get(url+'/api/home/get_freelancers', {
               headers: {
                 'X-localization': 'ar',
               },

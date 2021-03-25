@@ -64,6 +64,7 @@
 import change_password from "@/components/modals/change_password";
 import change_setting from "@/components/modals/change_setting";
 import axios from "axios";
+import url from '../../main';
 
 export default {
   name: 'my_account',
@@ -90,7 +91,7 @@ export default {
         console.log('You need to login first');
       }
       else {
-        axios.get('http://18.194.157.202/api/auth/me', {
+        axios.get(url+'/api/auth/me', {
           headers: {
             'Authorization': 'Bearer ' + token
           }

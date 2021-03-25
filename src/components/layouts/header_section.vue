@@ -11,17 +11,19 @@
                 <a href=""><i class="fab fa-facebook-f"></i></a>
             </div>
         </div>
-      <div v-if="Message != ''" class="notificationDiv" id="notify">
-        <a v-on:click.prevent="changePage()">
-          <div class="Webnotification" id="notification">
-            <div class="bateria">
-              <div class="icon"></div>
-              <h1>{{ Message.title }}</h1>
-              <p>{{Message.body}}</p>
+      <div class="notificationDiv">
+      <div class="Webnotification" id="notification" v-if="Message != ''">
+           <div class="bateria">
+             <div class="icon"></div>
+           </div>
+           <div class="message" v-on:click.prevent="changePage()">
+             <span>{{ Message.title }}</span>
+             <p> {{ Message.body }} </p>
+           </div>
+            <div class="closeNotification">
               <a id="closeNotification" v-on:click="close()"><i class="fa fa-times"></i></a>
             </div>
-          </div>
-        </a>
+      </div>
       </div>
         <nav class="navbar navbar-light bg-light">
             <div class="container">
@@ -121,20 +123,23 @@ export default {
       }
     },
     close(){
-      $('#notify').hide();
+      $('#notification').hide();
     },
     changePage(){
-      if (this.type === '3'){
-        if (sessionStorage.getItem('user_type') === '1'){
-          $('#notify').hide();
-          this.$router.push('/orders');
-        }else {
-          $('#notify').hide();
-          this.$router.push('/orders_2');
-        }
-      }else {
-        $('#notify').hide();
+      if (this.type === 1){
+        this.$router.push('/chats');
+      }
+      else if (this.type === 2){
         this.$router.push('/');
+      }
+      else if ((this.type === 3) && (sessionStorage.getItem('user_type') === '1')){
+        this.$router.push('/orders');
+      }
+      else if ((this.type === 3) && (sessionStorage.getItem('user_type') === '2')){
+        this.$router.push('/orders_2');
+      }
+      else {
+        this.$router.push('/chats');
       }
     },
     RefreshHeader(){
@@ -143,3 +148,102 @@ export default {
   }
 }
 </script>
+<style>
+.notificationDiv{
+  position: fixed;
+  left: 0;
+  z-index: 9999999999;
+}
+.Webnotification {
+  height: 90px;
+  width: 400px;
+  background: #FEE101;
+  color: #fff;
+  font-size: 14px;
+  margin: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  transition: all 2s cubic-bezier(0.85, 0.38, 0.11, 0.66);
+  -webkit-animation: show 5s;
+  animation: show 2s;
+  direction: ltr !important;
+  position: relative
+}
+.notificationDiv .red{
+  background-color: #c32b2b !important
+}
+.notificationDiv .green{
+  background-color: #0fbd0f !important
+}
+.Webnotification:target {
+  transform: translateY(0%);
+  opacity: 1;
+}
+.Webnotification .bateria .icon {
+  background: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 30px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Webnotification .bateria .icon:after {
+  content: "";
+  font-family: FontAwesome;
+  transform: rotate(-90deg);
+  color: #ff7043;
+}
+.Webnotification .message span {
+  color: #fff;
+  font-size: 16px;
+}
+.Webnotification .message p {
+  color: #fff;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.Webnotification .message i {
+  position: absolute;
+  top: 40px;
+  right: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+@-webkit-keyframes show {
+  0% {
+    transform: translateY(-150%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes show {
+  0% {
+    transform: translateY(-150%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+
+}
+.bateria {
+  float: left;
+  width: 30%;
+}
+.message {
+  float: left;
+  width: 60%;
+  text-align: left;
+}
+.closeNotification{
+  float: left;
+  width: 10%;
+}
+</style>

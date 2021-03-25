@@ -12,7 +12,7 @@
                 </nav>
                 <div class="col-lg most-l">
                     <a v-on:click.prevent="fetchAllFreelancers()" class="active" style="cursor: pointer">الكل</a>
-                    <a v-for="(category, index) in Categories" :key="index" v-on:click.prevent="category_id = category.id; fetchFreelancers()" style="cursor: pointer">
+                    <a v-for="(category, index) in Categories" :key="index" v-on:click.prevent="category_id = category.id ; fetchAllFreelancers()" style="cursor: pointer">
                       {{ category.name }}
                     </a>
                 </div>
@@ -48,8 +48,26 @@
                     </router-link>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-4"></div>
+                  <div class="col-lg-4">
+                    <nav aria-label="Page freelancers example">
+                      <ul class="pagination">
+                        <li class="page-item">
+                          <button type="button" class="page-link" v-if="page !== 1" @click="page--; fetchAllFreelancers()"> Previous </button>
+                        </li>
+                        <li class="page-item">
+                          <button type="button" class="page-link" v-for="(pageNumber, index) in pages.slice(page-1, page+5)" :key="index" @click="page = pageNumber; fetchAllFreelancers()"> {{pageNumber}} </button>
+                        </li>
+                        <li class="page-item">
+                          <button type="button" @click="page++; fetchAllFreelancers()" v-if="page < pages.length" class="page-link"> Next </button>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                  <div class="col-lg-4"></div>
+                </div>
               </div>
-
             </div>
         </div>
     </div>
@@ -57,12 +75,10 @@
 <script>
 import login_section from "@/components/modals/login-section";
 import axios from "axios";
+import url from '../../main';
 
 export default {
     name:'our_serve',
-    mounted() {
-        console.log('Component mounted.')
-    },
   components:{
     login_section,
   },
@@ -71,9 +87,12 @@ export default {
         Categories: {
           SubCategories:[],
         },
-        category_id: sessionStorage.getItem('category_id'),
+        category_id: null,
         Freelancers:[],
         q: sessionStorage.getItem('q'),
+        page: 1,
+        perPage: 5,
+        pages: [],
       }
   },
   created() {
@@ -83,7 +102,7 @@ export default {
   methods:{
     fetchServices(){
       try {
-        axios.get('http://18.194.157.202/api/home/categories',
+        axios.get(url+'/api/home/categories',
             {
               headers: {
                 'X-localization': 'ar',
@@ -103,41 +122,17 @@ export default {
         console.log(e);
       }
     },
-
-    fetchFreelancers(){
-      try {
-        axios.get('http://18.194.157.202/api/home/get_freelancers',
-            {
-              headers: {
-                'X-localization': 'ar',
-              },
-              params: {
-                'category_id': this.category_id,
-              },
-            })
-            .then(res => {
-              if (res.data['status']['status'] === "success") {
-                this.Freelancers = res.data['Freelancers'];
-                console.log(res.data['Freelancers']);
-              } else {
-                console.log(res.data['Freelancers']);
-              }
-            })
-            .catch(e => {
-              console.log(e);
-            })
-      }catch (e){
-        console.log(e);
-      }
-    },
     fetchAllFreelancers(){
       try {
-        axios.get('http://18.194.157.202/api/home/get_freelancers', {
+        axios.get(url+'/api/home/get_freelancers', {
           headers: {
             'X-localization': 'ar',
           },
           params:{
             'q' : this.q,
+            page: this.page,
+            per_page : 12,
+            category_id: this.category_id,
           }
         },)
             .then(res => {
@@ -156,7 +151,50 @@ export default {
     },
     getFreelancerId(freelancer_id){
       sessionStorage.setItem('freelancer_id', freelancer_id);
+    },
+    setPages () {
+      this.pages= [];
+      let numberOfPages = Math.ceil(this.Freelancers.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (Freelancers) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  Freelancers.slice(from, to);
+    },
+  },
+  computed: {
+    displayedPosts () {
+      return this.paginate(this.Freelancers);
     }
   },
+  watch: {
+    Freelancers () {
+      this.setPages();
+    }
+  },
+  filters: {
+    trimWords(value){
+      return value.split(" ").splice(0,20).join(" ") + '...';
+    }
+  }
 }
 </script>
+<style>
+button.page-link {
+  display: inline-block;
+}
+button.page-link {
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+}
+.offset{
+  width: 500px !important;
+  margin: 20px auto;
+}
+</style>

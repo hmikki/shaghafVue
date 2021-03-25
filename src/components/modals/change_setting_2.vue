@@ -113,6 +113,7 @@ import axios from "axios";
 import jquery from 'jquery';
 import Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
     components:{
@@ -172,7 +173,7 @@ export default {
           formData.append('lat', this.lat);
           formData.append('lng', this.lng);
           const token = sessionStorage.getItem('access_token_1');
-          axios.post('http://18.194.157.202/api/auth/update',
+          axios.post(url+'/api/auth/update',
               formData,
               {
                 headers: {
@@ -231,7 +232,7 @@ export default {
       },
     getCities(){
       try {
-        axios.get('http://18.194.157.202/api/home/install',
+        axios.get(url+'/api/home/install',
             {
               headers:{
                 'X-localization' : 'ar'

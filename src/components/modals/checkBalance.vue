@@ -14,7 +14,7 @@
               <h3> لا يوجد لديك رصيد كافي </h3>
             </div>
             <div class="tab-button">
-              <button type="submit" class="btn" id="dep" v-on:click.prevent="">انتقل للبطاقة</button>
+              <button type="submit" class="btn" id="dep" v-on:click.prevent="goToCard()">انتقل للبطاقة</button>
             </div>
           </div>
         </div>
@@ -24,7 +24,52 @@
 </template>
 <script>
 
+import axios from "axios";
+import Swal from "sweetalert2";
+import jquery from 'jquery';
+let $ = jquery;
+import url from '../../main';
+
 export default {
   name:'check_balance',
+  methods:{
+    goToCard(){
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        axios.post(url+'/api/transactions/generate_checkout',
+            {
+              value: sessionStorage.getItem('amount'),
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                const transaction_id = res.data['Transaction']['id'];
+                const payment_token = res.data['Transaction']['payment_token'];
+                sessionStorage.setItem('transaction_id', transaction_id);
+                sessionStorage.setItem('payment_token', payment_token);
+                sessionStorage.setItem('amount', this.value);
+                $('#check_balance').modal('hide');
+                this.$router.push('/payment');
+              } else {
+                Swal.fire(
+                    res.data['status']['status'],
+                    'خطأ في البيانات المدخلة',
+                    'error'
+                );
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
+    }
+  }
 }
 </script>

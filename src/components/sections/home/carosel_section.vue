@@ -24,6 +24,7 @@
 </template>
 <script>
 import axios from "axios";
+import url from '../../../main';
 
 export default {
   name: 'carosel_section',
@@ -38,7 +39,7 @@ export default {
     methods : {
     fetchAdvertisments(){
       try {
-        axios.get('http://18.194.157.202/api/home/advertisements', {
+        axios.get(url+'/api/home/advertisements', {
           headers: {
             'X-localization': 'ar',
           }

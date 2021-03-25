@@ -1,4 +1,5 @@
 <template>
+  <check-balance></check-balance>
   <reject></reject>
   <cancel></cancel>
   <div class="modal fade thanks rate-page" id="rate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -154,15 +155,15 @@ import cancel from "@/components/modals/cancel";
 import reject from "@/components/modals/reject";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
+import checkBalance from "@/components/modals/checkBalance";
 let $ = jquery;
+import url from '../../main';
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
   components:{
       cancel,
       reject,
+    checkBalance
   },
     data(){
       return{
@@ -174,6 +175,7 @@ export default {
         availableBalance:'',
         chatRoom:[],
         user_id:'',
+        balance:'',
       }
   },
     created() {
@@ -184,7 +186,7 @@ export default {
       fetchOrderDetails(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/orders/show',
+          axios.get(url+'/api/orders/show',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -198,8 +200,10 @@ export default {
                 if (res.data['status']['status'] === "success") {
                   this.Order = res.data['Order'];
                   this.OrderStatuses = res.data['OrderStatuses'];
+                  this.balance = res.data['Order']['balance'];
                   const customer_id = res.data['Order']['user_id'];
                   sessionStorage.setItem('customer_id', customer_id);
+                  sessionStorage.setItem('amount', res.data['Order']['total']);
                 } else {
                   console.log();
                 }
@@ -213,36 +217,32 @@ export default {
       },
       updateOrder(order_status){
         try {
-          const token = sessionStorage.getItem('access_token_1');
-          axios.post('http://18.194.157.202/api/orders/update',
-              {
-                order_id: sessionStorage.getItem('order_id'),
-                status: order_status,
-              },
-              {
-                headers: {
-                  'Authorization': 'Bearer ' + token,
-                  'X-localization': 'ar',
+            const token = sessionStorage.getItem('access_token_1');
+            axios.post(url+'/api/orders/update',
+                {
+                  order_id: sessionStorage.getItem('order_id'),
+                  status: order_status,
                 },
-              })
-              .then(res => {
-                if (res.data['status']['status'] === "success") {
-                  Swal.fire(
-                      res.data['status']['status'],
-                      'تم تحديث حالة الطلب',
-                      'success'
-                  );
-                } else {
-                  Swal.fire(
-                      res.data['status']['status'],
-                      'لا يمكن تحديث حالة الطلب',
-                      'error'
-                  );
-                }
-              })
-              .catch(e => {
-                console.log(e);
-              })
+                {
+                  headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'X-localization': 'ar',
+                  },
+                })
+                .then(res => {
+                  if (res.data['status']['status'] === "success") {
+                    Swal.fire(
+                        res.data['status']['status'],
+                        'تم تحديث حالة الطلب',
+                        'success'
+                    );
+                  } else {
+                    $('#check_balance').modal('show');
+                  }
+                })
+                .catch(e => {
+                  console.log(e);
+                })
         }catch (e){
           console.log(e);
         }
@@ -250,7 +250,7 @@ export default {
       reviewOrder(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.post('http://18.194.157.202/api/orders/review',
+          axios.post(url+'/api/orders/review',
               {
                 order_id: this.order_id,
                 rate: this.rate,
@@ -306,7 +306,7 @@ export default {
           } else {
             this.user_id = sessionStorage.getItem('customer_id');
           }
-          axios.post('http://18.194.157.202/api/chats/rooms/create',
+          axios.post(url+'/api/chats/rooms/create',
               {
                 user_id: this.user_id,
               },

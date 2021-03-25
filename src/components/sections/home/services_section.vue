@@ -22,6 +22,7 @@
 
 <script>
 import axios from "axios";
+import url from '../../../main';
 
 export default {
     name: 'Categories',
@@ -37,7 +38,7 @@ export default {
     methods : {
         fetchCategories(){
           try {
-            axios.get('http://18.194.157.202/api/home/categories', {
+            axios.get(url+'/api/home/categories', {
               headers: {
                 'X-localization': 'ar',
               }

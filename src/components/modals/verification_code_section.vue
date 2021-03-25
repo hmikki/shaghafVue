@@ -30,6 +30,7 @@ import axios from "axios";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
     data(){
@@ -46,7 +47,7 @@ export default {
 
             console.log(this.code);
             const token = sessionStorage.getItem('access_token_1');
-            axios.post('http://18.194.157.202/api/auth/verify',
+            axios.post(url+'/api/auth/verify',
                 {
                   code: this.code,
                   type: this.type,
@@ -84,7 +85,7 @@ export default {
         resendVerification(){
           try {
             const token = sessionStorage.getItem('access_token_1');
-            axios.get('http://18.194.157.202/api/auth/resend_verify',
+            axios.get(url+'/api/auth/resend_verify',
                 {
                   headers: {
                     'Authorization': 'Bearer ' + token,

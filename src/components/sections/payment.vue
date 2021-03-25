@@ -1,18 +1,13 @@
 
 <template>
   <form action="http://localhost:8080/#/paymentStatus" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
-  <paymentStatus></paymentStatus>
 </template>
 <script>
-import paymentStatus from "@/components/modals/paymentStatus";
 export default {
   data(){
     return{
       checkOutId : sessionStorage.getItem('payment_token')
     }
-  },
-  components:{
-    paymentStatus,
   },
   created() {
     try {

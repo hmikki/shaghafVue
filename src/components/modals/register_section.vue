@@ -68,6 +68,7 @@
 import axios from "axios";
 import jquery from 'jquery'
 import * as Swal from "sweetalert2";
+import url from "@/main";
 let $ = jquery;
 
 export default {
@@ -92,7 +93,7 @@ export default {
     methods:{
         register(){
           try {
-            axios.post('http://18.194.157.202/api/auth/register',
+            axios.post(url+'/api/auth/register',
                 {
                   'name': this.name,
                   'mobile': '966'+this.mobile,
@@ -141,7 +142,7 @@ export default {
         },
         getCities(){
           try {
-            axios.get('http://18.194.157.202/api/home/install',
+            axios.get(url+'/api/home/install',
                 {
                   headers:{
                     'X-localization' : 'ar'
@@ -163,7 +164,6 @@ export default {
         },
       getTypeValue(val){
         this.type = val;
-        console.log(this.type);
       },
       getProviderTypeValue(){
         let provider = document.getElementById('providerType').value;

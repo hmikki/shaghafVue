@@ -195,6 +195,7 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 
 export default {
@@ -238,7 +239,7 @@ export default {
   methods:{
       fetchFreelancer() {
         try {
-          axios.get('http://18.194.157.202/api/home/get_freelancer', {
+          axios.get(url+'/api/home/get_freelancer', {
             headers: {
               'X-localization': 'ar',
             },
@@ -263,7 +264,7 @@ export default {
       fetchFreelancerPortfolios(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/portfolios',
+          axios.get(url+'/api/portfolios',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -290,7 +291,7 @@ export default {
       fetchFreelancerProducts(val){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/products',
+          axios.get(url+'/api/products',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -316,7 +317,7 @@ export default {
     creatrOrder(product_id){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/orders/store',
+        axios.post(url+'/api/orders/store',
             {
               delivered_date: this.delivered_date,
               delivered_time: this.delivered_time,
@@ -357,7 +358,7 @@ export default {
     fetchProduct(product_id){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/products/show',
+        axios.get(url+'/api/products/show',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,

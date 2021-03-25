@@ -146,6 +146,7 @@ import jquery from 'jquery';
 import add_portfolio from "@/components/modals/add_portfolio";
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
   name: 'my_account',
@@ -171,7 +172,7 @@ export default {
     userDetails2(){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/auth/me', {
+        axios.get(url+'/api/auth/me', {
           headers: {
             'Authorization': 'Bearer ' + token,
             'X-localization': 'ar',
@@ -195,7 +196,7 @@ export default {
         let formData = new FormData();
         formData.append('avatar',file);
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/auth/update',
+        axios.post(url+'/api/auth/update',
             formData,
             {
               headers:{

@@ -90,14 +90,12 @@
 import collection_request from "@/components/modals/collection_request";
 import axios from "axios";
 import deposit from "@/components/modals/deposit";
+import url from '../../main';
 export default {
   name: 'financial',
   components:{
     collection_request,
     deposit,
-  },
-  mounted() {
-    console.log('financial mounted.');
   },
   data(){
     return{
@@ -113,7 +111,7 @@ export default {
     fetchBalance(){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/transactions/my_balance',
+        axios.get(url+'/api/transactions/my_balance',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,
@@ -138,7 +136,7 @@ export default {
       try {
 
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/transactions',
+        axios.get(url+'/api/transactions',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,

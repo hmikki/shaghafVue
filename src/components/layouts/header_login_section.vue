@@ -40,6 +40,7 @@ import logout from "@/components/modals/logout";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
   components:{
@@ -58,8 +59,7 @@ export default {
         userDetails(){
           try {
             const token = sessionStorage.getItem('access_token_1');
-            console.log('Bearer ' + token);
-            axios.get('http://18.194.157.202/api/auth/me', {
+            axios.get(url+'/api/auth/me', {
               headers: {
                 'Authorization': 'Bearer ' + token
               }
@@ -81,7 +81,7 @@ export default {
         logout(){
           try {
             const token = sessionStorage.getItem('access_token_1');
-            axios.post('http://18.194.157.202/api/auth/logout', {}, {
+            axios.post(url+'/api/auth/logout', {}, {
               headers: {
                 'Authorization': 'Bearer ' + token
               }

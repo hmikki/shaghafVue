@@ -40,8 +40,6 @@
 @import "assets/css/responsive.css";
 @import "assets/css/slick-theme.css";
 @import "assets/css/slick.css";
-@import "https://unpkg.com/vue3-google-map";
-
 </style>
 
 <script>

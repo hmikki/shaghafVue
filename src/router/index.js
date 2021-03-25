@@ -93,11 +93,6 @@ const routes = [
     component: () => import('../views/pages/Freelancer_page.vue')
   },
   {
-    path: '/notification_1',
-    name: 'notification_1',
-    component: () => import('../views/pages/notification_1.vue')
-  },
-  {
     path: '/notifications',
     name: 'notifications',
     component: () => import('../views/pages/notifications.vue')

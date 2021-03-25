@@ -10,6 +10,8 @@ import jquery from 'jquery'
 import vmApp from './App.vue'
 import '../src/assets/js/head.js';
 import * as carousel from 'vue3-carousel';
+let url = 'https://passionplatforms.com';
+export default url;
 
 
 createApp(App).use(vmApp).use(router).use(store).use(VueTilt).use(Bootstrap).use(jquery).use(carousel).use(FileUpload).mount('#app');

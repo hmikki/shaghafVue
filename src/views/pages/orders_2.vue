@@ -85,11 +85,9 @@
 <script>
 
 import axios from "axios";
+import url from '../../main';
 
 export default {
-    mounted() {
-        console.log('Component mounted.')
-    },
     components:{
     },
     data(){
@@ -108,7 +106,7 @@ export default {
     fetchOrders(val){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/orders',
+        axios.get(url+'/api/orders',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,

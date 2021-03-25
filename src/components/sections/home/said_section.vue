@@ -47,6 +47,7 @@ import axios from "axios";
 
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import url from '../../../main';
 
 export default {
   components:{
@@ -66,7 +67,7 @@ export default {
     methods:{
         fetchReviews(){
           try {
-            axios.get('http://18.194.157.202/api/home/get_reviews',
+            axios.get(url+'/api/home/get_reviews',
                 {
                   headers: {
                     'X-localization': 'ar',

@@ -30,6 +30,8 @@
 <script>
 import axios from "axios";
 import * as Swal from "sweetalert2";
+import url from '../../main';
+
 export default {
     data(){
         return{
@@ -42,7 +44,7 @@ export default {
         forgetPassword(){
           try {
             const token = sessionStorage.getItem('access_token_1');
-            axios.post('http://18.194.157.202/api/auth/forget_password',
+            axios.post(url+'/api/auth/forget_password',
                 {
                   mobile: this.mobile
                 },

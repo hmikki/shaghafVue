@@ -53,6 +53,7 @@ import axios from "axios";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
   name:'collection_request',
@@ -71,7 +72,7 @@ export default {
     refund(){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/transactions/request_refund',
+        axios.post(url+'/api/transactions/request_refund',
             {
               name : this.name,
               iban :this.iban,

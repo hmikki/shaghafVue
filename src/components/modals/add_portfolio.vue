@@ -45,7 +45,9 @@
 <script>
 import axios from "axios";
 import * as Swal from "sweetalert2";
-
+import jquery from 'jquery';
+let $ = jquery;
+import url from '../../main';
 
 export default {
   name:'add_portfolio',
@@ -72,7 +74,7 @@ export default {
         formData.append('description', this.description);
         console.log(file);
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/portfolios/store',
+        axios.post(url+'/api/portfolios/store',
             formData,
             {
               headers: {
@@ -82,6 +84,7 @@ export default {
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
+                $('#add_portfolio').modal('hide');
                 Swal.fire(
                     res.data['status']['status'],
                     'تمت الاضافة بنجاح',

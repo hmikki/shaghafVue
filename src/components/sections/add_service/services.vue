@@ -92,6 +92,7 @@ import axios from "axios";
 import edit_order from "@/components/modals/edit_order.vue";
 import jquery from 'jquery';
 let $ = jquery;
+import url from '../../../main';
 
 export default {
     name:'services',
@@ -115,7 +116,7 @@ export default {
       try {
         const token = sessionStorage.getItem('access_token_1');
         const user_id = sessionStorage.getItem('user_id');
-        axios.get('http://18.194.157.202/api/products',
+        axios.get(url+'/api/products',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,
@@ -146,7 +147,7 @@ export default {
       try {
 
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/products/destroy',
+        axios.post(url+'/api/products/destroy',
             {
               product_id: sessionStorage.getItem('product_id'),
             },

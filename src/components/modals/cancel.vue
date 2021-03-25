@@ -28,6 +28,7 @@ import axios from "axios";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
   name:'cancel',
@@ -40,7 +41,7 @@ export default {
     updateOrder(order_status){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/orders/update',
+        axios.post(url+'/api/orders/update',
             {
               order_id: sessionStorage.getItem('order_id'),
               status: order_status,

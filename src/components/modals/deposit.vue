@@ -31,12 +31,10 @@ import checkBalance from "@/components/modals/checkBalance";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
   name:'deposit',
-  mounted() {
-    console.log('deposit mounted');
-  },
   components:{
     checkBalance,
   },
@@ -46,14 +44,11 @@ export default {
       Transaction:[],
     }
   },
-  created() {
-
-  },
   methods:{
     createTransaction(){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.post('http://18.194.157.202/api/transactions/generate_checkout',
+        axios.post(url+'/api/transactions/generate_checkout',
             {
               value: this.value,
             },
@@ -90,7 +85,7 @@ export default {
     checkBalance(){
       try {
         const token = sessionStorage.getItem('access_token_1');
-        axios.get('http://18.194.157.202/api/transactions/my_balance',
+        axios.get(url+'/api/transactions/my_balance',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,

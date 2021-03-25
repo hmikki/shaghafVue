@@ -58,6 +58,7 @@ import profile_status from "@/components/modals/profileStatus";
 import welcome from "@/components/modals/welcome";
 import * as Swal from "sweetalert2";
 let $ = Jquery;
+import url from '../../main';
 
 export default {
   name: 'login',
@@ -80,7 +81,7 @@ export default {
 
         login( ){
           try {
-            axios.post('http://18.194.157.202/api/auth/login',
+            axios.post(url+'/api/auth/login',
                 {
                   'mobile': '966'+ this.mobile,
                   'password': this.password,

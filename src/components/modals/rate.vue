@@ -41,6 +41,7 @@
 import axios from "axios";
 import * as Swal from "sweetalert2";
 const token= sessionStorage.getItem('access_token');
+import url from '../../main';
 
 export default {
   name: 'rate',
@@ -55,7 +56,7 @@ export default {
   methods:{
     reviewOrder(){
       try {
-        axios.post('http://18.194.157.202/api/orders/review',
+        axios.post(url+'/api/orders/review',
             {
               order_id: this.order_id,
               rate: this.rate,
@@ -94,7 +95,7 @@ export default {
     updateOrder(order_status){
       try {
       const token = sessionStorage.getItem('access_token_1');
-      axios.post('http://18.194.157.202/api/orders/update',
+      axios.post(url+'/api/orders/update',
           {
             order_id : sessionStorage.getItem('order_id'),
             status : order_status,

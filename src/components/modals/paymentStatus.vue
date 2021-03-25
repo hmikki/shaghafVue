@@ -39,6 +39,7 @@
 </template>
 <script>
 import axios from "axios";
+import url from '../../main';
 
 export default {
   name:'paymentStatus',
@@ -54,7 +55,7 @@ export default {
       checkPayment(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/transactions/check_payment',
+          axios.get(url+'/api/transactions/check_payment',
               {
                 headers:{
                   'Authorization' : 'Bearer ' + token,

@@ -100,7 +100,7 @@
 </template>
 <script>
 import axios from "axios";
-const token = sessionStorage.getItem('access_token');
+import url from '../../main';
 
 export default {
     mounted() {
@@ -118,8 +118,8 @@ export default {
   methods:{
     fetchOrderDetails(){
       try {
-
-        axios.get('http://18.194.157.202/api/orders/show',
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get(url+'/api/orders/show',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,
@@ -146,8 +146,8 @@ export default {
     },
     changeOrderStatus(){
       try {
-
-        axios.post('http://18.194.157.202/api/orders/update',
+        const token = sessionStorage.getItem('access_token_1')
+        axios.post(url+'/api/orders/update',
             {
               order_id: '',
               status: '',

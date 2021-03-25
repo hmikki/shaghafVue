@@ -70,6 +70,7 @@ import axios from "axios";
 import jquery from 'jquery';
 import * as Swal from "sweetalert2";
 let $ = jquery;
+import url from '../../main';
 
 export default {
   data(){
@@ -93,7 +94,7 @@ export default {
   methods:{
       fetchAllCategories(){
         try {
-          axios.get('http://18.194.157.202/api/home/categories',
+          axios.get(url+'/api/home/categories',
               {
                 headers: {
                   'X-localization': 'ar',
@@ -116,7 +117,7 @@ export default {
       fetchDetails(){
         try {
           const token = sessionStorage.getItem('access_token_1');
-          axios.get('http://18.194.157.202/api/products/show',
+          axios.get(url+'/api/products/show',
               {
                 headers: {
                   'Authorization': 'Bearer ' + token,
@@ -157,7 +158,7 @@ export default {
           formData.append('price', this.price);
           formData.append('type', this.type);
           const token = sessionStorage.getItem('access_token_1');
-          axios.post('http://18.194.157.202/api/products/update',
+          axios.post(url+'/api/products/update',
               formData,
               {
                 headers: {
@@ -194,7 +195,7 @@ export default {
         try {
           var select = document.getElementById('cats').value;
           console.log(select);
-          axios.get('http://18.194.157.202/api/home/categories',
+          axios.get(url+'/api/home/categories',
               {
                 headers: {
                   'X-localization': 'ar',
