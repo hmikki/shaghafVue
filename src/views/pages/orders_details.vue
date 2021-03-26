@@ -231,6 +231,7 @@ export default {
                 })
                 .then(res => {
                   if (res.data['status']['status'] === "success") {
+                    this.Order.status = res.data['Order']['status'];
                     Swal.fire(
                         res.data['status']['status'],
                         'تم تحديث حالة الطلب',
@@ -331,7 +332,7 @@ export default {
         }catch (e){
           console.log(e);
         }
-      }
+      },
     },
 }
 </script>

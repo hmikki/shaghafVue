@@ -52,7 +52,6 @@ export default {
                 const payment_token = res.data['Transaction']['payment_token'];
                 sessionStorage.setItem('transaction_id', transaction_id);
                 sessionStorage.setItem('payment_token', payment_token);
-                sessionStorage.setItem('amount', this.value);
                 $('#check_balance').modal('hide');
                 this.$router.push('/payment');
               } else {
