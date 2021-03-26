@@ -15,10 +15,10 @@
           <div class="modal-tab col-3">
             <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
               <li class="nav-item col-6">
-                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">رصيدي</a>
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="fetchBalance()">رصيدي</a>
               </li>
               <li class="nav-item col-6">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false">عملياتي المالية</a>
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="fetchTransaction()">عملياتي المالية</a>
               </li>
             </ul>
           </div>

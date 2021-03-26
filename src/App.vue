@@ -45,7 +45,6 @@
 <script>
 import header_section from "@/components/layouts/header_section";
 import footer_section from "@/components/layouts/footer_section";
-import Pusher from "pusher-js";
 
 
 export default {
@@ -55,35 +54,13 @@ export default {
   },
   data(){
     return{
-      Message:[],
     }
   },
   updated() {
   },
   created() {
-    this.pusher();
   },
   methods:{
-    pusher(){
-      try {
-        Pusher.logToConsole = true;
-        let pusher = new Pusher('da99af9260d89f306342', {
-          cluster: 'ap1'
-        });
-        let that = this;
-        let channel = pusher.subscribe('online');
-        channel.bind('SendGlobalNotificationEvent', function(data) {
-          that.Message = data.notification;
-        });
-        let user_id = sessionStorage.getItem('user_id');
-        let channel2 = pusher.subscribe('online.' +user_id);
-        channel2.bind('SendNotificationEvent', function(data) {
-          that.Message=data.notification;
-        });
-      }catch (e){
-        console.log();
-      }
-    }
   }
 }
 

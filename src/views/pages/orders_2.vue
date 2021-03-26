@@ -3,7 +3,7 @@
     <!-- start wrapper -->
     <div class="wrapper">
         <div class="container">
-            <div class="sevice-user orders orders-2 add-orders">
+            <div class="sevice-user orders orders-2 add-orders financial-operations">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><router-link to="/"><i class="fas fa-home"></i></router-link></li>
