@@ -80,6 +80,25 @@
               </div>
               <div class="col-lg-3"></div>
             </div>
+            <div class="row">
+              <div class="col-lg-4"></div>
+              <div class="col-lg-4">
+                <nav aria-label="Page financial example">
+                  <ul class="pagination">
+                    <li class="page-item">
+                      <button type="button" class="page-link" v-if="page !== 1" @click="page--; fetchTransaction()"> Previous </button>
+                    </li>
+                    <li class="page-item">
+                      <button type="button" class="page-link" v-for="(pageNumber, index) in pages.slice(page-1, page+5)" :key="index" @click="page = pageNumber; fetchTransaction()"> {{pageNumber}} </button>
+                    </li>
+                    <li class="page-item">
+                      <button type="button" @click="page++; fetchTransaction()" v-if="page < pages.length" class="page-link"> Next </button>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <div class="col-lg-4"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -101,6 +120,9 @@ export default {
     return{
       Balance:[],
       Transactions:[],
+      page: 1,
+      perPage: 5,
+      pages: [],
     }
   },
   created() {
@@ -143,6 +165,7 @@ export default {
                 'X-localization': 'ar'
               },
               params: {
+                page: this.page,
                 per_page: 10
               }
             })
@@ -160,6 +183,49 @@ export default {
         console.log(e);
       }
     },
+    setPages () {
+      this.pages = [];
+      let numberOfPages = Math.ceil(this.Transactions.length / this.perPage);
+      for (let index = 1; index <= numberOfPages; index++) {
+        this.pages.push(index);
+      }
+    },
+    paginate (Transactions) {
+      let page = this.page;
+      let perPage = this.perPage;
+      let from = (page * perPage) - perPage;
+      let to = (page * perPage);
+      return  Transactions.slice(from, to);
+    },
   },
+  computed: {
+    displayedPosts () {
+      return this.paginate(this.Transactions);
+    }
+  },
+  watch: {
+    Transactions () {
+      this.setPages();
+    }
+  },
+  filters: {
+    trimWords(value){
+      return value.split(" ").splice(0,20).join(" ") + '...';
+    }
+  }
 }
 </script>
+<style>
+button.page-link {
+  display: inline-block;
+}
+button.page-link {
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+}
+.offset{
+  width: 500px !important;
+  margin: 20px auto;
+}
+</style>

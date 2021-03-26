@@ -13,10 +13,10 @@
                 <div class="modal-tab col-3">
                   <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
                     <li class="nav-item col-6">
-                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="is_completed= 0;fetchCurrentOrder()">الطلبات الحالية</a>
+                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="is_completed= 0;refreshPaginate();fetchCurrentOrder()">الطلبات الحالية</a>
                     </li>
                     <li class="nav-item col-6">
-                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="is_completed= 1;fetchCurrentOrder()">الطلبات السابقة</a>
+                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="is_completed= 1;refreshPaginate();fetchCurrentOrder()">الطلبات السابقة</a>
                     </li>
                   </ul>
                 </div>
@@ -165,6 +165,7 @@ export default {
               params: {
                 page: this.page,
                 is_completed: this.is_completed,
+                per_page: 8,
               }
             })
             .then(res => {
@@ -202,6 +203,10 @@ export default {
       let to = (page * perPage);
       return  Orders.slice(from, to);
     },
+    refreshPaginate(){
+      this.Orders= [];
+      this.page = 1;
+    }
   },
   computed: {
     displayedPosts () {
