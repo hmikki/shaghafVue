@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="chat-r">
-              <div v-for="(room,index) in Rooms" :key="index" class="col-lg-12 chat-cur" v-on:click.prevent="getUserId(room.User['id']);getRoomId(room.id);openChat(room.User['id']); fetchMessages(room.id)">
+              <div v-for="(room,index) in Rooms" :key="index" class="col-lg-12 chat-cur" v-on:click.prevent="getUserId(room.User['id']);getRoomId(room.id);openChat(room.User['id']);refreshRoom(); fetchMessages(room.id)">
                 <div class="row">
                   <div class="col-lg-3">
                     <img class="b-r-half circle-img" :src="(room.User)? room.User.avatar : '' " alt="">
@@ -34,8 +34,8 @@
                 </div>
                 <div class="col-lg-12">
                   <div class="col-lg-12 showMore">
-                    <a class="paginate" @click="page++; fetchMessages()"> عرض الرسائل السابقة </a>
-                    </div>
+                    <a class="paginate" @click="page++; showMoreMessages()"> عرض الرسائل السابقة </a>
+                  </div>
                   <div class="col-lg-12" v-for="(message, index) in Messages" :key="index" :class="{'l-litter' :message.user_id === user_id , 'm-litter' : message.user_id !== user_id}">
                     <div class="col-lg-6 mb-3 ml-lang">
                       <p v-if="message.type === 1" class=" ch-messsage">{{ (message)?message.message: ''}}</p>
@@ -121,7 +121,6 @@ export default {
   },
   computed:{
     ...mapState({
-
     }),
     displayedPosts () {
       return this.paginate(this.Messages);
@@ -145,19 +144,18 @@ export default {
       console.log(e);
     }
   },
-  methods:{
-    fetchRooms(){
+  methods: {
+    fetchRooms() {
       try {
-
         const token = sessionStorage.getItem('access_token_1');
-        axios.get(url+'/api/chats/rooms',
+        axios.get(url + '/api/chats/rooms',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,
                 'X-localization': 'ar',
               },
-              params:{
-                per_page:10
+              params: {
+                per_page: 10
               }
             })
             .then(res => {
@@ -170,13 +168,12 @@ export default {
             .catch(e => {
               console.log(e);
             })
-      }catch (e){
+      } catch (e) {
         console.log(e);
       }
     },
-    openChat(user_id){
+    openChat(user_id) {
       try {
-
         const user_type = sessionStorage.getItem('user_type');
         if (user_type === '1') {
           this.user_id = sessionStorage.getItem('freelancer_id');
@@ -184,7 +181,7 @@ export default {
           this.user_id = sessionStorage.getItem('customer_id');
         }
         const token = sessionStorage.getItem('access_token_1');
-        axios.post(url+'/api/chats/rooms/create',
+        axios.post(url + '/api/chats/rooms/create',
             {
               user_id: user_id,
             },
@@ -204,19 +201,18 @@ export default {
             .catch(e => {
               console.log(e);
             })
-      }catch (e){
+      } catch (e) {
         console.log(e);
       }
     },
-    getMessage(data){
+    getMessage(data) {
       this.Messages.push(data);
     },
-    fetchMessages(){
+    fetchMessages() {
       try {
-
         console.log(this.room_id);
         const token = sessionStorage.getItem('access_token_1');
-        axios.get(url+'/api/chats/rooms/messages',
+        axios.get(url + '/api/chats/rooms/messages',
             {
               headers: {
                 'Authorization': 'Bearer ' + token,
@@ -224,13 +220,14 @@ export default {
               },
               params: {
                 chat_room_id: sessionStorage.getItem('room_id'),
-                page : this.page,
-                per_page : 5
+                page: this.page,
+                per_page: 5
               }
             })
             .then(res => {
               if (res.data['status']['status'] === "success") {
-                res.data['ChatRoomMessages'].reverse().forEach(message=>this.Messages.push(message));
+                this.Messages = res.data['ChatRoomMessages'].reverse();
+                // res.data['ChatRoomMessages'].forEach(message=>this.Messages.push(message)).unshift();
               } else {
                 console.log();
               }
@@ -238,15 +235,14 @@ export default {
             .catch(e => {
               console.log(e);
             })
-      }catch (e){
+      } catch (e) {
         console.log(e);
       }
     },
-    sendMessage(){
+    sendMessage() {
       try {
-
         const token = sessionStorage.getItem('access_token_1');
-        axios.post(url+'/api/chats/rooms/messages/create',
+        axios.post(url + '/api/chats/rooms/messages/create',
             {
               'chat_room_id': sessionStorage.getItem('room_id'),
               'type': this.type,
@@ -268,13 +264,12 @@ export default {
             .catch(e => {
               console.log(e);
             })
-      }catch (e){
+      } catch (e) {
         console.log(e);
       }
     },
-    sendFile(){
+    sendFile() {
       try {
-
         let file = this.$refs.file.files[0];
         let formData = new FormData();
         formData.append('message', file);
@@ -289,7 +284,7 @@ export default {
         formData.append('type', this.type);
         formData.append('chat_room_id', sessionStorage.getItem('room_id'));
         const token = sessionStorage.getItem('access_token_1');
-        axios.post(url+'/api/chats/rooms/messages/create',
+        axios.post(url + '/api/chats/rooms/messages/create',
             formData,
             {
               headers: {
@@ -307,7 +302,7 @@ export default {
             .catch(e => {
               console.log(e);
             })
-      }catch (e){
+      } catch (e) {
         console.log(e)
       }
     },
@@ -324,7 +319,7 @@ export default {
           reader.readAsDataURL(file);
         }
         const token = sessionStorage.getItem('access_token_1');
-        axios.post(url+'/api/chats/rooms/messages/create',
+        axios.post(url + '/api/chats/rooms/messages/create',
             {
               'chat_room_id': this.room_id,
               'type': this.type,
@@ -346,30 +341,65 @@ export default {
             .catch(e => {
               console.log(e);
             })
-      }catch (e){
+      } catch (e) {
         console.log(e);
       }
     },
-    getUserId(user_id){
+    getUserId(user_id) {
       sessionStorage.setItem('user_id', user_id);
     },
-    getRoomId(room_id){
+    getRoomId(room_id) {
       sessionStorage.setItem('room_id', room_id);
     },
-    setPages () {
+    setPages() {
       this.pages = [];
       let numberOfPages = Math.ceil(this.Messages.length / this.perPage);
       for (let index = 1; index <= numberOfPages; index++) {
         this.pages.push(index);
       }
     },
-    paginate (Messages) {
+    paginate(Messages) {
       let page = this.page;
       let perPage = this.perPage;
       let from = (page * perPage) - perPage;
       let to = (page * perPage);
-      return  Messages.slice(from, to);
+      return Messages.slice(from, to);
     },
+    showMoreMessages() {
+      try {
+        console.log(this.room_id);
+        const token = sessionStorage.getItem('access_token_1');
+        axios.get(url + '/api/chats/rooms/messages',
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              },
+              params: {
+                chat_room_id: sessionStorage.getItem('room_id'),
+                page: this.page,
+                per_page: 5
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                //this.Messages = [];
+                res.data['ChatRoomMessages'].forEach(message => this.Messages.unshift(message));
+              } else {
+                console.log();
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    refreshRoom(){
+      this.Messages=[];
+      this.page = 1;
+    }
   },
   watch: {
     Messages () {
