@@ -4,10 +4,10 @@
     <div class="modal-tab col-3">
       <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
         <li class="nav-item col-6">
-          <a v-on:click.prevent="fetchService(2)" class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">منتجات</a>
+          <a v-on:click.prevent="type = 2;fetchService()" class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">منتجات</a>
         </li>
         <li class="nav-item col-6">
-          <a v-on:click.prevent="fetchService(1)" class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false">خدمات</a>
+          <a v-on:click.prevent="type = 1;fetchService()" class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false">خدمات</a>
         </li>
       </ul>
     </div>
@@ -106,13 +106,14 @@ export default {
     return{
       Products:[],
       product_id:'',
+      type : 2,
     }
   },
   created() {
       this.fetchService();
   },
   methods:{
-    fetchService(val){
+    fetchService(){
       try {
         const token = sessionStorage.getItem('access_token_1');
         const user_id = sessionStorage.getItem('user_id');
@@ -124,7 +125,7 @@ export default {
               },
               params: {
                 user_id: user_id,
-                type: val,
+                type: this.type,
               }
             })
             .then(res => {

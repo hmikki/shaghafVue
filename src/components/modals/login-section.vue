@@ -106,7 +106,7 @@ export default {
                         'بيانات الدخول غير صحيحة',
                         'error');
                   }
-                  if ((res.data['User']['type'] === '2') && (res.data['User']['profile_completed'] === false)){
+                  if ((sessionStorage.getItem('user_type') === '2') && (res.data['User']['profile_completed'] === false)){
                        // alert('not completed');
                         $('#exampleModalCenter').modal('hide');
                         $('#profile_status').modal('show');

@@ -237,7 +237,6 @@ export default {
       Navigation
     },
     mounted() {
-        console.log('Component mounted.');
         this.fetchUser();
         this.fetchProduct();
     },

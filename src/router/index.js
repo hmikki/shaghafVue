@@ -98,6 +98,11 @@ const routes = [
     component: () => import('../views/pages/notifications.vue')
   },
   {
+    path: '/owl',
+    name: 'owl',
+    component: () => import('../views/pages/owl.vue')
+  },
+  {
     path: '/Home',
     name: 'Home',
     component: Home

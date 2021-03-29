@@ -1,6 +1,6 @@
 
 <template>
-  <form action="http://localhost:8080/#/paymentStatus" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
+  <form :action="'http://localhost:8080/#/paymentStatus'" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
 </template>
 <script>
 export default {
@@ -10,7 +10,6 @@ export default {
     }
   },
   created() {
-    try {
       (function(){
         var wpwl = wpwl || {};
 
@@ -33,20 +32,24 @@ export default {
         window.wpwl = wpwl;
 
         // load static files async
-        (function(d,t,w,s,j){
-          s = d.createElement(t); j = d.getElementsByTagName(t)[0];
-          var e = w.checkout.config.environmentConfig;
-          s.src = [e.url, "/v", w.apiVersion, "/static/", e.cacheVersion, "/js/static", w.minified ? ".min" : "", ".js"].join("");
-          s.async = true;
-          j.parentNode.insertBefore(s, j);
-        }(document, "script", wpwl));
+        try {
+          (function (d, t, w, s, j) {
+            s = d.createElement(t);
+            j = d.getElementsByTagName(t)[1];
+            let e = w.checkout.config.environmentConfig;
+            s.src = [e.url, "/v", w.apiVersion, "/static/", e.cacheVersion, "/js/static", w.minified ? ".min" : "", ".js"].join("");
+            s.async = true;
+            j.parentNode.insertBefore(s, j);
+
+          }(document, "script", wpwl));
+        }catch (e){
+          console.log(e);
+        }
+
       }());
-    }catch (e){
-      console.log(e);
-    }
   },
   methods:{
-  }
+    }
 }
 
 </script>
