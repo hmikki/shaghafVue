@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-lg-3" v-for="(product,index) in Products" :key="index">
           <div class="card pro-ser-card" v-tilt>
-            <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
+            <img class="card-img-top imageHeight" :src="product['first_image']" alt="Card image cap">
             <div class="card-body">
               <h6 class="card-title">{{ product['name'] }}</h6>
               <p class="card-text">{{ product['description'] }}</p>
@@ -44,7 +44,7 @@
       <div class="row">
         <div class="col-lg-3" v-for="(product,index) in Products" :key="index">
           <div class="card pro-ser-card" v-tilt>
-            <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
+            <img class="card-img-top imageHeight" :src="product['first_image']" alt="Card image cap">
             <div class="card-body">
               <h6 class="card-title">{{ product['name'] }}</h6>
               <p class="card-text">{{ product['description'] }}</p>

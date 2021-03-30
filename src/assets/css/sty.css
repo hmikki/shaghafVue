@@ -2343,3 +2343,20 @@ End notifications Page
     padding: 10px 25px;
     font-weight: bold
 }
+.imageHeight{
+    height: 150px;
+}
+.add-orders .card-body button{
+    margin: 0;
+}
+.modal-tab, .modal-tab li{
+    padding: 0!important
+}
+.modal-tab .nav-pills .nav-link.active,.modal-tab .nav-pills .show>.nav-link, .modal-tab ul a, .modal-tab{
+    color: #000;
+    font-size: 0.9rem
+}
+ .modal-tab{
+    background-color: #eee;
+    border: none
+}

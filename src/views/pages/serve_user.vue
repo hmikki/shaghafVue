@@ -47,9 +47,9 @@
                                 <div class="col-lg-11 o-h">
                                     <h6>الأعمال السابقة</h6>
                                   <carousel :items-to-show="1" :wrap-around="true">
-                                    <Slide v-for="slide in 1" :key="slide">
-                                      <div v-for="(portfolio, index) in Portfolios" :key="index">
-                                        <img :src="portfolio.media" style="max-width: 150px">
+                                    <Slide>
+                                      <div class="col-lg-4" v-for="(portfolio, index) in Portfolios" :key="index">
+                                        <input type="image" :src="portfolio.media" style="max-width: 150px;height: 100px;">
                                       </div>
                                     </Slide>
                                     <template #addons>
@@ -86,10 +86,10 @@
                 <div class="modal-tab col-3">
                   <ul class="nav nav-pills mb-3 list-con row" id="pills-tab" role="tablist">
                     <li class="nav-item col-6">
-                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="fetchProducts(2)">منتجات</a>
+                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" v-on:click.prevent="type= 2; fetchProducts()">منتجات</a>
                     </li>
                     <li class="nav-item col-6">
-                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="fetchProducts(1)">خدمات</a>
+                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#transaction" role="tab" aria-controls="pills-profile" aria-selected="false" v-on:click.prevent="type= 1;fetchProducts()">خدمات</a>
                     </li>
                   </ul>
                 </div>
@@ -99,7 +99,7 @@
                   <div class="row pb-5">
                     <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
                       <div class="card pro-ser-card">
-                        <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
+                        <img class="card-img-top imageHeight" :src="product.Media[0].file" alt="Card image cap">
                         <div class="card-body">
                           <h6 class="card-title">{{product['name']}}</h6>
                           <p class="card-text">{{ product['description'] }}</p>
@@ -119,7 +119,7 @@
                   <div class="row pb-5">
                     <div class="col-lg-3" v-for="(product, index) in Products" :key="index">
                       <div class="card pro-ser-card">
-                        <img class="card-img-top" :src="product['first_image']" alt="Card image cap">
+                        <img class="card-img-top imageHeight" :src="product.Media[0].file" alt="Card image cap">
                         <div class="card-body">
                           <h6 class="card-title">{{product['name']}}</h6>
                           <p class="card-text">{{ product['description'] }}</p>
@@ -168,6 +168,7 @@ export default {
         User:{
           City:[],
         },
+        type:2,
         Portfolios:[],
         Products:[],
         Product:[],
@@ -247,7 +248,7 @@ export default {
           console.log(e);
         }
       },
-      fetchProducts(val){
+      fetchProducts(){
         try {
           const token = sessionStorage.getItem('access_token_1');
           const user_id = sessionStorage.getItem('user_id');
@@ -259,7 +260,7 @@ export default {
                 },
                 params: {
                   user_id: user_id,
-                  type: val,
+                  type: this.type,
                   per_page: 8,
                 }
               })
@@ -372,3 +373,9 @@ export default {
   },
 }
 </script>
+<style>
+.card-img-top{
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+</style>
