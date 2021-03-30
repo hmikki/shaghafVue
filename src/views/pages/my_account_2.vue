@@ -179,7 +179,6 @@ export default {
             .then(res => {
               if (res.data['status']['status'] === "success") {
                 this.User = res.data['User'];
-                console.log(res.data['User']);
               } else {
                 console.log()
               }
