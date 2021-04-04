@@ -1,11 +1,10 @@
 <template>
-  <form :action="this.url+'/#/paymentStatus'" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
+  <form :action="url+'/#/paymentStatus'" class="paymentWidgets" data-brands="VISA MASTER AMEX"></form>
 </template>
 <script>
 export default {
   data(){
     return{
-      url : 'https://passionplatforms.com',
       checkOutId : sessionStorage.getItem('payment_token')
     }
   },
