@@ -32,10 +32,10 @@ export default {
       window.wpwl = wpwl;
 
       // load static files async
-      try {
+
         (function (d, t, w, s, j) {
           s = d.createElement(t);
-          j = d.getElementsByTagName(t)[0];
+          j = d.getElementsByTagName(t)[1];
           let e = w.checkout.config.environmentConfig;
           s.src = [e.url, "/v", w.apiVersion, "/static/", e.cacheVersion, "/js/static", w.minified ? ".min" : "", ".js"].join("");
           s.async = true;
@@ -44,10 +44,8 @@ export default {
           }else {
             console.log('error');
           }
-        }(document, "script", wpwl));
-      }catch (e){
-        console.log(e);
-      }
+        }(document, "script", wpwl)
+        );
 
     }());
   },

@@ -70,7 +70,7 @@ export default {
             if (res.data['status']['status'] === "success"){
               this.Transaction = res.data['Transaction'];
             }else {
-              console.log(res.data['result']);
+              console.log();
             }
           })
         }catch (e){

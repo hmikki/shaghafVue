@@ -14,7 +14,7 @@
                     <div class="col-lg-4">
                         <div class="card">
                             <div class="img-o-h">
-                                <router-link to="/chats"><span class="chat"><img src="../../assets/img/chat.svg" alt=""></span></router-link>
+                                <router-link v-show="user_type === '1'" to="/chats" v-on:click.prevent="createRoom()"><span class="chat"><img src="../../assets/img/chat.svg" alt=""></span></router-link>
                                 <div class="order-card-img">
                                     <img class="card-img-top" :src="Freelancer['avatar']" alt="Card image cap">
                                 </div>
@@ -255,7 +255,8 @@ export default {
         lng: '' ,
         User:[],
         user_id:'',
-        type: 2
+        type: 2,
+        user_type: sessionStorage.getItem('user_type')
       }
   },
   created() {
@@ -343,7 +344,7 @@ export default {
           console.log(e);
         }
     },
-    creatrOrder(product_id){
+      creatrOrder(product_id){
       try {
         const token = sessionStorage.getItem('access_token_1');
         axios.post(url+'/api/orders/store',
@@ -384,7 +385,7 @@ export default {
         console.log(e);
       }
     },
-    fetchProduct(product_id){
+      fetchProduct(product_id){
       try {
         const token = sessionStorage.getItem('access_token_1');
         axios.get(url+'/api/products/show',
@@ -411,7 +412,7 @@ export default {
         console.log(e);
       }
     },
-    locatorButtonPressed() {
+      locatorButtonPressed() {
         try {
           navigator.geolocation.getCurrentPosition(
               position => {
@@ -426,7 +427,38 @@ export default {
           console.log();
         }
 
-  }
+  },
+      createRoom(){
+      try {
+        const token = sessionStorage.getItem('access_token_1');
+        this.user_id = sessionStorage.getItem('freelancer_id');
+        axios.post(url+'/api/chats/rooms/create',
+            {
+              user_id: this.user_id,
+            },
+            {
+              headers: {
+                'Authorization': 'Bearer ' + token,
+                'X-localization': 'ar',
+              }
+            })
+            .then(res => {
+              if (res.data['status']['status'] === "success") {
+                this.chatRoom = res.data['ChatRoom'];
+                const room_id = res.data['ChatRoom']['id'];
+                sessionStorage.setItem('room_id', room_id);
+                this.$router.push('/chats');
+              } else {
+                console.log();
+              }
+            })
+            .catch(e => {
+              console.log(e);
+            })
+      }catch (e){
+        console.log(e);
+      }
+    },
 
   },
   setup() {
